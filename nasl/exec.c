@@ -142,7 +142,7 @@ int2cell (long int x)
 }
 
 static tree_cell *
-bool2cell (int x)
+bool2cell (long int x)
 {
   return int2cell (x != 0);
 }
@@ -221,7 +221,7 @@ cell2atom (lex_ctxt * lexic, tree_cell * c1)
     }
 }
 
-int
+long int
 cell_cmp (lex_ctxt * lexic, tree_cell * c1, tree_cell * c2)
 {
   int flag, typ, typ1, typ2;
@@ -749,10 +749,10 @@ nasl_short_dump (FILE * fp, const tree_cell * c)
 
 
 /** @todo This is an algorithm for calculating x^y, replace it if possible. */
-static int
-expo (int x, int y)
+static long int
+expo (long int x, long int y)
 {
-  int z;
+  long int z;
 
   if (y == 0)
     return 1;
