@@ -1,3 +1,9 @@
+2016-11-10  Michael Wiegand <michael.wiegand@greenbone.net>
+
+	Post branch version bump.
+
+	* CMakeLists.txt: Set version to 9.1.0 and status to beta.
+
 2016-11-09  Hani Benhabiles <hani.benhabiles@greenbone.net>
 
 	* nasl/exec.c (bool2cell, cell_cmp, expo): Use long int instead of int
