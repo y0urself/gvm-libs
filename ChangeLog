@@ -1,3 +1,8 @@
+2016-11-11  Michael Wiegand <michael.wiegand@greenbone.net>
+
+	* nasl/nasl_ssh.c (get_ssh_port): Use value stored already instead of
+	trying to cast it again from an already free'd string.
+
 2016-11-11  Timo Pollmeier <timo.pollmeier@greenbone.net>
 
 	* base/openvas_file.c (openvas_export_file_name): Move format_state = 0

@@ -441,7 +441,7 @@ get_ssh_port (lex_ctxt *lexic)
     {
       port = GPOINTER_TO_SIZE (port_str);
       g_free (port_str);
-      if (type == KB_TYPE_INT && (port = GPOINTER_TO_SIZE (port_str)) > 0)
+      if (type == KB_TYPE_INT && port > 0)
         return port;
     }
 
