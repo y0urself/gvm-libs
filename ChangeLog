@@ -1,3 +1,8 @@
+2016-11-15  Hani Benhabiles <hani.benhabiles@greenbone.net>
+
+	* misc/network.c (is_ip_address): New function.
+	(open_SSL_connection): Don't use hostname if it is an IP address.
+
 2016-11-11  Michael Wiegand <michael.wiegand@greenbone.net>
 
 	* nasl/nasl_ssh.c (get_ssh_port): Use value stored already instead of
