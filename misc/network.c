@@ -779,6 +779,7 @@ socket_negotiate_ssl (int fd, openvas_encaps_t transport, struct arglist *args)
   char *hostname = NULL;
   openvas_connection *fp;
   kb_t kb;
+  char buf[1024];
 
   if (!fd_is_stream (fd))
     {
@@ -791,7 +792,8 @@ socket_negotiate_ssl (int fd, openvas_encaps_t transport, struct arglist *args)
   key = kb_item_get_str (kb, "SSL/key");
   passwd = kb_item_get_str (kb, "SSL/password");
   cafile = kb_item_get_str (kb, "SSL/CA");
-  if (kb_item_get_int (kb, "Host/SNI/force_disable") <= 0)
+  snprintf (buf, sizeof (buf), "Host/SNI/%d/force_disable", fp->port);
+  if (kb_item_get_int (kb, buf) <= 0)
     hostname = plug_get_host_fqdn (args);
 
   fp->transport = transport;
@@ -1075,6 +1077,7 @@ open_stream_connection_ext (struct arglist *args, unsigned int port,
   switch (transport)
     {
     int ret;
+    char buf[1024];
     case OPENVAS_ENCAPS_IP:
       break;
     case OPENVAS_ENCAPS_SSLv23:
@@ -1094,7 +1097,8 @@ open_stream_connection_ext (struct arglist *args, unsigned int port,
 
     case OPENVAS_ENCAPS_SSLv2:
       /* We do not need a client certificate in this case */
-      if (kb_item_get_int (kb, "Host/SNI/force_disable") <= 0)
+      snprintf (buf, sizeof (buf), "Host/SNI/%d/force_disable", fp->port);
+      if (kb_item_get_int (kb, buf) <= 0)
         hostname = plug_get_host_fqdn (args);
       ret = open_SSL_connection (fp, cert, key, passwd, cafile, hostname);
       g_free (cert);
