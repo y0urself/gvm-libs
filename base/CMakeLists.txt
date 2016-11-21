@@ -78,7 +78,7 @@ if (BUILD_SHARED)
   add_library (openvas_base_shared SHARED ${FILES})
   set_target_properties (openvas_base_shared PROPERTIES OUTPUT_NAME "openvas_base")
   set_target_properties (openvas_base_shared PROPERTIES CLEAN_DIRECT_OUTPUT 1)
-  set_target_properties (openvas_base_shared PROPERTIES SOVERSION "${CPACK_PACKAGE_VERSION_MAJOR}")
+  set_target_properties (openvas_base_shared PROPERTIES SOVERSION "${PROJECT_VERSION_MAJOR}")
   set_target_properties (openvas_base_shared PROPERTIES VERSION "${CPACK_PACKAGE_VERSION}")
   set_target_properties (openvas_base_shared PROPERTIES PUBLIC_HEADER "${HEADERS}")
 

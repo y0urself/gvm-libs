@@ -1,3 +1,37 @@
+2016-11-21  Michael Wiegand <michael.wiegand@greenbone.net>
+
+	Streamline handling of version information.
+
+	* CMakeLists.txt: Raise minimum required CMake version to 3.0 to make
+	setting the project version with the PROJECT command available. Set
+	project version using PROJECT command. Check parent directory when
+	setting SVN_EXECUTABLE, because since 1.7 svn has a single .svn
+	directory. Set project version independently of CPack configuration.
+	Make switching between beta and stable version schemes easier. Use
+	version string with possible SVN revision suffix for the CPack package
+	version, but skip SVN revision suffix for LIBOPENVASCONFIG_VERSION and
+	thus OPENVASLIB_VERSION since we do not care about the revision at
+	build time. Derive OPENVASLIB_VERSION from LIBOPENVASCONFIG_VERSION to
+	have both exposed versions strings consistent.
+
+	* base/CMakeLists.txt: Set SOVERSION from PROJECT_VERSION_MAJOR
+	instead of CPACK_PACKAGE_VERSION_MAJOR.
+
+	* misc/CMakeLists.txt: Set SOVERSION from PROJECT_VERSION_MAJOR
+	instead of CPACK_PACKAGE_VERSION_MAJOR. Stop defining
+	OPENVASLIB_VERSION since it is used nowhere in misc.
+
+	* nasl/CMakeLists.txt: Set SOVERSION from PROJECT_VERSION_MAJOR
+	instead of CPACK_PACKAGE_VERSION_MAJOR.
+
+	* omp/CMakeLists.txt: Set SOVERSION from PROJECT_VERSION_MAJOR instead
+	of CPACK_PACKAGE_VERSION_MAJOR.
+
+	* osp/CMakeLists.txt: Set SOVERSION from PROJECT_VERSION_MAJOR instead
+	of CPACK_PACKAGE_VERSION_MAJOR.
+
+	* INSTALL: Update with increased minimum version for CMake.
+
 2016-11-16  Hani Benhabiles <hani.benhabiles@greenbone.net>
 
 	* misc/network.c (open_SSL_connection): Don't fail the handshake upon receiving a

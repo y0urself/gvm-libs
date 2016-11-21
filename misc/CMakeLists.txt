@@ -126,7 +126,7 @@ if (BUILD_SHARED)
 
   set_target_properties (openvas_misc_shared PROPERTIES OUTPUT_NAME "openvas_misc")
   set_target_properties (openvas_misc_shared PROPERTIES CLEAN_DIRECT_OUTPUT 1)
-  set_target_properties (openvas_misc_shared PROPERTIES SOVERSION "${CPACK_PACKAGE_VERSION_MAJOR}")
+  set_target_properties (openvas_misc_shared PROPERTIES SOVERSION "${PROJECT_VERSION_MAJOR}")
   set_target_properties (openvas_misc_shared PROPERTIES VERSION "${CPACK_PACKAGE_VERSION}")
   set_target_properties (openvas_misc_shared PROPERTIES PUBLIC_HEADER "${HEADERS}")
 
@@ -142,23 +142,6 @@ if (BUILD_SHARED)
                            ${LINKER_HARDENING_FLAGS})
   endif (MINGW)
 endif (BUILD_SHARED)
-
-if (OPENVASLIB_VERSION)
-  add_definitions (-DOPENVASLIB_VERSION=\\\"${OPENVASLIB_VERSION}\\\")
-
-  string (REGEX REPLACE "^\([0-9]+\).*" "\\1" PATCH_VERS
-          ${CPACK_PACKAGE_VERSION_PATCH})
-
-  string (COMPARE EQUAL ${PATCH_VERS} ${CPACK_PACKAGE_VERSION_PATCH} EQ)
-  if (EQ)
-    set (PATCH_VERS "0")
-  endif (EQ)
-
-  add_definitions (-DOPENVASLIB_VERSION_MAJOR=${CPACK_PACKAGE_VERSION_MAJOR})
-  add_definitions (-DOPENVASLIB_VERSION_MINOR=${CPACK_PACKAGE_VERSION_MINOR})
-  add_definitions (-DOPENVASLIB_VERSION_PATCH=${PATCH_VERS})
-endif (OPENVASLIB_VERSION)
-
 
 if (OPENVAS_STATE_DIR)
   add_definitions (-DOPENVAS_STATE_DIR=\\\"${OPENVAS_STATE_DIR}\\\")

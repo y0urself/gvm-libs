@@ -49,7 +49,7 @@ if (BUILD_SHARED)
   add_library (openvas_omp_shared SHARED ${FILES})
   set_target_properties (openvas_omp_shared PROPERTIES OUTPUT_NAME "openvas_omp")
   set_target_properties (openvas_omp_shared PROPERTIES CLEAN_DIRECT_OUTPUT 1)
-  set_target_properties (openvas_omp_shared PROPERTIES SOVERSION "${CPACK_PACKAGE_VERSION_MAJOR}")
+  set_target_properties (openvas_omp_shared PROPERTIES SOVERSION "${PROJECT_VERSION_MAJOR}")
   set_target_properties (openvas_omp_shared PROPERTIES VERSION "${CPACK_PACKAGE_VERSION}")
   set_target_properties (openvas_omp_shared PROPERTIES PUBLIC_HEADER "${HEADERS}")
 

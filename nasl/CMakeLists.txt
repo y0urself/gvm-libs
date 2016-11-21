@@ -145,7 +145,7 @@ if (BUILD_SHARED)
   add_library (openvas_nasl_shared SHARED ${FILES})
   set_target_properties (openvas_nasl_shared PROPERTIES OUTPUT_NAME "openvas_nasl")
   set_target_properties (openvas_nasl_shared PROPERTIES CLEAN_DIRECT_OUTPUT 1)
-  set_target_properties (openvas_nasl_shared PROPERTIES SOVERSION "${CPACK_PACKAGE_VERSION_MAJOR}")
+  set_target_properties (openvas_nasl_shared PROPERTIES SOVERSION "${PROJECT_VERSION_MAJOR}")
   set_target_properties (openvas_nasl_shared PROPERTIES VERSION "${CPACK_PACKAGE_VERSION}")
   set_target_properties (openvas_nasl_shared PROPERTIES PUBLIC_HEADER "${HEADERS}")
 # line bellow is needed so it also works with no-undefined which is e.g. used by Mandriva
