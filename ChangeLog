@@ -1,3 +1,7 @@
+2016-11-23  Michael Wiegand <michael.wiegand@greenbone.net>
+
+	* misc/radius.c (radius_init): Fix typo in warning message.
+
 2016-11-21  Hani Benhabiles <hani.benhabiles@greenbone.net>
 
 	* misc/network.c (socket_negotiate_ssl, open_stream_connection_ext):
