@@ -1,3 +1,12 @@
+2016-11-24  Hani Benhabiles <hani.benhabiles@greenbone.net>
+
+	* misc/openvas_server.c (openvas_socket_vsendf): New function.
+
+	* misc/openvas_server.h: Add new function header.
+
+	* osp/osp.c (osp_connection_new, osp_send_command):
+	(osp_connection_close): Handle unix socket case.
+
 2016-11-23  Michael Wiegand <michael.wiegand@greenbone.net>
 
 	* misc/radius.c (radius_init): Fix typo in warning message.

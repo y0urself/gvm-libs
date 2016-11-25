@@ -856,6 +856,21 @@ openvas_server_vsendf (gnutls_session_t *session, const char *fmt, va_list ap)
 /**
  * @brief Send a string to the server.
  *
+ * @param[in]  socket   Socket to send string through.
+ * @param[in]  fmt      Format of string to send.
+ * @param[in]  ap       Args for fmt.
+ *
+ * @return 0 on success, 1 if server closed connection, -1 on error.
+ */
+int
+openvas_socket_vsendf (int socket, const char *fmt, va_list ap)
+{
+  return unix_vsendf_internal (socket, fmt, ap, 0);
+}
+
+/**
+ * @brief Send a string to the server.
+ *
  * @param[in]  connection  Connection.
  * @param[in]  fmt         Format of string to send.
  * @param[in]  ap          Args for fmt.

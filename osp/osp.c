@@ -29,6 +29,8 @@
 #include "../misc/openvas_server.h"
 #include "../omp/xml.h"
 #include "osp.h"
+#include <sys/un.h>
+#include <unistd.h>
 
 
 #undef  G_LOG_DOMAIN
@@ -71,16 +73,38 @@ osp_connection_new (const char *host, int port, const char *cacert,
 {
   osp_connection_t *connection;
 
-  if (port <= 0 || port > 65535)
-    return NULL;
-  if (!host || openvas_get_host_type (host) == -1)
-    return NULL;
-  if (!cert || !key || !cacert)
-    return NULL;
+  if (host && *host == '/')
+    {
+      struct sockaddr_un addr;
+      int len;
 
-  connection = g_malloc0(sizeof (*connection));
-  connection->socket = openvas_server_open_with_cert
-                        (&connection->session, host, port, cacert, cert, key);
+      connection = g_malloc0 (sizeof (*connection));
+      connection->socket = socket (AF_UNIX, SOCK_STREAM, 0);
+      if (connection->socket == -1)
+        return NULL;
+
+      addr.sun_family = AF_UNIX;
+      strncpy (addr.sun_path, host, 108);
+      len = strlen (addr.sun_path) + sizeof (addr.sun_family);
+      if (connect (connection->socket, (struct sockaddr *) &addr, len) == -1)
+        {
+          close (connection->socket);
+          return NULL;
+        }
+    }
+  else
+    {
+      if (port <= 0 || port > 65535)
+        return NULL;
+      if (!host || openvas_get_host_type (host) == -1)
+        return NULL;
+      if (!cert || !key || !cacert)
+        return NULL;
+
+      connection = g_malloc0 (sizeof (*connection));
+      connection->socket = openvas_server_open_with_cert
+                            (&connection->session, host, port, cacert, cert, key);
+    }
   if (connection->socket == -1)
     {
       g_free (connection);
@@ -112,8 +136,17 @@ osp_send_command (osp_connection_t *connection, entity_t *response,
   if (!connection || !fmt || !response)
     goto out;
 
-  if (openvas_server_vsendf (&connection->session, fmt, ap) == -1)
-    goto out;
+  if (*connection->host == '/')
+    {
+      if (openvas_socket_vsendf (connection->socket, fmt, ap) == -1)
+        goto out;
+      goto out;
+    }
+  else
+    {
+      if (openvas_server_vsendf (&connection->session, fmt, ap) == -1)
+        goto out;
+    }
 
   if (read_entity (&connection->session, response))
     goto out;
@@ -136,7 +169,10 @@ osp_connection_close (osp_connection_t *connection)
   if (!connection)
     return;
 
-  openvas_server_close (connection->socket, connection->session);
+  if (*connection->host == '/')
+    close (connection->socket);
+  else
+    openvas_server_close (connection->socket, connection->session);
   g_free (connection->host);
   g_free (connection);
 }
