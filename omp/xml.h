@@ -89,9 +89,6 @@ void print_entity_format (entity_t, gpointer indentation);
 int try_read_entity_and_string (gnutls_session_t *, int, entity_t *,
                                 GString **);
 
-int try_read_entity_and_string_c (openvas_connection_t *, int, entity_t *,
-                                  GString **);
-
 int read_entity_and_string (gnutls_session_t *, entity_t *, GString **);
 
 int read_entity_and_string_c (openvas_connection_t *, entity_t *, GString **);
@@ -105,6 +102,8 @@ int try_read_entity (gnutls_session_t *, int, entity_t *);
 int try_read_entity_c (openvas_connection_t *, int, entity_t *);
 
 int read_entity (gnutls_session_t *, entity_t *);
+
+int read_entity_s (int, entity_t *);
 
 int read_entity_c (openvas_connection_t *, entity_t *);
 

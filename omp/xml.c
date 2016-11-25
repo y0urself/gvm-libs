@@ -597,9 +597,9 @@ try_read_entity_and_string (gnutls_session_t * session, int timeout,
 }
 
 /**
- * @brief Try read an XML entity tree from the manager.
+ * @brief Try read an XML entity tree from the socket.
  *
- * @param[in]   connection  Connection.
+ * @param[in]   socket    Socket to read from.
  * @param[in]   timeout   Server idle time before giving up, in seconds.  0 to
  *                        wait forever.
  * @param[out]  entity    Pointer to an entity tree.
@@ -613,22 +613,18 @@ try_read_entity_and_string (gnutls_session_t * session, int timeout,
  * @return 0 success, -1 read error, -2 parse error, -3 end of file, -4 timeout.
  */
 int
-try_read_entity_and_string_c (openvas_connection_t *connection, int timeout,
-                              entity_t * entity, GString ** string_return)
+try_read_entity_and_string_s (int socket, int timeout, entity_t *entity,
+                              GString **string_return)
 {
   GMarkupParser xml_parser;
   GError *error = NULL;
   GMarkupParseContext *xml_context;
   GString *string;
   time_t last_time;
-  /* Buffer for reading from the manager. */
+  /* Buffer for reading from the socket. */
   char buffer_start[BUFFER_SIZE];
   /* End of the manager reading buffer. */
   char *buffer_end = buffer_start + BUFFER_SIZE;
-
-  if (connection->tls)
-    return try_read_entity_and_string (&connection->session, timeout, entity,
-                                       string_return);
 
   /* Record the start time. */
 
@@ -643,7 +639,7 @@ try_read_entity_and_string_c (openvas_connection_t *connection, int timeout,
     {
       /* Turn off blocking. */
 
-      if (fcntl (connection->socket, F_SETFL, O_NONBLOCK) == -1)
+      if (fcntl (socket, F_SETFL, O_NONBLOCK) == -1)
         return -1;
     }
 
@@ -682,8 +678,7 @@ try_read_entity_and_string_c (openvas_connection_t *connection, int timeout,
       while (1)
         {
           g_debug ("   asking for %i\n", (int) (buffer_end - buffer_start));
-          count = read (connection->socket, buffer_start,
-                        buffer_end - buffer_start);
+          count = read (socket, buffer_start, buffer_end - buffer_start);
           if (count < 0)
             {
               if (errno == EINTR)
@@ -698,7 +693,7 @@ try_read_entity_and_string_c (openvas_connection_t *connection, int timeout,
                           <= 0)
                         {
                           g_warning ("   timeout\n");
-                          fcntl (connection->socket, F_SETFL, 0L);
+                          fcntl (socket, F_SETFL, 0L);
                           g_markup_parse_context_free (xml_context);
                           return -4;
                         }
@@ -713,7 +708,7 @@ try_read_entity_and_string_c (openvas_connection_t *connection, int timeout,
               if (string && *string_return == NULL)
                 g_string_free (string, TRUE);
               if (timeout > 0)
-                fcntl (connection->socket, F_SETFL, 0L);
+                fcntl (socket, F_SETFL, 0L);
               g_markup_parse_context_free (xml_context);
               return -1;
             }
@@ -734,7 +729,7 @@ try_read_entity_and_string_c (openvas_connection_t *connection, int timeout,
               if (string && *string_return == NULL)
                 g_string_free (string, TRUE);
               if (timeout > 0)
-                fcntl (connection->socket, F_SETFL, 0L);
+                fcntl (socket, F_SETFL, 0L);
               g_markup_parse_context_free (xml_context);
               return -3;
             }
@@ -759,7 +754,7 @@ try_read_entity_and_string_c (openvas_connection_t *connection, int timeout,
           if (string && *string_return == NULL)
             g_string_free (string, TRUE);
           if (timeout > 0)
-            fcntl (connection->socket, F_SETFL, 0L);
+            fcntl (socket, F_SETFL, 0L);
           g_markup_parse_context_free (xml_context);
           return -2;
         }
@@ -776,7 +771,7 @@ try_read_entity_and_string_c (openvas_connection_t *connection, int timeout,
                   g_slist_free_1 (context_data.first);
                 }
               if (timeout > 0)
-                fcntl (connection->socket, F_SETFL, 0L);
+                fcntl (socket, F_SETFL, 0L);
               g_markup_parse_context_free (xml_context);
               return -2;
             }
@@ -784,7 +779,7 @@ try_read_entity_and_string_c (openvas_connection_t *connection, int timeout,
           if (string)
             *string_return = string;
           if (timeout > 0)
-            fcntl (connection->socket, F_SETFL, 0L);
+            fcntl (socket, F_SETFL, 0L);
           g_markup_parse_context_free (xml_context);
           return 0;
         }
@@ -793,7 +788,7 @@ try_read_entity_and_string_c (openvas_connection_t *connection, int timeout,
         {
           g_warning ("   failed to get current time (1): %s\n",
                      strerror (errno));
-          fcntl (connection->socket, F_SETFL, 0L);
+          fcntl (socket, F_SETFL, 0L);
           g_markup_parse_context_free (xml_context);
           return -1;
         }
@@ -839,7 +834,11 @@ int
 read_entity_and_string_c (openvas_connection_t *connection, entity_t * entity,
                           GString ** string_return)
 {
-  return try_read_entity_and_string_c (connection, 0, entity, string_return);
+  if (connection->tls)
+    return try_read_entity_and_string (&connection->session, 0, entity,
+                                       string_return);
+  return try_read_entity_and_string_s (connection->socket, 0, entity,
+                                       string_return);
 }
 
 /**
@@ -976,7 +975,9 @@ int
 try_read_entity_c (openvas_connection_t *connection, int timeout,
                    entity_t * entity)
 {
-  return try_read_entity_and_string_c (connection, timeout, entity, NULL);
+  if (connection->tls)
+    return try_read_entity_and_string (&connection->session, 0, entity, NULL);
+  return try_read_entity_and_string_s (connection->socket, timeout, entity, NULL);
 }
 
 /**
@@ -991,6 +992,20 @@ int
 read_entity (gnutls_session_t * session, entity_t * entity)
 {
   return try_read_entity (session, 0, entity);
+}
+
+/**
+ * @brief Read an XML entity tree from the socket.
+ *
+ * @param[in]   socket    Socket to read from.
+ * @param[out]  entity    Pointer to an entity tree.
+ *
+ * @return 0 success, -1 read error, -2 parse error, -3 end of file.
+ */
+int
+read_entity_s (int socket, entity_t * entity)
+{
+  return try_read_entity_and_string_s (socket, 0, entity, NULL);
 }
 
 /**

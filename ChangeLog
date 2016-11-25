@@ -1,3 +1,18 @@
+2016-11-25  Hani Benhabiles <hani.benhabiles@greenbone.net>
+
+	* omp/xml.c (read_entity_s): New function.
+	(try_read_entity_and_string_c): Rename to
+	try_read_entity_and_string_s(). Adjust to take socket as argument
+	instead of openvas_connection. Don't handle tls session case.
+	(read_entity_and_string_c, try_read_entity_c): adjust to call
+	try_read_entity_and_string() or try_read_entity_and_string_s()
+	accordingly.
+
+	* omp/xml.h: Remove unused function header. Add new function header.
+
+	* osp/osp.c (osp_send_command): Call read_entity_s() in unix socket
+	case.
+
 2016-11-24  Hani Benhabiles <hani.benhabiles@greenbone.net>
 
 	* misc/openvas_server.c (openvas_socket_vsendf): New function.

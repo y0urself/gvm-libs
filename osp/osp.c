@@ -140,16 +140,17 @@ osp_send_command (osp_connection_t *connection, entity_t *response,
     {
       if (openvas_socket_vsendf (connection->socket, fmt, ap) == -1)
         goto out;
-      goto out;
+      if (read_entity_s (connection->socket, response))
+        goto out;
     }
   else
     {
       if (openvas_server_vsendf (&connection->session, fmt, ap) == -1)
         goto out;
+      if (read_entity (&connection->session, response))
+        goto out;
     }
 
-  if (read_entity (&connection->session, response))
-    goto out;
 
   rc = 0;
 
