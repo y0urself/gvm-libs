@@ -25,6 +25,10 @@
  */
 
 #include <time.h>
+#include <sys/param.h>
+#ifdef __FreeBSD__
+#include <sys/time.h>
+#endif
 #include "smb.h"
 /*implemented in genrand.c*/
 void generate_random_buffer_ntlmssp( unsigned char *out, int len);

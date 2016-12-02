@@ -28,6 +28,11 @@
 #include "capture_packet.h"
 #include <netinet/ip.h>
 
+#include <sys/param.h>
+#ifdef __FreeBSD__
+#include <sys/socket.h>
+#endif
+
 extern int islocalhost (struct in_addr *);
 
 

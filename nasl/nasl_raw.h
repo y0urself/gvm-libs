@@ -43,6 +43,13 @@
 
 #include <netinet/tcp.h>
 #include <netinet/udp.h>
+
+#include <sys/param.h>
+#ifdef __FreeBSD__
+#include <netinet/in.h>
+#include <netinet/ip.h>
+#endif
+
 #include <netinet/ip_icmp.h>
 
 #endif

@@ -28,6 +28,11 @@
 
 #include <pcap.h>
 
+#include <sys/param.h>
+#ifdef __FreeBSD__
+#include <netinet/in.h>
+#endif
+
 int v6_is_local_ip (struct in6_addr *);
 int v6_get_mac_addr (struct in6_addr *, char **);
 int islocalhost (struct in_addr *);

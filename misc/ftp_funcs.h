@@ -29,6 +29,11 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
+#include <sys/param.h>
+#ifdef __FreeBSD__
+#include <netinet/in.h>
+#endif
+
 int ftp_log_in (int, char *, char *);
 int ftp_get_pasv_address (int, struct sockaddr_in *);
 

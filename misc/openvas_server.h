@@ -49,6 +49,10 @@ extern "C"
 #ifdef _WIN32
 #include <winsock2.h>
 #else
+#include <sys/param.h>
+#ifdef __FreeBSD__
+#include <netinet/in.h>
+#endif
 #include <netinet/ip.h>
 #endif
 

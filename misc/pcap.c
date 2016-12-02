@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/param.h>
 #include <sys/types.h>
 #include <ifaddrs.h>
 
@@ -656,7 +657,11 @@ getinterfaces (int *howmany)
     log_legacy_write
      ("getinterfaces: SIOCGIFCONF claims you have no network interfaces!");
 
+#ifndef __FreeBSD__
   len = sizeof (struct ifmap);
+#else
+  len = sizeof (struct sockaddr);
+#endif
 
   for (bufp = buf; bufp && *bufp && (bufp < (buf + ifc.ifc_len));
        bufp += sizeof (ifr->ifr_name) + len)

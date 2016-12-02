@@ -43,6 +43,12 @@
 #include <string.h>             /* for bcopy */
 #include <sys/time.h>           /* for gettimeofday */
 #include <unistd.h>             /* for close */
+
+#include <sys/param.h>
+#ifdef __FreeBSD__
+#include <netinet/in.h>
+#endif
+
 #include <netinet/icmp6.h>      /* ICMPv6 */
 
 #include "../misc/bpf_share.h"          /* for bpf_open_live */

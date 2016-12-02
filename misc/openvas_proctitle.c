@@ -27,10 +27,14 @@
 #include <string.h>
 #include <stdio.h>
 
+#include <sys/param.h>
+
 #include "openvas_proctitle.h"
 
 extern const char *__progname;
+#ifndef __FreeBSD__
 extern const char *__progname_full;
+#endif
 static int argv_len;
 static char **old_argv;
 extern char **environ;
@@ -47,13 +51,19 @@ proctitle_init (int argc, char **argv)
 {
   int i = 0;
   char **envp = environ;
+#ifndef __FreeBSD__
   char *new_progname, *new_progname_full;
+#else
+  char *new_progname;
+#endif
 
   if (argv == NULL)
     return;
 
   new_progname = strdup (__progname);
+#ifndef __FreeBSD__
   new_progname_full = strdup (__progname_full);
+#endif
 
   /* Move environ to new memory, to be able to reuse older one. */
   while (envp[i]) i++;
@@ -74,7 +84,9 @@ proctitle_init (int argc, char **argv)
   /* Seems like these are in the moved environment, so reset them.  Idea from
    * proctitle.cpp in KDE libs.  */
   __progname = new_progname;
+#ifndef __FreeBSD__
   __progname_full = new_progname_full;
+#endif
 }
 
 /**

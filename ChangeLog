@@ -1,3 +1,36 @@
+2016-12-02  Michael Wiegand <michael.wiegand@greenbone.net>
+
+	Make it possible to compile openvas-libraries on FreeBSD.
+
+	* base/openvas_networking.h: Included netinet/in.h to ensure in6_addr
+	is defined. Define s6_addr32 so it is accessible in FreeBSD as well.
+
+	* misc/ftp_funcs.h: Include netinet/in.h to ensure sockaddr_in is
+	defined.
+
+	* misc/openvas_proctitle.c (proctitle_init): Do not try access
+	__progname_full on FreeBSD as it is undefined there.
+
+	* misc/openvas_server.h: Include netinet/in.h to ensure sockaddr_in is
+	defined.
+
+	* misc/pcap.c (getinterfaces): Use sockaddr instead of ifmap to
+	determine len, so partially reverting r10000 for FreeBSD.
+
+	* misc/pcap_openvas.h: Included netinet/in.h to ensure in6_addr is
+	defined.
+
+	* nasl/capture_packet.c: Include sys/socket.h to ensure AF_INET6 is
+	defined.
+
+	* nasl/nasl_packet_forgery_v6.c: Included netinet/in.h to ensure
+	in6_addr is defined.
+
+	* nasl/nasl_raw.h: Include netinet/in.h and netinet/ip.h to ensure
+	in_addr, ip, IP_RF, IP_DF, IP_MF, and IP_OFFMASK are defined.
+
+	* nasl/proto.h: Include sys/time.h to ensure timeval is defined.
+
 2016-11-25  Hani Benhabiles <hani.benhabiles@greenbone.net>
 
 	* omp/xml.c (read_entity_s): New function.
