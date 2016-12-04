@@ -31,6 +31,8 @@ if (NOT MINGW)
   set (CMAKE_C_FLAGS              "${CMAKE_C_FLAGS} ${HARDENING_FLAGS} -Wall -Wextra -fPIC")
 endif (NOT MINGW)
 
+include_directories (${LIBGVM_BASE_INCLUDE_DIRS})
+
 set (FILES xml.c omp.c)
 
 set (HEADERS xml.h omp.h)

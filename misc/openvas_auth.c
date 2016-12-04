@@ -33,7 +33,8 @@
 #endif
 
 #include "../base/openvas_file.h"
-#include "../base/array.h"
+
+#include <gvm/base/array.h>
 
 #include <errno.h>
 #include <gcrypt.h>

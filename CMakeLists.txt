@@ -177,10 +177,6 @@ if (NOT DATADIR)
   set (DATADIR "${CMAKE_INSTALL_PREFIX}/share")
 endif (NOT DATADIR)
 
-if (NOT OPENVAS_PID_DIR)
-  set (OPENVAS_PID_DIR "${LOCALSTATEDIR}/run")
-endif (NOT OPENVAS_PID_DIR)
-
 #if (NOT SYSCONFDIR)
 #  set (SYSCONFDIR "${CMAKE_INSTALL_PREFIX}/etc")
 #endif (NOT SYSCONFDIR)
@@ -204,6 +200,8 @@ message ("-- Install prefix: ${CMAKE_INSTALL_PREFIX}")
 
 pkg_check_modules (GNUTLS REQUIRED gnutls>=3.2.15)
 pkg_check_modules (GLIB REQUIRED glib-2.0>=2.32)
+pkg_check_modules (LIBGVM_BASE REQUIRED libgvm_base>=1.0.0)
+
 if (NOT OPENVAS_OMP_ONLY)
   pkg_check_modules (OPENVAS_WMICLIENT libopenvas_wmiclient>=1.0.1)
   pkg_check_modules (OPENVAS_WINCMD libopenvas_wincmd>=1.0.1)
@@ -337,7 +335,6 @@ install (FILES ${CMAKE_BINARY_DIR}/libopenvas_osp.pc
 install (DIRECTORY DESTINATION ${OPENVAS_LOG_DIR})
 install (DIRECTORY DESTINATION ${OPENVAS_DATA_DIR})
 install (DIRECTORY DESTINATION ${OPENVAS_CACHE_DIR})
-install (DIRECTORY DESTINATION ${OPENVAS_PID_DIR})
 install (DIRECTORY DESTINATION ${OPENVAS_SYSCONF_DIR})
 install (DIRECTORY
   DESTINATION ${OPENVAS_SYSCONF_DIR}/gnupg

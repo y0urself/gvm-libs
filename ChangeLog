@@ -1,3 +1,25 @@
+2016-12-04  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
+	Separate base/array, base/pidfile and base/cvss into the new module "gvm-libs".
+
+	* CMakeLists.txt: Add LIBGVM_BASE as required. Removed OPENVAS_PID_DIR.
+
+	* base/array.c, base/array.h, base/cvss.c, base/cvss.h, base/pidfile.c,
+	base/pidfile.h: Removed.
+
+	* base/CMakeLists.txt: Remove handling of "array", "cvss" and "pidfile".
+	Removed OPENVAS_PID_DIR handling.
+
+	* misc/openvas_auth.h: Remove unnecessary include of array.h.
+
+	* base/openvas_networking.h, misc/openvas_auth.c, omp/omp.h:
+	Adjust include for array.h.
+
+	* COPYING: Removed the entries for the removed files.
+
+	* misc/CMakeLists.txt, nasl/CMakeLists.txt, omp/CMakeLists.txt,
+	osp/CMakeLists.txt: Add the libgvm_base include directory.
+
 2016-12-02  Michael Wiegand <michael.wiegand@greenbone.net>
 
 	Make it possible to compile openvas-libraries on FreeBSD.

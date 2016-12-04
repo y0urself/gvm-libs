@@ -24,8 +24,9 @@
 
 ## Pass-throughs
 
-include_directories (${GLIB_INCLUDE_DIRS})
-include_directories (${GNUTLS_INCLUDE_DIRS})
+include_directories (${GLIB_INCLUDE_DIRS}
+                     ${LIBGVM_BASE_INCLUDE_DIRS}
+                     ${GNUTLS_INCLUDE_DIRS})
 
 if (MINGW)
   if (CROSS_ENV)

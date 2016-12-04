@@ -122,7 +122,11 @@ add_definitions (-DOPENVAS_STATE_DIR=\\\"${OPENVAS_STATE_DIR}\\\")
 add_definitions (-DOPENVASLIB_VERSION=\\\"${OPENVASLIB_VERSION}\\\")
 add_definitions (-DOPENVAS_SYSCONF_DIR=\\\"${OPENVAS_SYSCONF_DIR}\\\")
 
-include_directories (${GLIB_INCLUDE_DIRS} ${GPGME_INCLUDE_DIRS} ${LIBSSH_INCLUDE_DIRS} ${KSBA_INCLUDE_DIRS})
+include_directories (${GLIB_INCLUDE_DIRS}
+                     ${GPGME_INCLUDE_DIRS}
+                     ${LIBSSH_INCLUDE_DIRS}
+                     ${LIBGVM_BASE_INCLUDE_DIRS}
+                     ${KSBA_INCLUDE_DIRS})
 
 link_directories (${LIBDIR} ../base ../misc)
 
@@ -136,6 +140,7 @@ if (BUILD_STATIC)
                           openvas_misc_static openvas_omp_static
                           ${GLIB_LDFLAGS} ${GCRYPT_LDFLAGS} ${GPGME_LDFLAGS}
                           ${GNUTLS_LDFLAGS} ${PCAP_LDFLAGS}
+                          ${LIBGVM_BASE_LDFLAGS}
                           ${OPENVAS_WMICLIENT_LDFLAGS}
                           ${OPENVAS_WINCMD_LDFLAGS} ${SNMP_LDFLAGS}
                           ${LIBSSH_LDFLAGS} ${KSBA_LDFLAGS} m)
@@ -151,6 +156,7 @@ if (BUILD_SHARED)
 # line bellow is needed so it also works with no-undefined which is e.g. used by Mandriva
   target_link_libraries (openvas_nasl_shared openvas_base_shared openvas_misc_shared
                          ${GLIB_LDFLAGS} ${GCRYPT_LDFLAGS} ${GPGME_LDFLAGS} m
+                         ${LIBGVM_BASE_LDFLAGS}
                          ${OPENVAS_WMICLIENT_LDFLAGS} ${OPENVAS_WINCMD_LDFLAGS}
                          ${GNUTLS_LDFLAGS} ${PCAP_LDFLAGS} ${LIBSSH_LDFLAGS}
                          ${KSBA_LDFLAGS} ${SNMP_LDFLAGS}

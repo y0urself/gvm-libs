@@ -31,8 +31,6 @@
 
 #include <glib.h>
 
-#include "../base/array.h"
-
 /**
  * @brief Numerical representation of the supported authentication methods.
  * @brief Beware to have it in sync with \ref authentication_methods.
@@ -66,4 +64,5 @@ int openvas_auth_ldap_enabled ();
 
 int
 openvas_auth_radius_enabled ();
+
 #endif /* not _OPENVAS_AUTH_H */

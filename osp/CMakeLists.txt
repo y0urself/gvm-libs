@@ -31,7 +31,8 @@ set (FILES osp.c)
 
 set (HEADERS osp.h)
 
-include_directories (${GLIB_INCLUDE_DIRS})
+include_directories (${GLIB_INCLUDE_DIRS}
+                     ${LIBGVM_BASE_INCLUDE_DIRS})
 
 if (BUILD_STATIC)
   add_library (openvas_osp_static STATIC ${FILES})

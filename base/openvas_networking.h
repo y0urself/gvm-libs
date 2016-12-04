@@ -36,13 +36,13 @@
 #include <ctype.h>
 #include <assert.h>
 
+#include <gvm/base/array.h>
+
 #include <sys/param.h>
 #ifdef __FreeBSD__
 #include <netinet/in.h>
 #define s6_addr32 __u6_addr.__u6_addr32
 #endif
-
-#include "array.h"
 
 #ifndef _OPENVAS_NETWORKING_H
 #define _OPENVAS_NETWORKING_H

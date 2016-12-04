@@ -50,21 +50,24 @@ if (NOT MINGW)
 
 endif (NOT MINGW)
 
-include_directories (${GLIB_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${REDIS_INCLUDE_DIRS})
+include_directories (${GLIB_INCLUDE_DIRS}
+                     ${ZLIB_INCLUDE_DIRS}
+                     ${LIBGVM_BASE_INCLUDE_DIRS}
+                     ${REDIS_INCLUDE_DIRS})
 
 if (MINGW)
-  set  (FILES array.c credentials.c openvas_hosts.c cvss.c nvti.c nvticache.c
-        openvas_file.c openvas_string.c pidfile.c settings.c gpgme_util.c
+  set  (FILES credentials.c openvas_hosts.c nvti.c nvticache.c
+        openvas_file.c openvas_string.c settings.c gpgme_util.c
         pwpolicy.c)
-  set (HEADERS array.h credentials.h openvas_hosts.h cvss.h nvti.h settings.h
-       openvas_file.h openvas_string.h pidfile.h gpgme_util.h pwpolicy.h)
+  set (HEADERS credentials.h openvas_hosts.h nvti.h settings.h
+       openvas_file.h openvas_string.h gpgme_util.h pwpolicy.h)
 else (MINGW)
-  set (FILES array.c credentials.c openvas_hosts.c cvss.c drop_privileges.c
+  set (FILES credentials.c openvas_hosts.c drop_privileges.c
        nvti.c nvticache.c openvas_compress.c openvas_file.c openvas_networking.c
-       kb_redis.c openvas_string.c pidfile.c settings.c gpgme_util.c pwpolicy.c)
-  set (HEADERS array.h credentials.h openvas_hosts.h cvss.h drop_privileges.h
+       kb_redis.c openvas_string.c settings.c gpgme_util.c pwpolicy.c)
+  set (HEADERS credentials.h openvas_hosts.h drop_privileges.h
        kb.h nvticache.h nvti.h settings.h openvas_compress.h openvas_file.h
-       openvas_networking.h openvas_string.h pidfile.h gpgme_util.h pwpolicy.h)
+       openvas_networking.h openvas_string.h gpgme_util.h pwpolicy.h)
 endif (MINGW)
 
 if (BUILD_STATIC)
@@ -88,15 +91,12 @@ if (BUILD_SHARED)
       assuan libgpg-error ole32 ws2_32 ffi z shlwapi dnsapi winmm)
     target_link_libraries (openvas_base_shared ${W32LIBS})
   else (MINGW)
-    target_link_libraries (openvas_base_shared LINK_PRIVATE ${GLIB_LDFLAGS} ${GIO_LDFLAGS} ${ZLIB_LDFLAGS} ${GPGME_LDFLAGS} ${REDIS_LDFLAGS} ${LINKER_HARDENING_FLAGS})
+    target_link_libraries (openvas_base_shared LINK_PRIVATE ${LIBGVM_BASE_LDFLAGS} ${GLIB_LDFLAGS} ${GIO_LDFLAGS} ${ZLIB_LDFLAGS} ${GPGME_LDFLAGS} ${REDIS_LDFLAGS} ${LINKER_HARDENING_FLAGS})
   endif (MINGW)
 endif (BUILD_SHARED)
 
 add_definitions (-DOPENVAS_SYSCONF_DIR=\\\"${OPENVAS_SYSCONF_DIR}\\\")
 add_definitions (-DOPENVAS_STATE_DIR=\\\"${OPENVAS_STATE_DIR}\\\")
-if (OPENVAS_PID_DIR)
-  add_definitions (-DOPENVAS_PID_DIR=\\\"${OPENVAS_PID_DIR}\\\")
-endif (OPENVAS_PID_DIR)
 
 add_custom_indent_targets (${FILES})
 
@@ -104,7 +104,7 @@ add_custom_indent_targets (${FILES})
 # TODO: This is currently only built for BUILD_SHARED
 if (BUILD_SHARED)
   add_executable (test-hosts test-hosts.c)
-  target_link_libraries (test-hosts openvas_base_shared ${GLIB_LDFLAGS} ${REDIS_LDFLAGS})
+  target_link_libraries (test-hosts openvas_base_shared ${GLIB_LDFLAGS} ${LIBGVM_BASE_LDFLAGS} ${REDIS_LDFLAGS})
 endif (BUILD_SHARED)
 
 ## Install

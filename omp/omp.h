@@ -26,7 +26,8 @@
 #ifndef _OPENVAS_LIBRARIES_OMP_H
 #define _OPENVAS_LIBRARIES_OMP_H
 
-#include "../base/array.h"
+#include <gvm/base/array.h>
+
 #include "xml.h"
 
 #ifdef __cplusplus
