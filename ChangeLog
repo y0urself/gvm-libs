@@ -1,3 +1,8 @@
+2016-12-08  Hani Benhabiles <hani.benhabiles@greenbone.net>
+
+	* nasl/nasl_ssh.c (nasl_ssh_connect): Disable checking of system
+	known_hosts file.
+
 2016-12-08  Michael Wiegand <michael.wiegand@greenbone.net>
 
 	* base/CMakeLists.txt, misc/CMakeLists.txt, nasl/CMakeLists.txt,

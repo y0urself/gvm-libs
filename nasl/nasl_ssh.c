@@ -539,6 +539,14 @@ nasl_ssh_connect (lex_ctxt *lexic)
       return NULL;
     }
 
+  if (ssh_options_set (session, SSH_OPTIONS_KNOWNHOSTS, "/dev/null"))
+    {
+      log_legacy_write ("Failed to disable SSH known_hosts: %s\n",
+                        ssh_get_error (session));
+      ssh_free (session);
+      return NULL;
+    }
+
   key_type = get_str_local_var_by_name (lexic, "keytype");
 #if LIBSSH_VERSION_INT >= SSH_VERSION_INT (0, 6, 0)
   if (key_type && ssh_options_set (session, SSH_OPTIONS_HOSTKEYS, key_type))
