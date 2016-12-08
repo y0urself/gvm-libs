@@ -83,7 +83,8 @@ endif (NOT MINGW)
 if (NOT MINGW)
   # On windows we are always PIC and stack-protector is replaces by DEP
   # Also stack protection needs a shared library to work
-  set (CMAKE_C_FLAGS              "${CMAKE_C_FLAGS} ${HARDENING_FLAGS} -Wall -Wextra -fPIC")
+  set (CMAKE_C_FLAGS              "${CMAKE_C_FLAGS} -Wall -Wextra -fPIC")
+  set (CMAKE_C_FLAGS_RELEASE      "${CMAKE_C_FLAGS_RELEASE} ${HARDENING_FLAGS}")
 endif (NOT MINGW)
 
 if (MINGW)

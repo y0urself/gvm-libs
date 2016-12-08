@@ -28,7 +28,8 @@
 if (NOT MINGW)
   # FIXME: certain flags should be defined on the global level,
   # because they change the API (e.g. _FILE_OFFSET_BITS).
-  set (CMAKE_C_FLAGS              "${CMAKE_C_FLAGS} ${HARDENING_FLAGS} -D_FILE_OFFSET_BITS=64 -Wall -Wextra -fPIC")
+  set (CMAKE_C_FLAGS              "${CMAKE_C_FLAGS} -D_FILE_OFFSET_BITS=64 -Wall -Wextra -fPIC")
+  set (CMAKE_C_FLAGS_RELEASE      "${CMAKE_C_FLAGS_RELEASE} ${HARDENING_FLAGS}")
 
   pkg_check_modules (ZLIB REQUIRED zlib)
 

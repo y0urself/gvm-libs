@@ -1,3 +1,10 @@
+2016-12-08  Michael Wiegand <michael.wiegand@greenbone.net>
+
+	* base/CMakeLists.txt, misc/CMakeLists.txt, nasl/CMakeLists.txt,
+	omp/CMakeLists.txt, osp/CMakeLists.txt: Consistently set hardening and
+	optimization flags only in "Release" build type to avoid compiler
+	optimization interfering with debugging in "Debug" build type.
+
 2016-12-04  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 
 	Separate base/array, base/pidfile and base/cvss into the new module "gvm-libs".
