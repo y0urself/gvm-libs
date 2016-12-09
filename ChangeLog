@@ -1,3 +1,7 @@
+2016-12-09  Hani Benhabiles <hani.benhabiles@greenbone.net>
+
+	* nasl/nasl_socket.c (nasl_close_socket): Improve close() error logging.
+
 2016-12-09  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 
 	Module "openvas_file" is now "fileutils" in gvm-libs.
