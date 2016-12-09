@@ -1,3 +1,16 @@
+2016-12-09  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
+	Module "openvas_file" is now "fileutils" in gvm-libs.
+
+	* base/openvas_file.c, base/openvas_file.h: Removed.
+
+	* COPYING: Removed the files respectively.
+
+	* base/CMakeLists.txt: Removed handling of this module.
+
+	* misc/openvas_auth.c, nasl/nasl_grammar.y: Removed unneeded include
+	of openvas/base/openvas_file.h
+
 2016-12-08  Hani Benhabiles <hani.benhabiles@greenbone.net>
 
 	* nasl/nasl_ssh.c (nasl_ssh_connect): Disable checking of system
