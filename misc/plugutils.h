@@ -28,7 +28,8 @@
 
 #include "arglists.h"
 
-#include "../base/nvti.h"
+#include <gvm/base/nvti.h>  /* for nvti_t */
+
 #include "../base/openvas_networking.h"
 #include "../base/kb.h"
 

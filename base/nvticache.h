@@ -33,11 +33,9 @@
 #ifndef _NVTICACHE_H
 #define _NVTICACHE_H
 
-/* for gchar */
-#include <glib.h>
+#include <glib.h>          /* for gchar */
 
-/* for nvtis_t */
-#include "nvti.h"
+#include <gvm/base/nvti.h> /* for nvti_t */
 
 int
 nvticache_init (const char *, const char *, const char *);

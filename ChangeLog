@@ -1,3 +1,16 @@
+2016-12-09  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
+	Module "nvti" is now in gvm-libs.
+
+	* base/nvti.c, base/nvti.h: Removed.
+
+	* COPYING: Removed the files respectively.
+
+	* base/CMakeLists.txt: Removed handling of this module.
+
+	* base/nvticache.h, misc/plugutils.h, nasl/nasl.c: Changed include
+	to gvm/base/nvti.h.
+
 2016-12-09  Hani Benhabiles <hani.benhabiles@greenbone.net>
 
 	* nasl/nasl_socket.c (nasl_close_socket): Improve close() error logging.

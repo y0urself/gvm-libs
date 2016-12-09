@@ -28,6 +28,8 @@
 #include <libssh/libssh.h>      /* for ssh_version */
 #include <gnutls/gnutls.h>      /* for gnutls_check_version */
 
+#include <gvm/base/nvti.h>
+
 #include "../misc/network.h"
 
 #include "nasl.h"
@@ -36,7 +38,6 @@
 #include "../base/gpgme_util.h" /* for gpgme_check_version */
 #include "../base/kb.h"                 /* for kb_new */
 #include "../base/openvas_hosts.h" /* for openvas_hosts_* and openvas_host_* */
-#include "../base/nvti.h"
 #include "../misc/prefs.h" /* for prefs_get */
 #include "../misc/nvt_categories.h"
 
