@@ -1,3 +1,8 @@
+2016-12-12  Hani Benhabiles <hani.benhabiles@greenbone.net>
+
+	* nasl/nasl_cert.c (build_hostname_list): Remove restriction on adding
+	CN values without a dot.
+
 2016-12-12  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 
 	Module "settings" is now in gvm-libs.
