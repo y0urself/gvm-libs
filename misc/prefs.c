@@ -41,7 +41,8 @@
 #include <stdio.h>  /* for printf() */
 #include <glib.h>   /* for gchar */
 
-#include "../base/settings.h"  /* for init_settings_iterator_from_file */
+#include <gvm/base/settings.h> /* for init_settings_iterator_from_file */
+
 #include "arglists.h"          /* for struct arglist */
 
 static struct arglist *global_prefs = NULL;

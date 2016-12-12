@@ -58,16 +58,15 @@ include_directories (${GLIB_INCLUDE_DIRS}
 
 if (MINGW)
   set  (FILES credentials.c openvas_hosts.c nvticache.c
-        openvas_string.c settings.c gpgme_util.c
-        pwpolicy.c)
-  set (HEADERS credentials.h openvas_hosts.h settings.h
+        openvas_string.c gpgme_util.c pwpolicy.c)
+  set (HEADERS credentials.h openvas_hosts.h
        openvas_string.h gpgme_util.h pwpolicy.h)
 else (MINGW)
   set (FILES credentials.c openvas_hosts.c drop_privileges.c
        nvticache.c openvas_compress.c openvas_networking.c
-       kb_redis.c openvas_string.c settings.c gpgme_util.c pwpolicy.c)
+       kb_redis.c openvas_string.c gpgme_util.c pwpolicy.c)
   set (HEADERS credentials.h openvas_hosts.h drop_privileges.h
-       kb.h nvticache.h settings.h openvas_compress.h
+       kb.h nvticache.h openvas_compress.h
        openvas_networking.h openvas_string.h gpgme_util.h pwpolicy.h)
 endif (MINGW)
 
