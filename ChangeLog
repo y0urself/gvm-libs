@@ -1,3 +1,19 @@
+2016-12-14  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
+	Module "openvas_compress" is now in gvm-libs/util.
+
+	* base/openvas_compress.c, base/openvas_compress.h: Removed.
+
+	* base/CMakeLists.txt: Removed handling of this module.
+
+	* CMakeLists.txt: Add requirement for libgvm_util.
+
+	* nasl/CMakeLists.txt: Add libgvm_util.
+
+	* nasl/nasl_misc_funcs.c: Changed include to gvm/util/compressutils.h.
+	(nasl_gunzip): Use gvm_uncompress instead of openvas_uncompress.
+	(nasl_gzip): Use gvm_compress instead of openvas_compress.
+
 2016-12-12  Hani Benhabiles <hani.benhabiles@greenbone.net>
 
 	* nasl/nasl_cert.c (build_hostname_list): Remove restriction on adding
@@ -13,7 +29,7 @@
 
 	* base/CMakeLists.txt: Removed handling of this module.
 
-	* misc/prefs.c: Changed include to gvm/base/settings.h.
+	* misc/prefs.c Changed include to gvm/base/settings.h.:
 
 2016-12-09  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 

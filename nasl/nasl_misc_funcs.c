@@ -28,11 +28,12 @@
 #include <sys/time.h>           /* for gettimeofday */
 #include <unistd.h>             /* for usleep */
 
+#include <gvm/util/compressutils.h> /* for gvm_uncompress */
+
 #include "../misc/ftp_funcs.h"          /* for ftp_log_in */
 #include "../base/kb.h"                 /* for KB_TYPE_STR */
 #include "../misc/network.h"            /* read_stream_connection_min */
 #include "../misc/plugutils.h"          /* plug_get_host_open_port */
-#include "../base/openvas_compress.h"
 
 #include "nasl_tree.h"
 #include "nasl_global_ctxt.h"
@@ -959,7 +960,7 @@ nasl_gunzip (lex_ctxt * lexic)
   if (datalen <= 0)
     return NULL;
 
-  uncompressed = openvas_uncompress (data, datalen, &uncomplen);
+  uncompressed = gvm_uncompress (data, datalen, &uncomplen);
   if (uncompressed == NULL)
     return NULL;
 
@@ -985,7 +986,7 @@ nasl_gzip (lex_ctxt * lexic)
   if (datalen <= 0)
     return NULL;
 
-  compressed = openvas_compress (data, datalen, &complen);
+  compressed = gvm_compress (data, datalen, &complen);
   if (compressed == NULL)
     return NULL;
 

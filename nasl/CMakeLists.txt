@@ -127,6 +127,7 @@ include_directories (${GLIB_INCLUDE_DIRS}
                      ${GPGME_INCLUDE_DIRS}
                      ${LIBSSH_INCLUDE_DIRS}
                      ${LIBGVM_BASE_INCLUDE_DIRS}
+                     ${LIBGVM_UTIL_INCLUDE_DIRS}
                      ${KSBA_INCLUDE_DIRS})
 
 link_directories (${LIBDIR} ../base ../misc)
@@ -142,6 +143,7 @@ if (BUILD_STATIC)
                           ${GLIB_LDFLAGS} ${GCRYPT_LDFLAGS} ${GPGME_LDFLAGS}
                           ${GNUTLS_LDFLAGS} ${PCAP_LDFLAGS}
                           ${LIBGVM_BASE_LDFLAGS}
+                          ${LIBGVM_UTIL_LDFLAGS}
                           ${OPENVAS_WMICLIENT_LDFLAGS}
                           ${OPENVAS_WINCMD_LDFLAGS} ${SNMP_LDFLAGS}
                           ${LIBSSH_LDFLAGS} ${KSBA_LDFLAGS} m)
@@ -158,6 +160,7 @@ if (BUILD_SHARED)
   target_link_libraries (openvas_nasl_shared openvas_base_shared openvas_misc_shared
                          ${GLIB_LDFLAGS} ${GCRYPT_LDFLAGS} ${GPGME_LDFLAGS} m
                          ${LIBGVM_BASE_LDFLAGS}
+                         ${LIBGVM_UTIL_LDFLAGS}
                          ${OPENVAS_WMICLIENT_LDFLAGS} ${OPENVAS_WINCMD_LDFLAGS}
                          ${GNUTLS_LDFLAGS} ${PCAP_LDFLAGS} ${LIBSSH_LDFLAGS}
                          ${KSBA_LDFLAGS} ${SNMP_LDFLAGS}
