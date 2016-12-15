@@ -144,48 +144,48 @@ nvticache_get (const gchar *filename)
       kb_del_items (cache_kb, pattern);
     }
   g_free (dummy);
-  if (kb_item_add_str (cache_kb, pattern, filename))
+  if (kb_item_add_str (cache_kb, pattern, filename, 0))
     goto kb_fail;
 
   if (nvti_required_keys (n))
     {
       g_snprintf (pattern, sizeof (pattern), "oid:%s:required_keys", oid);
-      if (kb_item_add_str (cache_kb, pattern, nvti_required_keys (n)))
+      if (kb_item_add_str (cache_kb, pattern, nvti_required_keys (n), 0))
         goto kb_fail;
     }
 
   if (nvti_mandatory_keys (n))
     {
       g_snprintf (pattern, sizeof (pattern), "oid:%s:mandatory_keys", oid);
-      if (kb_item_add_str (cache_kb, pattern, nvti_mandatory_keys (n)))
+      if (kb_item_add_str (cache_kb, pattern, nvti_mandatory_keys (n), 0))
         goto kb_fail;
     }
 
   if (nvti_excluded_keys (n))
     {
       g_snprintf (pattern, sizeof (pattern), "oid:%s:excluded_keys", oid);
-      if (kb_item_add_str (cache_kb, pattern, nvti_excluded_keys (n)))
+      if (kb_item_add_str (cache_kb, pattern, nvti_excluded_keys (n), 0))
         goto kb_fail;
     }
 
   if (nvti_required_udp_ports (n))
     {
       g_snprintf (pattern, sizeof (pattern), "oid:%s:required_udp_ports", oid);
-      if (kb_item_add_str (cache_kb, pattern, nvti_required_udp_ports (n)))
+      if (kb_item_add_str (cache_kb, pattern, nvti_required_udp_ports (n), 0))
         goto kb_fail;
     }
 
   if (nvti_required_ports (n))
     {
       g_snprintf (pattern, sizeof (pattern), "oid:%s:required_ports", oid);
-      if (kb_item_add_str (cache_kb, pattern, nvti_required_ports (n)))
+      if (kb_item_add_str (cache_kb, pattern, nvti_required_ports (n), 0))
         goto kb_fail;
     }
 
   if (nvti_dependencies (n))
     {
       g_snprintf (pattern, sizeof (pattern), "oid:%s:dependencies", oid);
-      if (kb_item_add_str (cache_kb, pattern, nvti_dependencies (n)))
+      if (kb_item_add_str (cache_kb, pattern, nvti_dependencies (n), 0))
         goto kb_fail;
     }
 
@@ -197,7 +197,7 @@ nvticache_get (const gchar *filename)
     goto kb_fail;
 
   g_snprintf (pattern, sizeof (pattern), "name:%s:oid", filename);
-  if (kb_item_add_str (cache_kb, pattern, oid))
+  if (kb_item_add_str (cache_kb, pattern, oid, 0))
     goto kb_fail;
   return n;
 

@@ -203,7 +203,7 @@ plug_get_host_fqdn (struct arglist *desc)
   if (hinfos)
     {
       int type;
-      char *vhosts = plug_get_key (desc, "hostinfos/vhosts", &type);
+      char *vhosts = plug_get_key (desc, "hostinfos/vhosts", &type, NULL);
       if (vhosts)
         return vhosts;
       else
@@ -644,7 +644,8 @@ get_plugin_preference_file_size (struct arglist *desc, const char *identifier)
 }
 
 void
-plug_set_key (struct arglist *args, char *name, int type, const void *value)
+plug_set_key_len (struct arglist *args, char *name, int type, const void *value,
+                  size_t len)
 {
   kb_t kb = plug_get_kb (args);
 
@@ -652,7 +653,7 @@ plug_set_key (struct arglist *args, char *name, int type, const void *value)
     return;
 
   if (type == ARG_STRING)
-    kb_item_add_str (kb, name, value);
+    kb_item_add_str (kb, name, value, len);
   else if (type == ARG_INT)
     kb_item_add_int (kb, name, GPOINTER_TO_SIZE (value));
   if (global_nasl_debug == 1)
@@ -665,9 +666,15 @@ plug_set_key (struct arglist *args, char *name, int type, const void *value)
     }
 }
 
+void
+plug_set_key (struct arglist *args, char *name, int type, const void *value)
+{
+  plug_set_key_len (args, name, type, value, 0);
+}
 
 void
-plug_replace_key (struct arglist *args, char *name, int type, void *value)
+plug_replace_key_len (struct arglist *args, char *name, int type, void *value,
+                      size_t len)
 {
   kb_t kb = plug_get_kb (args);
 
@@ -675,7 +682,7 @@ plug_replace_key (struct arglist *args, char *name, int type, void *value)
     return;
 
   if (type == ARG_STRING)
-    kb_item_set_str (kb, name, value);
+    kb_item_set_str (kb, name, value, len);
   else if (type == ARG_INT)
     kb_item_set_int (kb, name, GPOINTER_TO_SIZE (value));
   if (global_nasl_debug == 1)
@@ -686,6 +693,12 @@ plug_replace_key (struct arglist *args, char *name, int type, void *value)
         log_legacy_write ("replace key %s -> %d\n", name,
                           (int) GPOINTER_TO_SIZE (value));
     }
+}
+
+void
+plug_replace_key (struct arglist *args, char *name, int type, void *value)
+{
+  plug_replace_key_len (args, name, type, value, 0);
 }
 
 void
@@ -753,7 +766,7 @@ sig_chld (void (*fcn) ())
 }
 
 void *
-plug_get_key (struct arglist *args, char *name, int *type)
+plug_get_key (struct arglist *args, char *name, int *type, size_t *len)
 {
   kb_t kb = plug_get_kb (args);
   struct kb_item *res = NULL, *res_list;
@@ -784,7 +797,9 @@ plug_get_key (struct arglist *args, char *name, int *type)
         {
           if (type != NULL)
             *type = KB_TYPE_STR;
-          ret = g_strdup (res->v_str);
+          if (len)
+            *len = res->len;
+          ret = g_memdup (res->v_str, res->len + 1);
         }
       kb_item_free (res);
       return ret;
@@ -826,7 +841,9 @@ plug_get_key (struct arglist *args, char *name, int *type)
             {
               if (type != NULL)
                 *type = KB_TYPE_STR;
-              ret = g_strdup (res->v_str);
+              if (len)
+                *len = res->len;
+              ret = g_memdup (res->v_str, res->len + 1);
             }
           kb_item_free (res_list);
           return ret;

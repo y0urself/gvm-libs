@@ -638,7 +638,7 @@ init_nasl_ctx(naslctxt* pc, const char* name)
       log_legacy_write ("%s: Will not execute. Bad or missing signature",
                         full_name);
       if (pc->kb)
-        kb_item_add_str (pc->kb, key_path, "0");
+        kb_item_add_str (pc->kb, key_path, "0", 0);
       fclose(pc->fp);
       pc->fp = NULL;
       g_free(full_name);
@@ -647,7 +647,7 @@ init_nasl_ctx(naslctxt* pc, const char* name)
   if (pc->kb)
     {
       char *md5sum = file_md5sum (full_name);
-      kb_item_add_str (pc->kb, key_path, md5sum);
+      kb_item_add_str (pc->kb, key_path, md5sum, 0);
       g_free (md5sum);
     }
 

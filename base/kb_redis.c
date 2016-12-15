@@ -581,7 +581,8 @@ redis2kbitem_single (const char *name, const redisReply *elt, int force_int)
   else
     {
       item->type  = KB_TYPE_STR;
-      item->v_str = g_strdup (elt->str);
+      item->v_str = g_memdup (elt->str, elt->len + 1);
+      item->len = elt->len;
     }
 
   item->next    = NULL;
@@ -841,15 +842,23 @@ redis_del_items (kb_t kb, const char *name)
 }
 
 static int
-redis_add_str (kb_t kb, const char *name, const char *str)
+redis_add_str (kb_t kb, const char *name, const char *str, size_t len)
 {
   struct kb_redis *kbr;
+  struct redis_tx rtx;
   redisReply *rep;
   int rc = 0;
 
   kbr = redis_kb (kb);
 
-  rep = redis_cmd (kbr, "SADD %s %s", name, str);
+  rc = redis_transaction_new (kbr, &rtx);
+  if (rc)
+    return -1;
+  if (len == 0)
+    redis_transaction_cmd (&rtx, "SADD %s %s", name, str);
+  else
+    redis_transaction_cmd (&rtx, "SADD %s %b", name, str, len);
+  rc = redis_transaction_end (&rtx, &rep);
   if (rep == NULL || rep->type == REDIS_REPLY_ERROR)
     rc = -1;
 
@@ -860,7 +869,7 @@ redis_add_str (kb_t kb, const char *name, const char *str)
 }
 
 static int
-redis_set_str (kb_t kb, const char *name, const char *val)
+redis_set_str (kb_t kb, const char *name, const char *val, size_t len)
 {
   struct kb_redis *kbr;
   struct redis_tx rtx;
@@ -878,7 +887,10 @@ redis_set_str (kb_t kb, const char *name, const char *val)
     }
 
   redis_transaction_cmd (&rtx, "DEL %s", name);
-  redis_transaction_cmd (&rtx, "SADD %s %s", name, val);
+  if (len == 0)
+    redis_transaction_cmd (&rtx, "SADD %s %s", name, val);
+  else
+    redis_transaction_cmd (&rtx, "SADD %s %b", name, val, len);
 
   rc = redis_transaction_end (&rtx, &rep);
   if (rc || rep == NULL || rep->type == REDIS_REPLY_ERROR)

@@ -63,6 +63,7 @@ struct kb_item
     int v_int;
   };                    /**< Value of this knowledge base item. */
 
+  size_t len;           /**< Length of string. */
   struct kb_item *next; /**< Next item in list. */
 
   size_t namelen;       /**< Name length (including final NULL byte). */
@@ -102,8 +103,8 @@ struct kb_operations
   int (*kb_get_int) (kb_t, const char *);
   struct kb_item * (*kb_get_all) (kb_t, const char *);
   struct kb_item * (*kb_get_pattern) (kb_t, const char *);
-  int (*kb_add_str) (kb_t, const char *, const char *);
-  int (*kb_set_str) (kb_t, const char *, const char *);
+  int (*kb_add_str) (kb_t, const char *, const char *, size_t);
+  int (*kb_set_str) (kb_t, const char *, const char *, size_t);
   int (*kb_add_int) (kb_t, const char *, int);
   int (*kb_set_int) (kb_t, const char *, int);
   int (*kb_del_items) (kb_t, const char *);
@@ -247,16 +248,17 @@ kb_item_get_pattern (kb_t kb, const char *pattern)
  * @param[in] kb  KB handle where to store the item.
  * @param[in] name  Item name.
  * @param[in] str  Item value.
+ * @param[in] len  Value length. Used for blobs.
  * @return 0 on success, non-null on error.
  */
 static inline int
-kb_item_add_str (kb_t kb, const char *name, const char *str)
+kb_item_add_str (kb_t kb, const char *name, const char *str, size_t len)
 {
   assert (kb);
   assert (kb->kb_ops);
   assert (kb->kb_ops->kb_add_str);
 
-  return kb->kb_ops->kb_add_str (kb, name, str);
+  return kb->kb_ops->kb_add_str (kb, name, str, len);
 }
 
 /**
@@ -264,16 +266,17 @@ kb_item_add_str (kb_t kb, const char *name, const char *str)
  * @param[in] kb  KB handle where to store the item.
  * @param[in] name  Item name.
  * @param[in] str  Item value.
+ * @param[in] len  Value length. Used for blobs.
  * @return 0 on success, non-null on error.
  */
 static inline int
-kb_item_set_str (kb_t kb, const char *name, const char *str)
+kb_item_set_str (kb_t kb, const char *name, const char *str, size_t len)
 {
   assert (kb);
   assert (kb->kb_ops);
   assert (kb->kb_ops->kb_set_str);
 
-  return kb->kb_ops->kb_set_str (kb, name, str);
+  return kb->kb_ops->kb_set_str (kb, name, str, len);
 }
 
 /**

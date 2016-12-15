@@ -1,3 +1,29 @@
+2016-12-15  Hani Benhabiles <hani.benhabiles@greenbone.net>
+
+	Support inserting binary blobs in KB.
+
+	* base/kb.h (kb_item): Add length element.
+	(kb_operations): Adjust functions prototypes.
+	(kb_item_add_str, kb_itm_set_str): Add len parameter.
+
+	* base/kb_redis.c (redis2kbitem_single): Add item length in string case.
+	(redis_add_str, redis_set_str): Add len parameter. Adjust to handle
+	binary data.
+
+	* base/nvticache.c (nvticache_get): Adjust kb_item_add_str() calls.
+
+	* misc/plugutils.c (plug_get_host_fqdn): Adjust plug_get_key() call.
+	(plug_set_key_len, plug_replace_key_len): New functions.
+	(plug_set_key, plug_replace_key): Use new functions.
+	(plug_get_key): Copy memory instead of string.
+
+	* misc/plugutils.h: Adjust functions prototypes.
+
+	* nasl/nasl.c, nasl/nasl_builtin_find_service.c,
+	nasl/nasl_builtin_openvas_tcp_scanner.c, nasl/nasl_grammar.y,
+	nasl/nasl_misc_funcs.c, nasl/nasl_scanner_glue.c, nasl/nasl_ssh.c:
+	Adjust function call.
+
 2016-12-14  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 
 	Module "openvas_compress" is now in gvm-libs/util.

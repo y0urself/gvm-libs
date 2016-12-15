@@ -729,11 +729,12 @@ get_kb_item (lex_ctxt * lexic)
   char *val;
   tree_cell *retc;
   int type;
+  size_t len;
 
   if (kb_entry == NULL)
     return NULL;
 
-  val = plug_get_key (script_infos, kb_entry, &type);
+  val = plug_get_key (script_infos, kb_entry, &type, &len);
 
 
   if (val == NULL && type == -1)
@@ -753,7 +754,7 @@ get_kb_item (lex_ctxt * lexic)
       retc->type = CONST_DATA;
       if (val != NULL)
         {
-          retc->size = strlen (val);
+          retc->size = len;
           retc->x.str_val = val;
         }
       else
@@ -794,6 +795,8 @@ replace_kb_item (lex_ctxt * lexic)
   else
     {
       char *value = get_str_local_var_by_name (lexic, "value");
+      int len = get_local_var_size_by_name (lexic, "value");
+
       if (value == NULL)
         {
           nasl_perror (lexic,
@@ -801,7 +804,7 @@ replace_kb_item (lex_ctxt * lexic)
                        name);
           return FAKE_CELL;
         }
-      plug_replace_key (script_infos, name, ARG_STRING, value);
+      plug_replace_key_len (script_infos, name, ARG_STRING, value, len);
     }
 
   return FAKE_CELL;
@@ -834,6 +837,7 @@ set_kb_item (lex_ctxt * lexic)
   else
     {
       char *value = get_str_local_var_by_name (lexic, "value");
+      int len = get_local_var_size_by_name (lexic, "value");
       if (value == NULL)
         {
           nasl_perror (lexic,
@@ -841,7 +845,7 @@ set_kb_item (lex_ctxt * lexic)
                        name);
           return FAKE_CELL;
         }
-      plug_set_key (script_infos, name, ARG_STRING, value);
+      plug_set_key_len (script_infos, name, ARG_STRING, value, len);
     }
 
   return FAKE_CELL;
