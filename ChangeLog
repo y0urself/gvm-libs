@@ -1,5 +1,15 @@
 2016-12-15  Hani Benhabiles <hani.benhabiles@greenbone.net>
 
+	* nasl/nasl_crypto2.c (nasl_aes128_ctr_encrypt)
+	(nasl_aes256_ctr_encrypt): New functions.
+
+	* nasl/nasl_crypto2.h: Add new functions prototypes.
+
+	* nasl/nasl_init.c (libfuncs): Add aes128_ctr_encrypt() and
+	aes256_ctr_encrypt().
+
+2016-12-15  Hani Benhabiles <hani.benhabiles@greenbone.net>
+
 	Support inserting binary blobs in KB.
 
 	* base/kb.h (kb_item): Add length element.

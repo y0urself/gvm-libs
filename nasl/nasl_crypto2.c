@@ -1439,6 +1439,18 @@ nasl_aes256_cbc_encrypt (lex_ctxt * lexic)
 }
 
 tree_cell *
+nasl_aes128_ctr_encrypt (lex_ctxt * lexic)
+{
+  return encrypt_data (lexic, GCRY_CIPHER_AES128, GCRY_CIPHER_MODE_CTR);
+}
+
+tree_cell *
+nasl_aes256_ctr_encrypt (lex_ctxt * lexic)
+{
+  return encrypt_data (lexic, GCRY_CIPHER_AES256, GCRY_CIPHER_MODE_CTR);
+}
+
+tree_cell *
 nasl_des_ede_cbc_encrypt (lex_ctxt * lexic)
 {
   return encrypt_data (lexic, GCRY_CIPHER_3DES, GCRY_CIPHER_MODE_CBC);

@@ -35,6 +35,8 @@ tree_cell *nasl_dsa_do_sign (lex_ctxt * lexic);
 tree_cell *nasl_rc4_encrypt (lex_ctxt * lexic);
 tree_cell *nasl_aes128_cbc_encrypt (lex_ctxt * lexic);
 tree_cell *nasl_aes256_cbc_encrypt (lex_ctxt * lexic);
+tree_cell *nasl_aes128_ctr_encrypt (lex_ctxt * lexic);
+tree_cell *nasl_aes256_ctr_encrypt (lex_ctxt * lexic);
 tree_cell *nasl_des_ede_cbc_encrypt (lex_ctxt * lexic);
 
 
