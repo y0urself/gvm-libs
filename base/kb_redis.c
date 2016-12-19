@@ -859,7 +859,7 @@ redis_add_str (kb_t kb, const char *name, const char *str, size_t len)
   else
     redis_transaction_cmd (&rtx, "SADD %s %b", name, str, len);
   rc = redis_transaction_end (&rtx, &rep);
-  if (rep == NULL || rep->type == REDIS_REPLY_ERROR)
+  if (rc || rep == NULL || rep->type == REDIS_REPLY_ERROR)
     rc = -1;
 
   if (rep != NULL)
