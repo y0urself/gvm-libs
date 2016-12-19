@@ -1,3 +1,7 @@
+2016-12-19  Michael Wiegand <michael.wiegand@greenbone.net>
+
+	* INSTALL: Use more appropriate package in 'apt-get' line.
+
 2016-12-15  Hani Benhabiles <hani.benhabiles@greenbone.net>
 
 	* nasl/nasl_crypto2.c (nasl_aes128_ctr_encrypt)
