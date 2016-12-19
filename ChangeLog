@@ -1,3 +1,12 @@
+2016-12-19  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
+	* base/openvas_networking.h: Removed all includes that are not directly
+	required by this header file itself.
+
+	* base/openvas_hosts.c, base/openvas_networking.c, misc/network.c,
+	osp/osp.c: Add includes here that are needed here and were located in
+	openvas_networking.h before.
+
 2016-12-19  Hani Benhabiles <hani.benhabiles@greenbone.net>
 
 	* base/kb_redis.c (redis_add_str): Check return value of

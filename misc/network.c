@@ -39,10 +39,17 @@
 #include <stdio.h>              /* for FILE */
 #include <sys/time.h>           /* for gettimeofday */
 
+#include <arpa/inet.h>          /* for inet_pton */
+
 #include <glib.h>
 
 #include <gnutls/gnutls.h>
 #include <gnutls/x509.h>
+
+#ifdef __FreeBSD__
+#include <netinet/in.h>
+#define s6_addr32 __u6_addr.__u6_addr32
+#endif
 
 #include "network.h"            /* for socket_close() */
 #include "../base/kb.h"         /* for kb_item_get_str() */

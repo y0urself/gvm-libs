@@ -25,6 +25,8 @@
 
 #include <glib.h>
 
+#include <assert.h>
+
 #include "../base/openvas_hosts.h"
 #include "../misc/openvas_server.h"
 #include "../omp/xml.h"

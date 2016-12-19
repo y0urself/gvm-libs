@@ -34,6 +34,9 @@
  * The module consequently uses glib datatypes.
  */
 
+#include <assert.h>
+#include <netdb.h>
+
 #include "openvas_hosts.h"
 
 /* Static variables */

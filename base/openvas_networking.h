@@ -23,29 +23,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <arpa/inet.h>
-#include <net/if.h>
-#include <sys/types.h>
-#include <ifaddrs.h>
-#include <netdb.h>
-#include <glib.h>
-#include <errno.h>
-#include <ctype.h>
-#include <assert.h>
-
-#include <gvm/base/array.h>
-
-#include <sys/param.h>
-#ifdef __FreeBSD__
-#include <netinet/in.h>
-#define s6_addr32 __u6_addr.__u6_addr32
-#endif
-
 #ifndef _OPENVAS_NETWORKING_H
 #define _OPENVAS_NETWORKING_H
+
+#include <netdb.h>           /* for struct in6_addr */
+#include <gvm/base/array.h>  /* for array_t */
 
 /**
  * @brief Possible port types.
