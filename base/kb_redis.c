@@ -846,7 +846,7 @@ redis_add_str (kb_t kb, const char *name, const char *str, size_t len)
 {
   struct kb_redis *kbr;
   struct redis_tx rtx;
-  redisReply *rep;
+  redisReply *rep = NULL;
   int rc = 0;
 
   kbr = redis_kb (kb);

@@ -1,3 +1,7 @@
+2016-12-20  Hani Benhabiles <hani.benhabiles@greenbone.net>
+
+	* base/kb_redis.c (redis_add_str): Initialize rep variable.
+
 2016-12-19  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 
 	* base/openvas_networking.h: Removed all includes that are not directly
