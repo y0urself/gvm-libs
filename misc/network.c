@@ -46,6 +46,8 @@
 #include <gnutls/gnutls.h>
 #include <gnutls/x509.h>
 
+#include <gvm/base/networking.h>
+
 #ifdef __FreeBSD__
 #include <netinet/in.h>
 #define s6_addr32 __u6_addr.__u6_addr32
@@ -1830,7 +1832,7 @@ open_socket (struct sockaddr *paddr, int type, int protocol,
         return -1;
       }
 
-  openvas_source_set_socket (soc, 0, family);
+  gvm_source_set_socket (soc, 0, family);
 
   if (connect (soc, paddr, len) < 0)
     {
@@ -1903,7 +1905,7 @@ open_sock_opt_hn (const char *hostname, unsigned int port, int type,
   struct sockaddr_in6 addr6;
   struct in6_addr in6addr;
 
-  openvas_resolve_as_addr6 (hostname, &in6addr);
+  gvm_resolve_as_addr6 (hostname, &in6addr);
   if (IN6_IS_ADDR_V4MAPPED (&in6addr))
     {
       bzero ((void *) &addr, sizeof (addr));

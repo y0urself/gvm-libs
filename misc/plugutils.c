@@ -40,6 +40,8 @@
 
 #include <glib.h>
 
+#include <gvm/base/networking.h>
+
 #include "arglists.h"
 #include "network.h"
 #include "plugutils.h"

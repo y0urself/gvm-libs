@@ -48,6 +48,8 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
+#include <gvm/base/networking.h>
+
 #include "nasl_smb.h"
 #include "openvas_smb_interface.h"
 #include "../misc/plugutils.h"

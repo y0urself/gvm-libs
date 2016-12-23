@@ -26,7 +26,6 @@
 #ifdef ENABLE_RADIUS_AUTH
 
 #include <freeradius-client.h>
-#include "../base/openvas_networking.h"
 #include <glib.h>
 
 #ifndef PW_MAX_MSG_SIZE

@@ -63,11 +63,11 @@ if (MINGW)
        openvas_string.h gpgme_util.h pwpolicy.h)
 else (MINGW)
   set (FILES credentials.c openvas_hosts.c drop_privileges.c
-       nvticache.c openvas_networking.c
+       nvticache.c
        kb_redis.c openvas_string.c gpgme_util.c pwpolicy.c)
   set (HEADERS credentials.h openvas_hosts.h drop_privileges.h
        kb.h nvticache.h
-       openvas_networking.h openvas_string.h gpgme_util.h pwpolicy.h)
+       openvas_string.h gpgme_util.h pwpolicy.h)
 endif (MINGW)
 
 if (BUILD_STATIC)

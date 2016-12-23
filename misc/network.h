@@ -33,7 +33,6 @@
 #include <gnutls/x509.h>
 
 #include "arglists.h"
-#include "../base/openvas_networking.h"
 
 /*
  * Type of "transport layer", for encapsulated connections

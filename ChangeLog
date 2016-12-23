@@ -1,3 +1,48 @@
+2016-12-23  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
+	Module "openvas_networking" is now in gvm-libs/base.
+
+	* base/openvas_networking.c, base/openvas_networking.h: Removed.
+
+	* base/CMakeLists.txt: Removed handling of this module.
+
+	* base/openvas_hosts.c (openvas_host_resolve): Use gsm_resolve instead
+	of openvas_resolve.
+
+	* base/openvas_hosts.h: Changed include to gvm/base/networking.h.
+
+	* misc/network.c (open_socket): Use gvm_source_set_socket
+	instead of openvas_source_set_socket.
+	(open_sock_opt_hn): Use gvm_resolve_as_addr6 instead of
+	openvas_resolve_as_addr6.
+
+	* misc/network.h: Removed unneeded include.
+
+	* misc/pcap.c (v6_routethrough): Use gvm_source_addr_as_addr6 instead
+	of openvas_source_addr_as_addr6. Use gvm_source_addr6 instead of
+	openvas_source_addr6.
+	(routethrough): Use gvm_source_addr instead of openvas_source_addr.
+
+	* misc/radius.c, misc/plugutils.h: Removed unnecessary include.
+
+	* misc/plugutils.c, misc/www_funcs.c, nasl/nasl_smb.c, nasl/nasl_wmi.c:
+	Add necessary include.
+
+	* nasl/nasl.c (main): Use gvm_source_iface_init instead of
+	openvas_source_iface_init.
+
+	* nasl/nasl_host.c (nasl_this_host): Use gvm_source_iface_is_set
+	instead of openvas_source_iface_is_set. Use gvm_source_addr_as_addr6
+	instead of openvas_source_addr_as_addr6. Use gvm_source_addr6
+	instead of openvas_source_addr6. Use gvm_resolve_as_addr6
+	intead of openvas_resolve_as_addr6.
+
+	* nasl/nasl_socket.c (nasl_open_privileged_socket): Use
+	gvm_source_set_socket instead of openvas_source_set_socket.
+	(nasl_open_sock_udp): Use gvm_source_set_socket instead
+	of openvas_source_set_socket. Use gvm_source_set_socket
+	instead of openvas_source_set_socket.
+
 2016-12-20  Hani Benhabiles <hani.benhabiles@greenbone.net>
 
 	* base/kb_redis.c (redis_add_str): Initialize rep variable.

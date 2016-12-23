@@ -33,8 +33,9 @@
 #include <string.h>             /* for strlen */
 #include <unistd.h>             /* for gethostname */
 
+#include <gvm/base/networking.h>
+
 #include "../misc/network.h"
-#include "../base/openvas_networking.h"
 #include "../misc/plugutils.h"          /* for plug_get_host_fqdn */
 #include "../misc/pcap_openvas.h"       /* for v6_is_local_ip */
 
@@ -181,15 +182,15 @@ nasl_this_host (lex_ctxt * lexic)
   retc = alloc_tree_cell (0, NULL);
   retc->type = CONST_DATA;
 
-  if (openvas_source_iface_is_set ())
+  if (gvm_source_iface_is_set ())
     {
       struct in6_addr addr;
 
       /* Use source_iface's IP address when available. */
       if (IN6_IS_ADDR_V4MAPPED (ia))
-        openvas_source_addr_as_addr6 (&addr);
+        gvm_source_addr_as_addr6 (&addr);
       else
-        openvas_source_addr6 (&addr);
+        gvm_source_addr6 (&addr);
       retc->x.str_val = addr6_as_str (&addr);
       retc->size = strlen (retc->x.str_val);
       return retc;
@@ -213,7 +214,7 @@ nasl_this_host (lex_ctxt * lexic)
 
       hostname[sizeof (hostname) - 1] = '\0';
       gethostname (hostname, sizeof (hostname) - 1);
-      if (openvas_resolve_as_addr6 (hostname, &in6addr))
+      if (gvm_resolve_as_addr6 (hostname, &in6addr))
         {
           retc->x.str_val = addr6_as_str (&in6addr);
           retc->size = strlen (retc->x.str_val);

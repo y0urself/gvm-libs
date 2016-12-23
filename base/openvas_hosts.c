@@ -1702,7 +1702,7 @@ openvas_host_resolve (const openvas_host_t *host, void *dst, int family)
   if (host == NULL || dst == NULL || host->type != HOST_TYPE_NAME)
     return -1;
 
-  return openvas_resolve (host->name, dst, family);
+  return gvm_resolve (host->name, dst, family);
 }
 
 /**

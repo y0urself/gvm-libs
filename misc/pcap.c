@@ -30,6 +30,7 @@
 #include <sys/types.h>
 #include <ifaddrs.h>
 
+#include <gvm/base/networking.h>
 
 #include "bpf_share.h"
 #include "pcap_openvas.h"
@@ -1086,9 +1087,9 @@ v6_routethrough (struct in6_addr *dest, struct in6_addr *source)
     log_legacy_write ("ipaddr2devname passed a NULL dest address");
 
   if (IN6_IS_ADDR_V4MAPPED (dest))
-    openvas_source_addr_as_addr6 (&src);
+    gvm_source_addr_as_addr6 (&src);
   else
-    openvas_source_addr6 (&src);
+    gvm_source_addr6 (&src);
 
   if (!initialized)
     {
@@ -1272,7 +1273,7 @@ routethrough (struct in_addr *dest, struct in_addr *source)
 
   struct in_addr src;
 
-  openvas_source_addr (&src);
+  gvm_source_addr (&src);
   if (!dest)
     log_legacy_write ("ipaddr2devname passed a NULL dest address");
 

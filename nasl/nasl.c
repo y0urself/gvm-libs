@@ -273,7 +273,7 @@ main (int argc, char **argv)
   signal (SIGPIPE, SIG_IGN);
 #endif
 
-  if (source_iface && openvas_source_iface_init (source_iface))
+  if (source_iface && gvm_source_iface_init (source_iface))
     {
       fprintf (stderr, "Erroneous network source interface: %s\n",
                source_iface);

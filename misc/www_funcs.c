@@ -22,6 +22,8 @@
 #include <ctype.h>
 #include <arpa/inet.h>
 
+#include <gvm/base/networking.h>
+
 #include "../base/kb.h"
 #include "plugutils.h"
 #include "support.h"

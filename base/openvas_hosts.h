@@ -35,8 +35,6 @@
 #ifndef _OPENVAS_HOSTS_H
 #define _OPENVAS_HOSTS_H
 
-#include "openvas_networking.h"
-
 #include <glib.h>
 #include <ctype.h>
 #include <string.h>
@@ -45,6 +43,8 @@
 #include <errno.h>
 #include <arpa/inet.h>
 #include <netdb.h>
+
+#include <gvm/base/networking.h>
 
 /* Static values */
 
