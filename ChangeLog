@@ -1,3 +1,8 @@
+2016-12-26  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
+	* base/openvas_string.c: Removed trace and log definition and
+	includes that are not used in this module.
+
 2016-12-23  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 
 	Module "openvas_networking" is now in gvm-libs/base.

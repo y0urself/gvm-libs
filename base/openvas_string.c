@@ -28,32 +28,10 @@
  * @brief String utilities.
  */
 
-/**
- * @brief Trace flag.
- *
- * 0 to turn off all tracing messages.
- */
-#define TRACE 1
-
 #include <assert.h>
-#include <ctype.h>
 #include <glib.h>
-#include <stdio.h>
-#include <string.h>             /* for strcmp */
-#include <sys/types.h>
-#include <unistd.h>
 
-// FIX
-#if 0
-#include "tracef.h"
-#endif
 #include "openvas_string.h"
-
-#undef G_LOG_DOMAIN
-/**
- * @brief GLib log domain.
- */
-#define G_LOG_DOMAIN "md string"
 
 /**
  * @brief Append a string to a string variable.
