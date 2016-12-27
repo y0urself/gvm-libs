@@ -25,9 +25,10 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#include <gvm/base/strings.h>
+
 #include "credentials.h"
 
-#include "openvas_string.h"
 
 /**
  * @brief Free credentials.
@@ -70,7 +71,7 @@ void
 append_to_credentials_username (credentials_t * credentials, const char *text,
                                 gsize length)
 {
-  openvas_append_text (&credentials->username, text, length);
+  gvm_append_text (&credentials->username, text, length);
 }
 
 /**
@@ -84,5 +85,5 @@ void
 append_to_credentials_password (credentials_t * credentials, const char *text,
                                 gsize length)
 {
-  openvas_append_text (&credentials->password, text, length);
+  gvm_append_text (&credentials->password, text, length);
 }

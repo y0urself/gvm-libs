@@ -38,7 +38,6 @@
 #include <ldap.h>
 
 #include "openvas_auth.h"
-#include "../base/openvas_string.h"
 
 #undef G_LOG_DOMAIN
 /**

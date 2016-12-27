@@ -1,3 +1,20 @@
+2016-12-27  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
+	Module "openvas_string" is now in gvm-libs/base.
+
+	* base/openvas_sring.c, base/openvas_sring.h: Removed.
+
+	* base/CMakeLists.txt: Removed handling of this module.
+
+	* COPYING: Removed the files respectively. Also removed some
+	other files that are not present anymore.
+
+	* base/credentials.c (append_to_credentials_username,
+	append_to_credentials_password): Use gvm_append_text instead
+	of openvas_append_text.
+
+	* misc/ldap_connect_auth.c: Removed unneeded include.
+
 2016-12-26  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 
 	* base/openvas_string.c: Removed trace and log definition and
