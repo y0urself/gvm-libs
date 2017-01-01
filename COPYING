@@ -22,7 +22,6 @@ as changes were applied:
 
 base/CMakeLists.txt: GPLv2+
 base/credentials.[c|h]: GPLv2+
-base/drop_privileges.[c|h]: GPLv2+
 base/gpgme_util.[c|h]: GPLv2+
 base/nvticache.[c|h]: GPLv2+
 base/openvas_hosts.[c|h]: GPLv2+
