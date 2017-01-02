@@ -1,5 +1,15 @@
 2017-01-02  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 
+	Module "pwpolicy" is now in gvm-libs/base.
+
+	* base/pwpolicy.c, base/pwpolicy.h: Removed.
+
+	* base/CMakeLists.txt: Removed handling of this module.
+
+	* COPYING: Removed the files respectively.
+
+2017-01-02  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
 	Module "credentials" is now in gvm-libs/base.
 
 	* base/credentials.c, base/credentials.h: Removed.

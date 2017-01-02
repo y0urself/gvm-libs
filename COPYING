@@ -24,7 +24,6 @@ base/CMakeLists.txt: GPLv2+
 base/gpgme_util.[c|h]: GPLv2+
 base/nvticache.[c|h]: GPLv2+
 base/openvas_hosts.[c|h]: GPLv2+
-base/pwpolicy.[c|h]: GPLv2+
 base/kb.h: GPLv2+
 base/kb_redis.c: GPLv2+
 
