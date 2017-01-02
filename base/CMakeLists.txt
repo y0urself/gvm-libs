@@ -57,15 +57,11 @@ include_directories (${GLIB_INCLUDE_DIRS}
                      ${REDIS_INCLUDE_DIRS})
 
 if (MINGW)
-  set  (FILES credentials.c openvas_hosts.c nvticache.c
-        gpgme_util.c pwpolicy.c)
-  set (HEADERS credentials.h openvas_hosts.h
-       gpgme_util.h pwpolicy.h)
+  set  (FILES openvas_hosts.c nvticache.c gpgme_util.c pwpolicy.c)
+  set (HEADERS openvas_hosts.h gpgme_util.h pwpolicy.h)
 else (MINGW)
-  set (FILES credentials.c openvas_hosts.c
-       nvticache.c kb_redis.c gpgme_util.c pwpolicy.c)
-  set (HEADERS credentials.h openvas_hosts.h
-       kb.h nvticache.h gpgme_util.h pwpolicy.h)
+  set (FILES openvas_hosts.c nvticache.c kb_redis.c gpgme_util.c pwpolicy.c)
+  set (HEADERS openvas_hosts.h kb.h nvticache.h gpgme_util.h pwpolicy.h)
 endif (MINGW)
 
 if (BUILD_STATIC)
