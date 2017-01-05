@@ -1,3 +1,7 @@
+2017-01-05  Michael Wiegand <michael.wiegand@greenbone.net>
+
+	* misc/openvas_logging.c: Remove outdated reference.
+
 2017-01-02  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 
 	Module "pwpolicy" is now in gvm-libs/base.

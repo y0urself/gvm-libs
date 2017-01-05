@@ -32,8 +32,7 @@
  * @brief Implementation of logging methods for OpenVAS.
  *
  * This file contains all methods needed for openvas logging. To enable logging,
- * methods in this file are called. Have a look at
- * openvas-server/openvassd/openvassd.c for an example.
+ * methods in this file are called.
  *
  * The module reuses glib datatypes and api for memory management and logging.
  */
