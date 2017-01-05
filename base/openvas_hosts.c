@@ -410,7 +410,7 @@ is_hostname (const char *str)
 }
 
 /**
- * @brief Checks if a buffer points to an IPv6 CIDR-exprpessed block.
+ * @brief Checks if a buffer points to an IPv6 CIDR-expressed block.
  * "2620:0:2d0:200::7/120" is valid, "2620:0:2d0:200::7/129" is not.
  *
  * @param[in]   str Buffer to check in.
@@ -908,7 +908,7 @@ openvas_hosts_deduplicate (openvas_hosts_t *hosts)
  *                      the returned struct.
  * @param[in] max_hosts Max number of hosts in hosts_str. 0 means unlimited.
  *
- * @return NULL if error or hosts_str contains more than max hosts. otherwise, a
+ * @return NULL if error or hosts_str contains more than max hosts. Otherwise, a
  * hosts structure that should be released using @ref openvas_hosts_free.
  */
 openvas_hosts_t *
@@ -934,7 +934,7 @@ openvas_hosts_new_with_max (const gchar *hosts_str, unsigned int max_hosts)
       str++;
     }
 
-  /* Split comma-separeted list into single host-specifications */
+  /* Split comma-separated list into single host-specifications */
   split = g_strsplit (hosts->orig_str, ",", 0);
 
   /* first element of the splitted list */
