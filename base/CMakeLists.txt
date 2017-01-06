@@ -57,11 +57,11 @@ include_directories (${GLIB_INCLUDE_DIRS}
                      ${REDIS_INCLUDE_DIRS})
 
 if (MINGW)
-  set  (FILES openvas_hosts.c nvticache.c gpgme_util.c)
-  set (HEADERS openvas_hosts.h gpgme_util.h)
+  set  (FILES nvticache.c gpgme_util.c)
+  set (HEADERS gpgme_util.h)
 else (MINGW)
-  set (FILES openvas_hosts.c nvticache.c kb_redis.c gpgme_util.c)
-  set (HEADERS openvas_hosts.h kb.h nvticache.h gpgme_util.h)
+  set (FILES nvticache.c kb_redis.c gpgme_util.c)
+  set (HEADERS kb.h nvticache.h gpgme_util.h)
 endif (MINGW)
 
 if (BUILD_STATIC)
@@ -98,7 +98,7 @@ add_custom_indent_targets (${FILES})
 # TODO: This is currently only built for BUILD_SHARED
 if (BUILD_SHARED)
   add_executable (test-hosts test-hosts.c)
-  target_link_libraries (test-hosts openvas_base_shared ${GLIB_LDFLAGS} ${LIBGVM_BASE_LDFLAGS} ${REDIS_LDFLAGS})
+  target_link_libraries (test-hosts ${GLIB_LDFLAGS} ${LIBGVM_BASE_LDFLAGS} ${REDIS_LDFLAGS})
 endif (BUILD_SHARED)
 
 ## Install

@@ -24,15 +24,16 @@
  */
 
 #include <glib.h>
+#include <sys/un.h>
+#include <unistd.h>
 
 #include <assert.h>
 
-#include "../base/openvas_hosts.h"
+#include <gvm/base/hosts.h>
+
 #include "../misc/openvas_server.h"
 #include "../omp/xml.h"
 #include "osp.h"
-#include <sys/un.h>
-#include <unistd.h>
 
 
 #undef  G_LOG_DOMAIN
@@ -98,7 +99,7 @@ osp_connection_new (const char *host, int port, const char *cacert,
     {
       if (port <= 0 || port > 65535)
         return NULL;
-      if (!host || openvas_get_host_type (host) == -1)
+      if (!host || gvm_get_host_type (host) == -1)
         return NULL;
       if (!cert || !key || !cacert)
         return NULL;

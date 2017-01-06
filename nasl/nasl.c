@@ -28,6 +28,7 @@
 #include <libssh/libssh.h>      /* for ssh_version */
 #include <gnutls/gnutls.h>      /* for gnutls_check_version */
 
+#include <gvm/base/hosts.h>     /* for gvm_hosts_* and gvm_host_* */
 #include <gvm/base/nvti.h>
 
 #include "../misc/network.h"
@@ -37,7 +38,6 @@
 #include "exec.h"
 #include "../base/gpgme_util.h" /* for gpgme_check_version */
 #include "../base/kb.h"                 /* for kb_new */
-#include "../base/openvas_hosts.h" /* for openvas_hosts_* and openvas_host_* */
 #include "../misc/prefs.h" /* for prefs_get */
 #include "../misc/nvt_categories.h"
 
@@ -135,8 +135,8 @@ int
 main (int argc, char **argv)
 {
   struct arglist *script_infos;
-  openvas_hosts_t *hosts;
-  openvas_host_t *host;
+  gvm_hosts_t *hosts;
+  gvm_host_t *host;
   static gchar *target = NULL;
   gchar *default_target = "127.0.0.1";
   int mode = 0, n = 0, err = 0;
@@ -288,7 +288,7 @@ main (int argc, char **argv)
   if (!target)
     target = g_strdup (default_target);
 
-  hosts = openvas_hosts_new (target);
+  hosts = gvm_hosts_new (target);
   g_free (target);
 
   // for absolute and relative paths
@@ -299,15 +299,15 @@ main (int argc, char **argv)
     }
 
   prefs_config (config_file ?: OPENVASSD_CONF);
-  while ((host = openvas_hosts_next (hosts)))
+  while ((host = gvm_hosts_next (hosts)))
     {
       struct in6_addr ip6;
       char *hostname, *fqdn;
       kb_t kb;
       int rc;
 
-      hostname = openvas_host_value_str (host);
-      if (openvas_host_get_addr6 (host, &ip6) == -1)
+      hostname = gvm_host_value_str (host);
+      if (gvm_host_get_addr6 (host, &ip6) == -1)
         {
           fprintf (stderr, "Couldn't resolve %s\n", hostname);
           err++;
@@ -319,7 +319,7 @@ main (int argc, char **argv)
       if (rc)
         exit (1);
 
-      fqdn = openvas_host_reverse_lookup (host);
+      fqdn = gvm_host_reverse_lookup (host);
       script_infos = init (hostname, &ip6, fqdn ?: hostname, kb);
       g_free (fqdn);
       while (nasl_filenames[n])
@@ -372,6 +372,6 @@ main (int argc, char **argv)
   if (nasl_trace_fp != NULL)
     fflush (nasl_trace_fp);
 
-  openvas_hosts_free (hosts);
+  gvm_hosts_free (hosts);
   return err;
 }
