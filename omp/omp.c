@@ -824,7 +824,7 @@ check_response (gnutls_session_t* session)
 /**
  * @brief Read response and convert status of response to a return value.
  *
- * @param[in]  session  Pointer to GNUTLS session.
+ * @param[in]  connection  Connection.
  *
  * @return 0 on success, -1 or OMP response code on error.
  */
@@ -943,7 +943,7 @@ omp_stop_task (gnutls_session_t* session, const char* id)
 /**
  * @brief Stop a task and read the manager response.
  *
- * @param[in]  session  Pointer to GNUTLS session.
+ * @param[in]  connection  Connection.
  * @param[in]  id       ID of task.
  *
  * @return 0 on success, OMP response code on failure, -1 on error.

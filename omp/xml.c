@@ -393,16 +393,16 @@ handle_error (GMarkupParseContext * context, GError * error, gpointer user_data)
 /**
  * @brief Try read an XML entity tree from the manager.
  *
- * @param[in]   session   Pointer to GNUTLS session.
- * @param[in]   timeout   Server idle time before giving up, in seconds.  0 to
- *                        wait forever.
- * @param[out]  entity    Pointer to an entity tree.
- * @param[out]  string    An optional return location for the text read
- *                        from the session.  If NULL then it simply
- *                        remains NULL.  If a pointer to NULL then it points
- *                        to a freshly allocated GString on successful return.
- *                        Otherwise it points to an existing GString onto
- *                        which the text is appended.
+ * @param[in]   session        Pointer to GNUTLS session.
+ * @param[in]   timeout        Server idle time before giving up, in seconds.  0 to
+ *                             wait forever.
+ * @param[out]  entity         Pointer to an entity tree.
+ * @param[out]  string_return  An optional return location for the text read
+ *                             from the session.  If NULL then it simply
+ *                             remains NULL.  If a pointer to NULL then it points
+ *                             to a freshly allocated GString on successful return.
+ *                             Otherwise it points to an existing GString onto
+ *                             which the text is appended.
  *
  * @return 0 success, -1 read error, -2 parse error, -3 end of file, -4 timeout.
  */
@@ -599,16 +599,16 @@ try_read_entity_and_string (gnutls_session_t * session, int timeout,
 /**
  * @brief Try read an XML entity tree from the socket.
  *
- * @param[in]   socket    Socket to read from.
- * @param[in]   timeout   Server idle time before giving up, in seconds.  0 to
- *                        wait forever.
- * @param[out]  entity    Pointer to an entity tree.
- * @param[out]  string    An optional return location for the text read
- *                        from the session.  If NULL then it simply
- *                        remains NULL.  If a pointer to NULL then it points
- *                        to a freshly allocated GString on successful return.
- *                        Otherwise it points to an existing GString onto
- *                        which the text is appended.
+ * @param[in]   socket         Socket to read from.
+ * @param[in]   timeout        Server idle time before giving up, in seconds.  0 to
+ *                             wait forever.
+ * @param[out]  entity         Pointer to an entity tree.
+ * @param[out]  string_return  An optional return location for the text read
+ *                             from the session.  If NULL then it simply
+ *                             remains NULL.  If a pointer to NULL then it points
+ *                             to a freshly allocated GString on successful return.
+ *                             Otherwise it points to an existing GString onto
+ *                             which the text is appended.
  *
  * @return 0 success, -1 read error, -2 parse error, -3 end of file, -4 timeout.
  */
@@ -1011,8 +1011,8 @@ read_entity_s (int socket, entity_t * entity)
 /**
  * @brief Read an XML entity tree from the manager.
  *
- * @param[in]   session   Pointer to GNUTLS session.
- * @param[out]  entity    Pointer to an entity tree.
+ * @param[in]   connection Connection.
+ * @param[out]  entity     Pointer to an entity tree.
  *
  * @return 0 success, -1 read error, -2 parse error, -3 end of file.
  */
