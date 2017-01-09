@@ -136,7 +136,7 @@ nasl_smb_connect (lex_ctxt * lexic)
       return NULL;
     }
 
-  retc->x.i_val = (int) handle;
+  retc->x.i_val = handle;
   return retc;
 }
 

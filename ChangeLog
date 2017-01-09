@@ -1,3 +1,14 @@
+2016-01-09  Hani Benhabiles <hani.benhabiles@greenbone.net>
+
+	* nasl/nasl_smb.c (nasl_smb_connect): Don't cast handle to int.
+
+	* nasl/nasl_var.c (var2int, get_int_var_by_num, get_int_var_by_name)
+	(get_int_local_var_by_name): Handle long integers.
+
+	* nasl/nasl_lex_ctxt.h: Adjust functions headers.
+
+	* nasl/openvas_smb_interface.h (SMB_HANDLE): Define as long int.
+
 2017-01-09  Michael Wiegand <michael.wiegand@greenbone.net>
 
 	* omp/omp.c, omp/xml.c: Make sure parameter names in documentation
