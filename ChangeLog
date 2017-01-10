@@ -1,4 +1,11 @@
-2016-01-09  Hani Benhabiles <hani.benhabiles@greenbone.net>
+2017-01-10  Hani Benhabiles <hani.benhabiles@greenbone.net>
+
+	* misc/openvas_auth.c (get_password_hashes): Remove algorithm parameter
+	as only md5 is used.
+
+	* misc/openvas_auth.h: Adjust function header.
+
+2017-01-09  Hani Benhabiles <hani.benhabiles@greenbone.net>
 
 	* nasl/nasl_smb.c (nasl_smb_connect): Don't cast handle to int.
 

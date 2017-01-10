@@ -202,8 +202,8 @@ digest_hex (int gcrypt_algorithm, const guchar * digest)
 }
 
 /**
- * @brief Generate a pair of hashes to be used in the OpenVAS "auth/hash" file
- * for the user.
+ * @brief Generate a pair of md5 hashes to be used in the OpenVAS "auth/hash"
+ * file for the user.
  *
  * The "auth/hash" file consist of two hashes, h_1 and h_2. h_2 (the "seed")
  * is the message digest of (currently) 256 bytes of random data. h_1 is the
@@ -212,40 +212,30 @@ digest_hex (int gcrypt_algorithm, const guchar * digest)
  * The current implementation was taken from the openvas-adduser shell script
  * provided with openvas-server.
  *
- * @param digest_algorithm The libgcrypt message digest algorithm used to
- * create the digest (e.g. GCRY_MD_MD5; see the enum gcry_md_algos in
- * gcrypt.h)
  * @param password The password in plaintext.
  *
  * @return A pointer to a gchar containing the two hashes separated by a
  * space or NULL if an unavailable message digest algorithm was selected.
  */
 gchar *
-get_password_hashes (int digest_algorithm, const gchar * password)
+get_password_hashes (const gchar *password)
 {
-  gcry_error_t err = gcry_md_test_algo (digest_algorithm);
-  if (err != 0)
-    {
-      g_warning ("Could not select gcrypt algorithm: %s", gcry_strerror (err));
-      return NULL;
-    }
-
   g_assert (password);
 
   unsigned char *nonce_buffer[256];
-  guchar *seed = g_malloc0 (gcry_md_get_algo_dlen (digest_algorithm));
+  guchar *seed = g_malloc0 (gcry_md_get_algo_dlen (GCRY_MD_MD5));
   gchar *seed_hex = NULL;
   gchar *seed_pass = NULL;
-  guchar *hash = g_malloc0 (gcry_md_get_algo_dlen (digest_algorithm));
+  guchar *hash = g_malloc0 (gcry_md_get_algo_dlen (GCRY_MD_MD5));
   gchar *hash_hex = NULL;
   gchar *hashes_out = NULL;
 
   gcry_create_nonce (nonce_buffer, 256);
-  gcry_md_hash_buffer (digest_algorithm, seed, nonce_buffer, 256);
-  seed_hex = digest_hex (digest_algorithm, seed);
+  gcry_md_hash_buffer (GCRY_MD_MD5, seed, nonce_buffer, 256);
+  seed_hex = digest_hex (GCRY_MD_MD5, seed);
   seed_pass = g_strconcat (seed_hex, password, NULL);
-  gcry_md_hash_buffer (digest_algorithm, hash, seed_pass, strlen (seed_pass));
-  hash_hex = digest_hex (digest_algorithm, hash);
+  gcry_md_hash_buffer (GCRY_MD_MD5, hash, seed_pass, strlen (seed_pass));
+  hash_hex = digest_hex (GCRY_MD_MD5, hash);
 
   hashes_out = g_strjoin (" ", hash_hex, seed_hex, NULL);
 

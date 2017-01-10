@@ -56,7 +56,8 @@ void openvas_auth_tear_down (void);
 int
 openvas_authenticate_classic (const gchar *, const gchar *, const gchar *);
 
-gchar *get_password_hashes (int, const gchar *);
+gchar *
+get_password_hashes (const gchar *);
 
 gchar *digest_hex (int, const guchar *);
 
