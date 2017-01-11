@@ -1251,10 +1251,6 @@ routethrough (struct in_addr *dest, struct in_addr *source)
 {
   static int initialized = 0;
   int i;
-  struct in_addr addy;
-  static enum
-  { procroutetechnique, connectsockettechnique, guesstechnique } technique =
-    procroutetechnique;
   char buf[10240];
   struct interface_info *mydevs;
   static struct myroute
@@ -1283,9 +1279,7 @@ routethrough (struct in_addr *dest, struct in_addr *source)
       initialized = 1;
       mydevs = getinterfaces (&numinterfaces);
 
-      /* Now we must go through several techniques to determine info */
       routez = fopen ("/proc/net/route", "r");
-
       if (routez)
         {
           /* OK, linux style /proc/net/route ... we can handle this ... */
@@ -1363,13 +1357,12 @@ routethrough (struct in_addr *dest, struct in_addr *source)
         }
       else
         {
-          technique = connectsockettechnique;
+          log_legacy_write ("Could not read from /proc/net/route");
+          return NULL;
         }
     }
   else
-    {
-      mydevs = getinterfaces (&numinterfaces);
-    }
+    mydevs = getinterfaces (&numinterfaces);
   /* WHEW, that takes care of initializing, now we have the easy job of
      finding which route matches */
   if (islocalhost (dest))
@@ -1388,55 +1381,22 @@ routethrough (struct in_addr *dest, struct in_addr *source)
       return NULL;
     }
 
-  if (technique == procroutetechnique)
+  for (i = 0; i < numroutes; i++)
     {
-      for (i = 0; i < numroutes; i++)
+      if ((dest->s_addr & myroutes[i].mask) == myroutes[i].dest && myroutes[i].mask >= bestmatch)
         {
-          if ((dest->s_addr & myroutes[i].mask) == myroutes[i].dest && myroutes[i].mask >= bestmatch)
+          if (source)
             {
-              if (source)
-                {
-                  if (src.s_addr != INADDR_ANY)
-                    source->s_addr = src.s_addr;
-                  else
-                    source->s_addr = myroutes[i].dev->addr.s_addr;
-                }
-              match = i;
-              bestmatch = myroutes[i].mask;
+              if (src.s_addr != INADDR_ANY)
+                source->s_addr = src.s_addr;
+              else
+                source->s_addr = myroutes[i].dev->addr.s_addr;
             }
+          match = i;
+          bestmatch = myroutes[i].mask;
         }
-      if (match != -1)
-          return myroutes[match].dev->name;
     }
-  else if (technique == connectsockettechnique)
-    {
-      if (!getsourceip (&addy, dest))
-        return NULL;
-      if (!addy.s_addr)
-        {                       /* Solaris 2.4 */
-          struct hostent *myhostent = NULL;
-          char myname[MAXHOSTNAMELEN + 1];
-          myhostent = gethostbyname (myname);
-          if (gethostname (myname, MAXHOSTNAMELEN) || !myhostent)
-            log_legacy_write ("Cannot get hostname!");
-          memcpy (&(addy.s_addr), myhostent->h_addr_list[0],
-                  sizeof (struct in_addr));
-        }
-
-      /* Now we insure this claimed address is a real interface ... */
-      for (i = 0; i < numinterfaces; i++)
-        if (mydevs[i].addr.s_addr == addy.s_addr)
-          {
-            if (source)
-              {
-                source->s_addr = addy.s_addr;
-              }
-            return mydevs[i].name;
-          }
-      return NULL;
-    }
-  else
-    log_legacy_write ("%s: Provided technique is neither proc route"
-                      " nor connect socket", __FUNCTION__);
+  if (match != -1)
+      return myroutes[match].dev->name;
   return NULL;
 }

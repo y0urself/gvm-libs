@@ -1,3 +1,8 @@
+2017-01-11  Hani Benhabiles <hani.benhabiles@greenbone.net>
+
+	* misc/pcap.c (routethrough): Remove dead code used for very old
+	systems.
+
 2017-01-11  Michael Wiegand <michael.wiegand@greenbone.net>
 
 	Fix a number of documentation issues.
