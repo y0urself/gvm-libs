@@ -27,7 +27,7 @@
  * @file prefs.h
  * @brief Protos and data structures for NVT Information data sets.
  *
- * This file contains the protos for \ref nvti.c
+ * This file contains the protos for \ref prefs.c
  */
 
 #ifndef _OPENVAS_PREFS_H

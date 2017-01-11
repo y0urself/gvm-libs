@@ -33,7 +33,8 @@
 
 /**
  * @brief Numerical representation of the supported authentication methods.
- * @brief Beware to have it in sync with \ref authentication_methods.
+ *        Beware to have it in sync with \p authentication_methods in
+ *        \ref openvas_auth.c.
  */
 enum authentication_method
 {
@@ -44,7 +45,7 @@ enum authentication_method
 };
 
 /** @brief Type for the numerical representation of the supported
- *  @brief authentication methods. */
+ *         authentication methods. */
 typedef enum authentication_method auth_method_t;
 
 const gchar *auth_method_name (auth_method_t);

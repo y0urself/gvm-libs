@@ -535,7 +535,7 @@ get_plugin_preference (const char *oid, const char *name)
  * pseudo-random locations with different names, the "real" file name has to be
  * looked up in a hashtable.
  *
- * @return Filename on disc for \ref filename, NULL if not found or setup
+ * @return Filename on disc for \p filename, NULL if not found or setup
  *         broken.
  */
 const char *
@@ -589,7 +589,7 @@ get_plugin_preference_fname (struct arglist *desc, const char *filename)
  * @param identifier Identifier that was supplied by the client when the file
  *                   was uploaded.
  *
- * @return Contents of the file identified by \ref identifier, NULL if not found or setup
+ * @return Contents of the file identified by \p identifier, NULL if not found or setup
  *         broken.
  */
 char *
@@ -621,7 +621,7 @@ get_plugin_preference_file_content (struct arglist *desc,
  * @param identifier Identifier that was supplied by the client when the file
  *                   was uploaded.
  *
- * @return Size of the file identified by \ref identifier, -1 if not found or
+ * @return Size of the file identified by \p identifier, -1 if not found or
  *         setup broken.
  */
 long

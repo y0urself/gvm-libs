@@ -46,7 +46,7 @@
 
 /**
  * @brief Array of string representations of the supported authentication
- * @brief methods.
+ *        methods.
  */
 /** @warning  Beware to have it in sync with \ref authentication_method. */
 static const gchar *authentication_methods[] = { "file",
@@ -90,7 +90,7 @@ openvas_auth_radius_enabled ()
 /**
  * @brief Return name of auth_method_t.
  *
- * Keep in sync with \ref authentication_methods and
+ * Keep in sync with \p authentication_methods and
  * \ref authentication_method .
  *
  * @param method Auth method.

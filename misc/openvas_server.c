@@ -506,7 +506,7 @@ openvas_server_open (gnutls_session_t * session, const char *host, int port)
 /**
  * @brief Close a server connection and its socket.
  *
- * @param[in]  socket   Socket connected to server (from \ref connect_to_server).
+ * @param[in]  socket   Socket connected to server.
  * @param[in]  session  GNUTLS session with server.
  *
  * @return 0 on success, -1 on error.
@@ -821,11 +821,11 @@ out:
 /**
  * @brief Send a string to the connection.
  *
- * @param[in]  session  Pointer to GNUTLS session.
- * @param[in]  fmt      Format of string to send.
- * @param[in]  ap       Args for fmt.
- * @param[in]  quiet    Whether to log debug and info messages.  Useful for
- *                      hiding passwords.
+ * @param[in]  connection  Connection.
+ * @param[in]  fmt         Format of string to send.
+ * @param[in]  ap          Args for fmt.
+ * @param[in]  quiet       Whether to log debug and info messages.  Useful for
+ *                         hiding passwords.
  *
  * @return 0 on success, 1 if server closed connection, -1 on error.
  */
@@ -903,9 +903,9 @@ openvas_server_vsendf_quiet (gnutls_session_t *session, const char *fmt,
 /**
  * @brief Send a string to the server, refraining from logging besides warnings.
  *
- * @param[in]  session  Pointer to GNUTLS session.
- * @param[in]  fmt      Format of string to send.
- * @param[in]  ap       Args for fmt.
+ * @param[in]  connection  Connection.
+ * @param[in]  fmt         Format of string to send.
+ * @param[in]  ap          Args for fmt.
  *
  * @return 0 on success, 1 if server closed connection, -1 on error.
  */
@@ -940,8 +940,8 @@ openvas_server_sendf (gnutls_session_t * session, const char *format, ...)
 /**
  * @brief Format and send a string to the server.
  *
- * @param[in]  session  Pointer to GNUTLS session.
- * @param[in]  format   printf-style format string for message.
+ * @param[in]  connection  Connection.
+ * @param[in]  format      printf-style format string for message.
  *
  * @return 0 on success, -1 on error.
  */
@@ -982,8 +982,8 @@ openvas_server_sendf_quiet (gnutls_session_t * session, const char *format, ...)
 /**
  * @brief Format and send a string to the server.
  *
- * @param[in]  session  Pointer to GNUTLS session.
- * @param[in]  format   printf-style format string for message.
+ * @param[in]  connection  Connection.
+ * @param[in]  format      printf-style format string for message.
  *
  * @return 0 on success, -1 on error.
  */
@@ -1087,8 +1087,8 @@ openvas_server_sendf_xml_quiet (gnutls_session_t * session,
  *
  * Quiet version, only logs warnings.
  *
- * @param[in]  session  Pointer to GNUTLS session.
- * @param[in]  format   printf-style format string for message.
+ * @param[in]  connection  Connection.
+ * @param[in]  format      printf-style format string for message.
  *
  * @return 0 on success, -1 on error.
  */

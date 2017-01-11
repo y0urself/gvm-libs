@@ -214,14 +214,14 @@ rawsocket (int family)
 
 
 /**
- * @brief Opens a packet filter, grabs packets from \ref dst to port \ref magic
+ * @brief Opens a packet filter, grabs packets from \p dst to port \p magic
  *
  * @param[out] src   in_addr of source.
  * @param[in]  dst   Destination.
  * @param[in]  magic Destination port on src to listen to.
  *
- * @return A bpf that listens to tcp packets coming from \ref dst to port
- *         \ref magic.
+ * @return A bpf that listens to tcp packets coming from \p dst to port
+ *         \p magic.
  */
 int
 openbpf (struct in_addr dst, struct in_addr * src, int magic)
@@ -273,7 +273,7 @@ struct list {
 
 
 /**
- * @return First pointer to list in l with the given \ref dport , NULL if no
+ * @return First pointer to list in l with the given \p dport , NULL if no
  *         such list item could be found.
  */
 struct list*
@@ -291,8 +291,8 @@ get_packet (struct list * l, unsigned short dport)
 
 
 /**
- * @brief If no packet with \ref dport is in list, prepends a "packet" to the
- * @brief list \ref l.
+ * @brief If no packet with \p dport is in list, prepends a "packet" to the
+ * @brief list \p l.
  */
 struct list*
 add_packet (struct list * l, unsigned short dport, unsigned long ack)

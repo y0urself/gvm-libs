@@ -33,7 +33,7 @@
 static pcap_t *pcaps[NUM_CLIENTS];
 
 /**
- * @return -1 in case of error, index of the opened pcap_t in \ref pcaps
+ * @return -1 in case of error, index of the opened pcap_t in pcaps
  *         otherwise.
  */
 int

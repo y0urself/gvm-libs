@@ -2273,7 +2273,7 @@ os_recv (int soc, void *buf, int len, int opt)
  * internal_send() / internal_recv() :
  *
  * When processes are passing messages to each other, the format is
- * <length><msg>, with <length> being a long integer. The functions
+ * \<length\>\<msg\>, with \<length\> being a long integer. The functions
  * internal_send() and internal_recv() encapsulate and decapsulate
  * the messages themselves.
  */
