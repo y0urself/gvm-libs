@@ -96,6 +96,7 @@ parse_script_infos (const char *file, struct arglist *script_infos)
 
   if (exec_nasl_script (script_infos, file, NULL, mode) < 0)
     {
+      arg_del_value (script_infos, "NVTI");
       printf ("%s could not be loaded\n", file);
       return NULL;
     }
