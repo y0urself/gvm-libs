@@ -24,7 +24,7 @@
  */
 
 /**
- * @todo This module fulfils the reqirements to be placed in the base library.
+ * @todo This module fulfils the requirements to be placed in the base library.
  */
 
 /**
@@ -303,7 +303,7 @@ free_log_configuration (GSList * log_domain_list)
    * item in the link list.
    */
 
-  /* Go the the head of the list. */
+  /* Go to the head of the list. */
   log_domain_list_tmp = log_domain_list;
   while (log_domain_list_tmp != NULL)
     {
@@ -428,7 +428,7 @@ openvas_log_func (const char *log_domain, GLogLevelFlags log_level,
   if (openvas_log_config_list != NULL && log_domain != NULL)
     {
 
-      /* Go the the head of the list. */
+      /* Go to the head of the list. */
       log_domain_list_tmp = (GSList *) openvas_log_config_list;
 
       while (log_domain_list_tmp != NULL)
@@ -470,7 +470,7 @@ openvas_log_func (const char *log_domain, GLogLevelFlags log_level,
   if (openvas_log_config_list != NULL && log_domain != NULL)
     {
 
-      /* Go the the head of the list. */
+      /* Go to the head of the list. */
       log_domain_list_tmp = (GSList *) openvas_log_config_list;
 
       while (log_domain_list_tmp != NULL)
