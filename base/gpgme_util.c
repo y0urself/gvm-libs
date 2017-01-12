@@ -183,24 +183,18 @@ openvas_init_gpgme_ctx_from_dir (const gchar *dir)
  * @brief Return the name of the writable GnuPG home directory
  *
  * Returns the name of the GnuPG home directory to use when checking
- * GnuPG signatures.  The return value is the value of the environment
- * variable OPENVAS_GPGHOME if it is set.  Otherwise it is the
+ * GnuPG signatures.  The return value is the
  * directory openvas/gnupg under the statedir that was set by
  * configure (usually $prefix/var/lib/openvas/gnupg).  The return
  * value must be released with g_free.
  *
- * @param subdir  Directory to use in OPENVAS_STATE_DIR for gpghome, if
- *                environment OPENVAS_GPGHOME is not set.
+ * @param subdir  Directory to use in OPENVAS_STATE_DIR for gpghome.
  *
  * @return Custom name of the GnuPG home directory for general use.
  */
 static char *
 determine_gpghome (const gchar *subdir)
 {
-  char *envdir = getenv ("OPENVAS_GPGHOME");
-
-  if (envdir)
-    return g_strdup (envdir);
   if (subdir)
     return g_build_filename (OPENVAS_STATE_DIR, subdir, "gnupg", NULL);
   return g_build_filename (OPENVAS_STATE_DIR, "gnupg", NULL);
@@ -215,8 +209,7 @@ determine_gpghome (const gchar *subdir)
  * is called.  It is advisable to call this function as early as
  * possible to notice a bad installation (e.g. an too old gpg version).
  *
- * @param subdir  Directory to use in OPENVAS_STATE_DIR for gpghome, if
- *                environment OPENVAS_GPGHOME is not set.
+ * @param subdir  Directory to use in OPENVAS_STATE_DIR for gpghome.
  *
  * @return The gpgme_ctx_t to the context or NULL if an error occurred.
  */
@@ -250,13 +243,8 @@ set_gpghome (const char *path)
 static char *
 get_sysconf_gpghome (void)
 {
-  char *envdir = NULL;
-
-  envdir = getenv ("OPENVAS_GPGHOME");
   if (gpghome)
     return g_strdup (gpghome);
-  else if (envdir)
-    return g_strdup (envdir);
   else
     return g_build_filename (OPENVAS_SYSCONF_DIR, "gnupg", NULL);
 }
