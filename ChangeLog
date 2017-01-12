@@ -1,5 +1,11 @@
 2017-01-12  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 
+	* base/gpgme_util.c (determine_gpghome): Removed. Functionality
+	merged into openvas_init_gpgme_ctx().
+	(openvas_init_gpgme_ctx): Determine the path directly here.
+
+2017-01-12  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
 	Removing support of environment variable OPENVAS_GPGHOME.
 	This is too magic for its own good.
 

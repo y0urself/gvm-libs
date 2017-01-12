@@ -180,27 +180,6 @@ openvas_init_gpgme_ctx_from_dir (const gchar *dir)
 }
 
 /**
- * @brief Return the name of the writable GnuPG home directory
- *
- * Returns the name of the GnuPG home directory to use when checking
- * GnuPG signatures.  The return value is the
- * directory openvas/gnupg under the statedir that was set by
- * configure (usually $prefix/var/lib/openvas/gnupg).  The return
- * value must be released with g_free.
- *
- * @param subdir  Directory to use in OPENVAS_STATE_DIR for gpghome.
- *
- * @return Custom name of the GnuPG home directory for general use.
- */
-static char *
-determine_gpghome (const gchar *subdir)
-{
-  if (subdir)
-    return g_build_filename (OPENVAS_STATE_DIR, subdir, "gnupg", NULL);
-  return g_build_filename (OPENVAS_STATE_DIR, "gnupg", NULL);
-}
-
-/**
  * @brief Returns a new gpgme context.
  *
  * Inits a gpgme context with the custom gpghome directory, protocol
@@ -219,7 +198,11 @@ openvas_init_gpgme_ctx (const gchar *subdir)
   char *path;
   gpgme_ctx_t ctx;
 
-  path = determine_gpghome (subdir);
+  if (subdir)
+    path = g_build_filename (OPENVAS_STATE_DIR, subdir, "gnupg", NULL);
+  else
+    path = g_build_filename (OPENVAS_STATE_DIR, "gnupg", NULL);
+
   ctx = openvas_init_gpgme_ctx_from_dir (path);
   g_free (path);
   return ctx;
