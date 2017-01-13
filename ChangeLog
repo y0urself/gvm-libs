@@ -1,3 +1,14 @@
+2017-01-13  Michael Wiegand <michael.wiegand@greenbone.net>
+
+	Improve check for Bison parse generator to make sure we use bison and
+	not bison++.
+
+	* nasl/CMakeLists.txt: Use CMake package test as it allows us to check
+	for the version of the bison binary, explain why version check is
+	used.
+
+	* INSTALL: Note version requirement for bison.
+
 2017-01-12  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 
 	* base/gpgme_util.c (determine_gpghome): Removed. Functionality

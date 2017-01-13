@@ -14,7 +14,7 @@ some supported platforms.
 
 General build environment:
 * a C compiler (e.g. gcc)
-* bison
+* bison >= 2.5
 * flex
 * cmake >= 3.0
 * pkg-config

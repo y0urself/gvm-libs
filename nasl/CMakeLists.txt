@@ -74,21 +74,24 @@ set (CMAKE_C_FLAGS_RELEASE      "${CMAKE_C_FLAGS_RELEASE} ${HARDENING_FLAGS}")
 
 ## Compile the parser - note that there are (better) CMake macros to achieve
 ## that
-  message (STATUS "Looking for bison...")
-find_program (BISON bison)
-if (NOT BISON)
+message (STATUS "Looking for bison...")
+# We require bison >= 2.5 to distinguish between 'bison' and 'bison++'. They share the
+# same binary name, but bison++ is at a lower version and does not seem to be actively
+# developed anymore. NASL builds with bison, but not bison++ so we need to distinguish
+# them here.
+find_package (BISON 2.5)
+if (NOT BISON_FOUND)
   message (SEND_ERROR "bison executable not found!")
-else (NOT BISON)
-  message (STATUS "Looking for bison... ${BISON}")
+else (NOT BISON_FOUND)
   add_custom_command (
-     COMMAND bison
+    COMMAND ${BISON_EXECUTABLE}
      ARGS -d -v -t -p nasl ${CMAKE_CURRENT_SOURCE_DIR}/nasl_grammar.y
      WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
      DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/nasl_grammar.y
      OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/nasl_grammar.tab.c
      OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/nasl_grammar.tab.h
      OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/nasl_grammar.output)
-endif (NOT BISON)
+endif (NOT BISON_FOUND)
 
 set (FILES arc4.c capture_packet.c charcnv.c exec.c genrand.c hmacmd5.c
      iconv.c lint.c md4.c md5.c nasl.c nasl_builtin_find_service.c
