@@ -24,9 +24,6 @@
 #ifndef NASL_SIGNATURE_H
 #define NASL_SIGNATURE_H
 
-#include <glib.h>
-#include "../base/gpgme_util.h"
-
 int nasl_verify_signature (const char *filename);
 
 #endif

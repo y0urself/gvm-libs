@@ -26,7 +26,7 @@
 #include <string.h>             /* for strlen */
 #include <locale.h>             /* for LC_CTYPE  */
 
-#include "nasl_signature.h"
+#include <gvm/util/gpgmeutils.h>
 
 #include "nasl_tree.h"
 #include "nasl_var.h"
@@ -127,9 +127,12 @@ nasl_verify_signature (const char *filename)
 {
   int retcode = -1;
   char *sigfilename = NULL;
+  gchar * path = g_build_filename (OPENVAS_SYSCONF_DIR, "gnupg", NULL);
   gpgme_error_t err;
-  gpgme_ctx_t ctx = openvas_init_gpgme_sysconf_ctx ();
+  gpgme_ctx_t ctx = gvm_init_gpgme_ctx_from_dir (path);
   gpgme_data_t sig = NULL, text = NULL;
+
+  g_free (path);
 
   if (ctx == NULL)
     {

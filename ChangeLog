@@ -1,3 +1,26 @@
+2017-01-13  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
+	Module "gpgme_util" is now in gvm-libs/util.
+
+	* base/gpgme_util.c, base/gpgme_util.h: Removed.
+
+	* base/CMakeLists.txt: Removed handling of this module.
+
+	* COPYING: Removed the files respectively.
+
+	* nasl/nasl.c: Remove include of gpgme_util.h and add include
+	of gpgme.h.
+
+	* nasl/nasl_grammar.y: Add the now necessary include of glib.h.
+
+	* nasl/nasl_signature.c: Include gvm/util/gpgmeutils.h instead of
+	nasl_signature.h.
+	(nasl_verify_signature): Use gvm_init_gpgme_ctx_from_dir() to directly
+	set the right path instead of relying on the configuration of the
+	libraries module.
+
+	* nasl/nasl_signature.h: Removed includes that are not needed here.
+
 2017-01-13  Michael Wiegand <michael.wiegand@greenbone.net>
 
 	Improve check for Bison parse generator to make sure we use bison and

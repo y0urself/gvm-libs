@@ -57,11 +57,10 @@ include_directories (${GLIB_INCLUDE_DIRS}
                      ${REDIS_INCLUDE_DIRS})
 
 if (MINGW)
-  set  (FILES nvticache.c gpgme_util.c)
-  set (HEADERS gpgme_util.h)
+  set  (FILES nvticache.c)
 else (MINGW)
-  set (FILES nvticache.c kb_redis.c gpgme_util.c)
-  set (HEADERS kb.h nvticache.h gpgme_util.h)
+  set (FILES nvticache.c kb_redis.c)
+  set (HEADERS kb.h nvticache.h)
 endif (MINGW)
 
 if (BUILD_STATIC)

@@ -31,6 +31,8 @@
 #include <string.h> /* for strlen */
 #include <sys/stat.h> /* for stat */
 
+#include <glib.h>
+
 #include "nasl_tree.h"
 #include "nasl_global_ctxt.h"
 #include "nasl_func.h"
