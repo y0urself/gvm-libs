@@ -1,3 +1,36 @@
+2017-01-18  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
+	Module "openvas_server" is now in gvm-libs/util.
+
+	* misc/openvas_server.c, misc/openvas_server.h: Removed.
+
+	* misc/CMakeLists.txt: Removed handling of this module.
+
+	* COPYING: Removed the files respectively.
+
+	* misc/network.c: Include gvm/util/serverutils.h instead of
+	openvas_server.h.
+
+	* omp/omp.c: Include gvm/util/serverutils.h instead of
+	openvas_server.h. Use gvm_server_sendf instead of
+	openvas_server_sendf, gvm_server_sendf_xml_quiet instead
+	of openvas_server_sendf_xml_quiet, gvm_connection_t instead
+	of openvas_connection_t, gvm_server_sendf_xml instead of
+	openvas_server_sendf_xml.
+
+	* omp/omp.h: Use gvm_connection_t instead of openvas_connection_t.
+
+	* omp/xml.c: Use gvm_connection_t instead of openvas_connection_t.
+
+	* omp/xml.h: Include gvm/util/serverutils.h instead of
+	openvas_server.h.  Use gvm_connection_t instead of openvas_connection_t.
+
+	* osp/osp.c: Include gvm/util/serverutils.h instead of
+	openvas_server.h.  Use gvm_server_open_with_cert instead of
+	openvas_server_open_with_cert, gvm_socket_vsendf instead of
+	openvas_socket_vsendf, gvm_server_close instead of
+	openvas_server_close.
+
 2017-01-16  Hani Benhabiles <hani.benhabiles@greenbone.net>
 
 	* omp/xml.c (try_read_entity_and_string_s): Fix memory leak.

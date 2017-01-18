@@ -30,7 +30,7 @@
 #include <gnutls/gnutls.h>
 #include <stdio.h>
 
-#include "../misc/openvas_server.h"
+#include <gvm/util/serverutils.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -91,25 +91,25 @@ int try_read_entity_and_string (gnutls_session_t *, int, entity_t *,
 
 int read_entity_and_string (gnutls_session_t *, entity_t *, GString **);
 
-int read_entity_and_string_c (openvas_connection_t *, entity_t *, GString **);
+int read_entity_and_string_c (gvm_connection_t *, entity_t *, GString **);
 
 int read_entity_and_text (gnutls_session_t *, entity_t *, char **);
 
-int read_entity_and_text_c (openvas_connection_t *, entity_t *, char **);
+int read_entity_and_text_c (gvm_connection_t *, entity_t *, char **);
 
 int try_read_entity (gnutls_session_t *, int, entity_t *);
 
-int try_read_entity_c (openvas_connection_t *, int, entity_t *);
+int try_read_entity_c (gvm_connection_t *, int, entity_t *);
 
 int read_entity (gnutls_session_t *, entity_t *);
 
 int read_entity_s (int, entity_t *);
 
-int read_entity_c (openvas_connection_t *, entity_t *);
+int read_entity_c (gvm_connection_t *, entity_t *);
 
 int read_string (gnutls_session_t *, GString **);
 
-int read_string_c (openvas_connection_t *, GString **);
+int read_string_c (gvm_connection_t *, GString **);
 
 int parse_entity (const char *, entity_t *);
 

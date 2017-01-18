@@ -832,7 +832,7 @@ read_entity_and_string (gnutls_session_t * session, entity_t * entity,
  * @return 0 success, -1 read error, -2 parse error, -3 end of file.
  */
 int
-read_entity_and_string_c (openvas_connection_t *connection, entity_t * entity,
+read_entity_and_string_c (gvm_connection_t *connection, entity_t * entity,
                           GString ** string_return)
 {
   if (connection->tls)
@@ -887,7 +887,7 @@ read_entity_and_text (gnutls_session_t * session, entity_t * entity,
  * @return 0 success, -1 read error, -2 parse error, -3 end of file.
  */
 int
-read_entity_and_text_c (openvas_connection_t *connection, entity_t *entity,
+read_entity_and_text_c (gvm_connection_t *connection, entity_t *entity,
                         char **text)
 {
   if (text)
@@ -935,7 +935,7 @@ read_string (gnutls_session_t * session, GString ** string)
  * @return 0 success, -1 read error, -2 parse error, -3 end of file.
  */
 int
-read_string_c (openvas_connection_t *connection, GString **string)
+read_string_c (gvm_connection_t *connection, GString **string)
 {
   int ret = 0;
   entity_t entity;
@@ -973,7 +973,7 @@ try_read_entity (gnutls_session_t * session, int timeout, entity_t * entity)
  * @return 0 success, -1 read error, -2 parse error, -3 end of file, -4 timeout.
  */
 int
-try_read_entity_c (openvas_connection_t *connection, int timeout,
+try_read_entity_c (gvm_connection_t *connection, int timeout,
                    entity_t * entity)
 {
   if (connection->tls)
@@ -1018,7 +1018,7 @@ read_entity_s (int socket, entity_t * entity)
  * @return 0 success, -1 read error, -2 parse error, -3 end of file.
  */
 int
-read_entity_c (openvas_connection_t *connection, entity_t *entity)
+read_entity_c (gvm_connection_t *connection, entity_t *entity)
 {
   return try_read_entity_c (connection, 0, entity);
 }

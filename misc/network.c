@@ -47,6 +47,7 @@
 #include <gnutls/x509.h>
 
 #include <gvm/base/networking.h>
+#include <gvm/util/serverutils.h> /* for load_gnutls_file */
 
 #ifdef __FreeBSD__
 #include <netinet/in.h>
@@ -62,7 +63,6 @@
 #include "internal_com.h" /* for INTERNAL_COMM_MSG_TYPE_CTRL */
 #include "support.h"
 #include "openvas_logging.h"
-#include "openvas_server.h"
 
 #define TIMEOUT 20
 

@@ -31,7 +31,8 @@
 
 #include <gvm/base/hosts.h>
 
-#include "../misc/openvas_server.h"
+#include <gvm/util/serverutils.h>
+
 #include "../omp/xml.h"
 #include "osp.h"
 
@@ -105,7 +106,7 @@ osp_connection_new (const char *host, int port, const char *cacert,
         return NULL;
 
       connection = g_malloc0 (sizeof (*connection));
-      connection->socket = openvas_server_open_with_cert
+      connection->socket = gvm_server_open_with_cert
                             (&connection->session, host, port, cacert, cert, key);
     }
   if (connection->socket == -1)
@@ -141,14 +142,14 @@ osp_send_command (osp_connection_t *connection, entity_t *response,
 
   if (*connection->host == '/')
     {
-      if (openvas_socket_vsendf (connection->socket, fmt, ap) == -1)
+      if (gvm_socket_vsendf (connection->socket, fmt, ap) == -1)
         goto out;
       if (read_entity_s (connection->socket, response))
         goto out;
     }
   else
     {
-      if (openvas_server_vsendf (&connection->session, fmt, ap) == -1)
+      if (gvm_server_vsendf (&connection->session, fmt, ap) == -1)
         goto out;
       if (read_entity (&connection->session, response))
         goto out;
@@ -176,7 +177,7 @@ osp_connection_close (osp_connection_t *connection)
   if (*connection->host == '/')
     close (connection->socket);
   else
-    openvas_server_close (connection->socket, connection->session);
+    gvm_server_close (connection->socket, connection->session);
   g_free (connection->host);
   g_free (connection);
 }
