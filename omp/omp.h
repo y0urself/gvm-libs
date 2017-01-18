@@ -27,8 +27,7 @@
 #define _OPENVAS_LIBRARIES_OMP_H
 
 #include <gvm/base/array.h>
-
-#include "xml.h"
+#include <gvm/util/xmlutils.h>
 
 #ifdef __cplusplus
 extern "C"

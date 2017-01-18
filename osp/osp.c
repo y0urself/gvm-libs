@@ -23,17 +23,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include <glib.h>
-#include <sys/un.h>
-#include <unistd.h>
+#include <sys/un.h>            /* for struct sockaddr_un */
+#include <unistd.h>            /* for close */
+#include <assert.h>            /* for assert */
 
-#include <assert.h>
+#include <gvm/base/hosts.h>    /* for gvm_get_host_type */
+#include <gvm/util/xmlutils.h> /* for entity_t */
 
-#include <gvm/base/hosts.h>
-
-#include <gvm/util/serverutils.h>
-
-#include "../omp/xml.h"
 #include "osp.h"
 
 

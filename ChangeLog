@@ -1,5 +1,21 @@
 2017-01-18  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 
+	Module "xml" is now in gvm-libs/util.
+
+	* omp/xml.c, omp/xml.h: Removed.
+
+	* omp/CMakeLists.txt: Removed handling of this module.
+
+	* COPYING: Removed the files respectively.
+
+	* omp/omp.c: Removed unneeded include of xml.h.
+
+	* omp/omp.h: Include gvm/util/xmlutils.h instead of xml.h.
+
+	* osp/osp.c: Removed some unneeded includes.
+
+2017-01-18  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
 	Module "openvas_server" is now in gvm-libs/util.
 
 	* misc/openvas_server.c, misc/openvas_server.h: Removed.

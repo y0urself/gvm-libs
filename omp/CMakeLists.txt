@@ -34,9 +34,9 @@ endif (NOT MINGW)
 
 include_directories (${LIBGVM_BASE_INCLUDE_DIRS})
 
-set (FILES xml.c omp.c)
+set (FILES omp.c)
 
-set (HEADERS xml.h omp.h)
+set (HEADERS omp.h)
 
 include_directories (${GLIB_INCLUDE_DIRS})
 link_directories( ${CMAKE_CURRENT_BINARY_DIR}/../misc )

@@ -49,7 +49,6 @@
 #include <gvm/util/serverutils.h>
 
 #include "omp.h"
-#include "xml.h"
 
 #undef G_LOG_DOMAIN
 /**
