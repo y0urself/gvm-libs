@@ -6,7 +6,7 @@
  * Laban Mwangi <lmwangi@penguinlabs.co.ke>
  *
  * Copyright:
- * Copyright (C) 2009 PenguinLabs Limited
+ * Copyright (C) 2017 Greenbone Networks GmbH
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2,

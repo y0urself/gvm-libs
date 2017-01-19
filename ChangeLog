@@ -1,5 +1,10 @@
 2017-01-19  Michael Wiegand <michael.wiegand@greenbone.net>
 
+	* misc/openvas_logging.c, misc/openvas_logging.h: Transferred
+	copyright as requested by Laban Mwangi, the original author.
+
+2017-01-19  Michael Wiegand <michael.wiegand@greenbone.net>
+
 	* misc/pcap.c (v6_getsourceip): Fix typo in debug message.
 
 2017-01-18  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
