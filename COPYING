@@ -122,6 +122,3 @@ nasl/tests/testsuitesummary.nasl: GPLv2+
 
 omp/CMakeLists.txt: GPLv2+
 omp/omp.[c|h]: GPLv2+
-
-osp/CMakeLists.txt: GPLv2+
-osp/osp.[c|h]: GPLv2+
