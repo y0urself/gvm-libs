@@ -742,7 +742,7 @@ v6_getsourceip (struct in6_addr *src, struct in6_addr *dst)
       src->s6_addr32[2] = htonl (0xffff);
       src->s6_addr32[3] = sock.sin_addr.s_addr;
 #ifdef TCPIP_DEBUGGING
-      printf ("source addrss is %s\n",
+      printf ("source address is %s\n",
               inet_ntop (AF_INET6, src, name, sizeof (name)));
 #endif
       close (sd);
