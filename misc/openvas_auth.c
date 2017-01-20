@@ -28,10 +28,6 @@
 
 #include "openvas_auth.h"
 
-#ifndef _WIN32
-#include "openvas_uuid.h"
-#endif
-
 #include <gvm/base/array.h>
 
 #include <errno.h>

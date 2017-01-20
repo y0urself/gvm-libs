@@ -20,13 +20,13 @@ General build environment:
 * pkg-config
 
 Specific development libraries:
+* libgvm_base, libgvm_util >= 1.0.0
 * libglib >= 2.32
 * libgnutls >= 3.2.15
 * libgcrypt
 * zlib
 * libpcap
 * libgpgme >= 1.1.2
-* uuid-dev (from e2fsprogs)
 * libssh >= 0.5.0
 * libhiredis >= 0.10.1
 * libksba >= 1.0.7
@@ -52,7 +52,7 @@ Recommended to have RADIUS support:
 
 Install prerequisites on Debian GNU/Linux 'Jessie' 8:
 # apt-get install gcc pkg-config libssh-dev libgnutls28-dev libglib2.0-dev \
-  libpcap-dev libgpgme11-dev uuid-dev bison libksba-dev libhiredis-dev \
+  libpcap-dev libgpgme11-dev bison libksba-dev libhiredis-dev \
   libsnmp-dev libgcrypt20-dev libldap2-dev
 
 

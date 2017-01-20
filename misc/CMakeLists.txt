@@ -42,8 +42,6 @@ endif (MINGW)
 ## Config
 
 if (NOT MINGW)
-  pkg_check_modules (UUID REQUIRED uuid)
-
   if (BUILD_WITH_RADIUS)
     message (STATUS "Looking for freeradius-client library...")
     find_library (LIBRADIUS freeradius-client)
@@ -93,12 +91,12 @@ if (MINGW)
 else (MINGW)
   set (FILES arglists.c bpf_share.c ftp_funcs.c ids_send.c ldap_connect_auth.c
              network.c openvas_ssh.c openvas_auth.c openvas_logging.c
-             openvas_uuid.c plugutils.c popen.c radius.c
+             plugutils.c popen.c radius.c
              openvas_proctitle.c prefs.c www_funcs.c pcap.c)
 
   set (HEADERS arglists.h bpf_share.h ftp_funcs.h ldap_connect_auth.h
                network.h pcap_openvas.h plugutils.h popen.h openvas_proctitle.h
-               openvas_auth.h openvas_logging.h openvas_uuid.h
+               openvas_auth.h openvas_logging.h
                openvas_ssh.h prefs.h nvt_categories.h internal_com.h www_funcs.h
                radius.h)
 endif (MINGW)
@@ -134,7 +132,7 @@ if (BUILD_SHARED)
 
   if (MINGW)
     set (GLIB_LDFLAGS -Wl,--start-group ${GLIB_LDFLAGS} gmodule-2.0 -Wl,--end-group)
-    set (W32LIBS uuid ${GLIB_LDFLAGS} gnutls intl iconv tasn1
+    set (W32LIBS ${GLIB_LDFLAGS} gnutls intl iconv tasn1
        gcrypt gpgme assuan libgpg-error ole32 ws2_32 ffi z shlwapi dnsapi winmm)
     target_link_libraries (openvas_misc_shared openvas_base_shared ${W32LIBS})
   else (MINGW)

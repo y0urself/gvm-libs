@@ -1,3 +1,18 @@
+2017-01-20  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
+	Module "openvas_uuid" is now in gvm-libs/util.
+
+	* misc/openvas_uuid.c, misc/openvas_uuid.h: Removed.
+
+	* misc/CMakeLists.txt: Removed handling of this module.
+
+	* INSTALL: Remove uuid as dependency. Add missing requiremnt
+	to gvmlib.
+
+	* COPYING: Removed the files respectively.
+
+	* misc/openvas_auth.c: Remove unneeded include.
+
 2017-01-20  Michael Wiegand <michael.wiegand@greenbone.net>
 
 	* doc/Doxyfile.in, doc/Doxyfile_full.in: Remove 'osp/' directory from
