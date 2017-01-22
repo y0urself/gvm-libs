@@ -38,6 +38,8 @@ gchar *get_time (gchar *);
 void openvas_log_silent (const char *, GLogLevelFlags, const char *, gpointer);
 void openvas_log_func (const char *, GLogLevelFlags, const char *, gpointer);
 
+void log_func_for_gnutls (int, const char *);
+
 void setup_log_handlers (GSList *);
 
 void setup_legacy_log_handler (void (*)(const char *, va_list));

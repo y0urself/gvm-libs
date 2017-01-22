@@ -1,3 +1,12 @@
+2017-01-22  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
+	* misc/openvas_logging.c (log_func_for_gnutls): Make public.
+	(setup_log_handlers): Remove code for ssetting gnutls logging in
+	order to make this module indpendent of gnutls.
+
+	* misc/openvas_logging.h: Add proto for now-public
+	function log_func_for_gnutls().
+
 2017-01-20  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 
 	Module "openvas_uuid" is now in gvm-libs/util.

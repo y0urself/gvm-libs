@@ -47,7 +47,6 @@
 #include <stdarg.h>
 #include <libgen.h>
 #include <errno.h>
-#include <gnutls/gnutls.h>
 
 #include "openvas_logging.h"
 
@@ -723,7 +722,7 @@ openvas_log_func (const char *log_domain, GLogLevelFlags log_level,
  * OPENVAS_GNUTLS_DEBUG is to be set to the desired log level as
  * described in the GNUTLS manual.
  */
-static void
+void
 log_func_for_gnutls (int level, const char *message)
 {
   g_log ("x  gnutls", G_LOG_LEVEL_INFO, "tls(%d): %s", level, message);
@@ -788,16 +787,6 @@ setup_log_handlers (GSList * openvas_log_config_list)
                                        G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL |
                                        G_LOG_FLAG_RECURSION),
                      (GLogFunc) openvas_log_func, openvas_log_config_list);
-
-  /* Check whether GNUTLS debugging has been enabled.  */
-  {
-    const char *s;
-    if ((s=getenv ("OPENVAS_GNUTLS_DEBUG")))
-      {
-        gnutls_global_set_log_function (log_func_for_gnutls);
-        gnutls_global_set_log_level (atoi (s));
-      }
-  }
 }
 
 
