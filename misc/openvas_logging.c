@@ -718,7 +718,7 @@ openvas_log_func (const char *log_domain, GLogLevelFlags log_level,
 /**
  * @brief This function logs debug messages from gnutls.
  *
- * To enable GNUTLS debug messages, the environment variable @ref @c
+ * To enable GNUTLS debug messages, the environment variable @c
  * OPENVAS_GNUTLS_DEBUG is to be set to the desired log level as
  * described in the GNUTLS manual.
  */
