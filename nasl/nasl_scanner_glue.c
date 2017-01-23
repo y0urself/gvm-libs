@@ -34,6 +34,8 @@
 
 #include <glib.h>
 
+#include <gvm/base/logging.h>
+
 #include "../base/kb.h"                 /* for KB_TYPE_INT */
 #include "../misc/plugutils.h"          /* for plug_set_id */
 #include "../misc/network.h"            /* for getpts */
@@ -43,7 +45,6 @@
 #include "nasl_func.h"
 #include "nasl_var.h"
 #include "nasl_lex_ctxt.h"
-#include "../misc/openvas_logging.h"
 
 #include "nasl_debug.h"
 #include "nasl_scanner_glue.h"

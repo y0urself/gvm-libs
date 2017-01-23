@@ -28,8 +28,9 @@
 #include <net-snmp/net-snmp-config.h>
 #include <net-snmp/net-snmp-includes.h>
 
+#include <gvm/base/logging.h>
+
 #include <assert.h>
-#include "../misc/openvas_logging.h"
 #include "nasl_lex_ctxt.h"
 #include "../misc/plugutils.h"
 

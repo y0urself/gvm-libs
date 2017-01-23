@@ -28,8 +28,9 @@
 
 #include <glib.h>
 
+#include <gvm/base/logging.h>
+
 #include "arglists.h"
-#include "openvas_logging.h"
 
 #define HASH_MAX 2713
 

@@ -1,3 +1,25 @@
+2017-01-23  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
+	Module "openvas_logging" is now in gvm-libs/base.
+
+	* misc/openvas_logging.c, misc/openvas_logging.h: Removed.
+
+	* misc/CMakeLists.txt: Removed handling of this module.
+
+	* COPYING: Removed the files respectively.
+
+	* misc/arglists.c, misc/bpf_share.c, misc/ids_send.c, misc/network.c,
+	misc/pcap.c, misc/plugutils.c: Include gvm/base/logging.h instead of
+	openvas_logging.h.
+
+	* nasl/charcnv.c, nasl/exec.c, nasl/nasl_builtin_nmap.c,
+	nasl/nasl_builtin_openvas_tcp_scanner.c, nasl/nasl_builtin_synscan.c,
+	nasl/nasl_cert.c, nasl/nasl_crypto2.c, nasl/nasl_crypto.c,
+	nasl/nasl_debug.c, nasl/nasl_grammar.tab.c, nasl/nasl_grammar.y,
+	nasl/nasl_scanner_glue.c, nasl/nasl_smb.c, nasl/nasl_snmp.c,
+	nasl/nasl_socket.c, nasl/nasl_ssh.c, nasl/nasl_wmi.c:
+	Include gvm/base/logging.h instead of ../misc/openvas_logging.h.
+
 2017-01-23  Michael Wiegand <michael.wiegand@greenbone.net>
 
 	* misc/openvas_logging.c (log_func_for_gnutls): Remove superfluous

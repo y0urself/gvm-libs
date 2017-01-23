@@ -20,6 +20,8 @@
 #include <stdarg.h>
 #include <unistd.h>
 
+#include <gvm/base/logging.h>
+
 #include "../misc/arglists.h"
 
 #include "nasl_tree.h"
@@ -29,7 +31,6 @@
 #include "nasl_lex_ctxt.h"
 #include "exec.h"
 #include "../misc/plugutils.h"
-#include "../misc/openvas_logging.h"
 
 
 extern FILE *nasl_trace_fp;

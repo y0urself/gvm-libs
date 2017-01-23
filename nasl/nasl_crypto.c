@@ -26,6 +26,8 @@
 #include <gcrypt.h>
 #include <glib.h>
 
+#include <gvm/base/logging.h>
+
 #include "nasl_tree.h"
 #include "nasl_global_ctxt.h"
 #include "nasl_func.h"
@@ -36,7 +38,6 @@
 #include "hmacmd5.h"
 #include "smb_crypt.h"
 #include "nasl_debug.h"
-#include "../misc/openvas_logging.h"
 
 #include <ctype.h>
 #include <stdlib.h>

@@ -23,7 +23,7 @@
 
 #include <pcap.h>
 
-#include "openvas_logging.h"
+#include <gvm/base/logging.h>
 
 #undef DEBUG
 #undef DEBUG_HIGH

@@ -45,7 +45,8 @@
 #include <gnutls/gnutls.h>
 #include <gnutls/x509.h>
 
-#include "../misc/openvas_logging.h"
+#include <gvm/base/logging.h>
+
 #include "nasl_tree.h"
 #include "nasl_global_ctxt.h"
 #include "nasl_func.h"

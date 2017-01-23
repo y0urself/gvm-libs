@@ -475,7 +475,7 @@ glob: GLOBAL arg_decl
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../misc/openvas_logging.h"
+#include <gvm/base/logging.h>
 #include <gcrypt.h>
 
 static void

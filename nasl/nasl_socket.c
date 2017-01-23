@@ -46,10 +46,10 @@
 
 #include <gnutls/gnutls.h>
 #include <gvm/base/networking.h> /* for gvm_source_set_socket */
+#include <gvm/base/logging.h>
 
 #include "../misc/network.h"
 #include "../misc/plugutils.h"          /* for plug_get_host_ip */
-#include "../misc/openvas_logging.h"
 
 #include "nasl.h"
 

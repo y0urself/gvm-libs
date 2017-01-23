@@ -30,10 +30,11 @@
 
 #include <glib.h>
 
+#include <gvm/base/logging.h>
+
 #include "../misc/arglists.h" /* for struct arglist */
 #include "../misc/plugutils.h" /* for find_in_path */
 #include "../misc/prefs.h"          /* for prefs_get */
-#include "../misc/openvas_logging.h"
 #include "../misc/network.h"
 
 #include "nasl_lex_ctxt.h"

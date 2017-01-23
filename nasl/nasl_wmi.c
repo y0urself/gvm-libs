@@ -53,11 +53,11 @@
 #include <inttypes.h>
 
 #include <gvm/base/networking.h>
+#include <gvm/base/logging.h>
 
 #include "../misc/plugutils.h"
 #include "nasl_wmi.h"
 #include "openvas_wmi_interface.h"
-#include "../misc/openvas_logging.h"
 
 #define IMPORT(var) char *var = get_str_local_var_by_name(lexic, #var)
 #define max 5

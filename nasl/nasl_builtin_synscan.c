@@ -36,11 +36,12 @@
 #include <netinet/tcp.h> /* for TH_SYN */
 #include <netinet/ip.h>
 
+#include <gvm/base/logging.h>
+
 #include "../misc/arglists.h" /* for struct arglist */
 #include "../misc/bpf_share.h" /* for bpf_open_live */
 #include "../misc/pcap_openvas.h" /* for get_datalink_size */
 #include "../misc/plugutils.h" /* for scanner_add_port */
-#include "../misc/openvas_logging.h"
 #include "../misc/prefs.h"          /* for prefs_get */
 #include "../misc/network.h"    /* for getpts */
 

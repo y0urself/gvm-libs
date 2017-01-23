@@ -37,13 +37,14 @@
 #include <stdlib.h>
 #include <arpa/inet.h>
 
+#include <gvm/base/logging.h>
+
 #include "arglists.h"
 #include "bpf_share.h"
 #include "ids_send.h"
 #include "network.h"
 #include "pcap_openvas.h"
 #include "plugutils.h"
-#include "openvas_logging.h"
 #include "support.h"
 
 /** @todo: It still needs to be taken care

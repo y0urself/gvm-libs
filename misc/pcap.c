@@ -31,10 +31,10 @@
 #include <ifaddrs.h>
 
 #include <gvm/base/networking.h>
+#include <gvm/base/logging.h>
 
 #include "bpf_share.h"
 #include "pcap_openvas.h"
-#include "openvas_logging.h"
 #include "network.h"
 #include "support.h"
 
