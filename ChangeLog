@@ -1,3 +1,8 @@
+2017-01-27  Hani Benhabiles <hani.benhabiles@greenbone.net>
+
+	* misc/prefs.c (prefs_set): Fix possible use-after-free when old and
+	value point to the same data.
+
 2017-01-23  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 
 	Module "openvas_logging" is now in gvm-libs/base.
