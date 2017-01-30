@@ -1,3 +1,13 @@
+2017-01-30  Hani Benhabiles <hani.benhabiles@greenbone.net>
+
+	* misc/plugutils.c (get_plugin_preference): Adjust to prefs change to
+	GHashTable.
+
+	* misc/prefs.c: Remove comment about arglist.
+	(global_prefs): Change from arglist to GHashTable.
+	(prefs_init, preferences_get, prefs_get_bool, prefs_set, prefs_dump):
+	Adjust to change of global_prefs type.
+
 2017-01-27  Hani Benhabiles <hani.benhabiles@greenbone.net>
 
 	* misc/prefs.c (prefs_set): Fix possible use-after-free when old and

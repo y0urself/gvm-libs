@@ -482,8 +482,10 @@ add_plugin_preference (struct arglist *desc, const char *name, const char *type,
 char *
 get_plugin_preference (const char *oid, const char *name)
 {
-  struct arglist *prefs;
+  GHashTable *prefs;
+  GHashTableIter iter;
   char *plug_name, *cname;
+  void *itername, *itervalue;
   nvti_t * nvti;
 
   prefs = preferences_get ();
@@ -497,13 +499,13 @@ get_plugin_preference (const char *oid, const char *name)
   cname = g_strdup (name);
 
   g_strchomp (cname);
-  while (prefs->next)
+  g_hash_table_iter_init (&iter, prefs);
+  while (g_hash_table_iter_next (&iter, &itername, &itervalue))
     {
       char *a, *b;
-      char *t = prefs->name;
 
-      a = strchr (t, '[');
-      b = strchr (t, ']');
+      a = strchr (itername, '[');
+      b = strchr (itername, ']');
       if (a && b && b[1] == ':')
         {
           b += 2 * sizeof (char);
@@ -511,17 +513,16 @@ get_plugin_preference (const char *oid, const char *name)
             {
               int old = a[0];
               a[0] = 0;
-              if (!strcmp (t, plug_name))
+              if (!strcmp (itername, plug_name))
                 {
                   a[0] = old;
                   g_free (cname);
                   nvti_free (nvti);
-                  return (prefs->value);
+                  return itervalue;
                 }
               a[0] = old;
             }
         }
-      prefs = prefs->next;
     }
   g_free (cname);
   nvti_free (nvti);

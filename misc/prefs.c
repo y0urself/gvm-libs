@@ -29,11 +29,6 @@
  *
  * A gloabl store of preferences to scanner and NVTs is handled by this
  * module.
- *
- * The module is currently using arglist, but eventually once the all
- * of the Scanner uses the preferences via this module, it cann be replaced
- * by a better technology and then be moved to base. Possibly a consolidation
- * with the settings iterator make sense.
  */
 
 #include <string.h> /* for strlen() */
@@ -43,9 +38,8 @@
 
 #include <gvm/base/settings.h> /* for init_settings_iterator_from_file */
 
-#include "arglists.h"          /* for struct arglist */
 
-static struct arglist *global_prefs = NULL;
+static GHashTable *global_prefs = NULL;
 
 /**
  * @brief Initializes the preferences structure. If it was
@@ -56,16 +50,16 @@ static void
 prefs_init (void)
 {
   if (global_prefs)
-    arg_free (global_prefs);
+    g_hash_table_destroy (global_prefs);
 
-  global_prefs = g_malloc0 (sizeof (struct arglist));
+  global_prefs = g_hash_table_new (g_str_hash, g_str_equal);
 }
 
 /**
  * @brief Get the pointer to the global preferences structure.
  *        Eventually this function should not be used anywhere.
  */
-struct arglist *
+GHashTable *
 preferences_get (void)
 {
   if (!global_prefs)
@@ -89,10 +83,7 @@ prefs_get (const gchar * key)
   if (!global_prefs)
     prefs_init ();
 
-  if (arg_get_type (global_prefs, key) != ARG_STRING)
-    return NULL;
-
-  return arg_get_value (global_prefs, key);
+  return g_hash_table_lookup (global_prefs, key);
 }
 
 /**
@@ -109,15 +100,14 @@ prefs_get (const gchar * key)
 int
 prefs_get_bool (const gchar * key)
 {
+  gchar *str;
+
   if (!global_prefs)
     prefs_init ();
 
-  if (arg_get_type (global_prefs, key) == ARG_STRING)
-    {
-      gchar *str = arg_get_value (global_prefs, key);
-      if (str && !strcmp (str, "yes"))
-        return 1;
-    }
+  str = g_hash_table_lookup (global_prefs, key);
+  if (str && !strcmp (str, "yes"))
+    return 1;
 
   return 0;
 }
@@ -136,15 +126,7 @@ prefs_set (const gchar * key, const gchar * value)
   if (!global_prefs)
     prefs_init ();
 
-  if (arg_get_value (global_prefs, key))
-    {
-      gchar *old = arg_get_value (global_prefs, key);
-      arg_set_value (global_prefs, key, g_strdup (value));
-      g_free (old);
-      return;
-    }
-
-  arg_add_value (global_prefs, key, ARG_STRING, g_strdup (value));
+  g_hash_table_insert (global_prefs, g_strdup (key), g_strdup (value));
 }
 
 /**
@@ -178,12 +160,13 @@ prefs_config (const char *config)
 void
 prefs_dump (void)
 {
-  struct arglist * prefs = global_prefs;
+  void *name, *value;
+  GHashTableIter iter;
 
-  while (prefs && prefs->next)
+  g_hash_table_iter_init (&iter, global_prefs);
+  while (g_hash_table_iter_next (&iter, &name, &value))
     {
-      printf ("%s = %s\n", prefs->name, (char *) prefs->value);
-      prefs = prefs->next;
+      printf ("%s = %s\n", (char *) name, (char *) value);
     }
 }
 

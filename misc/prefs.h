@@ -42,6 +42,7 @@ void prefs_set (const gchar *, const gchar *);
 void prefs_dump (void);
 int prefs_nvt_timeout (const char *);
 
-struct arglist * preferences_get (void);
+GHashTable *
+preferences_get (void);
 
 #endif /* not _OPENVAS_PREFS_H */
