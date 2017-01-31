@@ -46,10 +46,6 @@ Recommended to have LDAP support:
 * libldap >= 2.4.11
   (LDAP can be disabled with -DBUILD_WITHOUT_LDAP=1)
 
-Recommended to have RADIUS support:
-* libfreeradius-client >= 1.1.6
-  (RADIUS can be enabled with -DBUILD_WITH_RADIUS=1)
-
 Install prerequisites on Debian GNU/Linux 'Jessie' 8:
 # apt-get install gcc pkg-config libssh-dev libgnutls28-dev libglib2.0-dev \
   libpcap-dev libgpgme11-dev bison libksba-dev libhiredis-dev \

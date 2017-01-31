@@ -1,5 +1,15 @@
 2017-01-31  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 
+	Module "radius" is now in gvm-libs/util.
+
+	* misc/radius.c, misc/radius.h: Removed.
+
+	* misc/CMakeLists.txt: Removed handling of this module.
+
+	* INSTALL: Remove hints about radius.
+
+2017-01-31  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
 	Moving omp library to gvm-libs as gmp library.
 
 	* CMakeLists.txt: Remove any handling for omp library.
