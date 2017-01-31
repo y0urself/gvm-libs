@@ -1,3 +1,14 @@
+2017-01-31  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
+	Moving omp library to gvm-libs as gmp library.
+
+	* CMakeLists.txt: Remove any handling for omp library.
+
+	* INSTALL: Removed references to omp library.
+
+	* omp/, omp/CMakeLists.txt, omp/README.txt, omp/omp.c, omp/omp.h,
+	libopenvas_omp.pc.in: Removed.
+
 2017-01-30  Hani Benhabiles <hani.benhabiles@greenbone.net>
 
 	* misc/plugutils.c (get_plugin_preference): Adjust to prefs change to

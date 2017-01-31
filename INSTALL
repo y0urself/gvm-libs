@@ -127,10 +127,8 @@ distribution in your message.
 Building OpenVAS Libraries statically linked
 --------------------------------------------
 
-If you want to build a statically linked version of OpenVAS Libraries -- for
-example to subsequently build a statically linked OMP command line client or
-Nagios plugin from the "openvas-cli" module -- you need statically linked
-versions of the prerequisite libraries as well.
+If you want to build a statically linked version of OpenVAS Libraries
+you need statically linked versions of the prerequisite libraries as well.
 
 This can be a problem with current versions of the GnuTLS library. In most
 distributions GnuTLS is built with p11-kit support, which makes linking
@@ -148,9 +146,9 @@ and install it into the path you configured.
 
 Once you have build and installed the GnuTLS library, configure OpenVAS
 Libraries with the following parameters to request statically linked versions of
-the "base", "misc" and "omp" modules:
+the "base" and "misc" modules:
 
-   $ cmake -DBUILD_STATIC=1 -DBUILD_SHARED=0 -DOPENVAS_OMP_ONLY=1 ..
+   $ cmake -DBUILD_STATIC=1 -DBUILD_SHARED=0 ..
 
 Once again, the "make install" command will build and install the requested
 modules.

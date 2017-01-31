@@ -47,7 +47,6 @@ if (NOT CMAKE_BUILD_TYPE)
   set (CMAKE_BUILD_TYPE Debug)
 endif (NOT CMAKE_BUILD_TYPE)
 
-OPTION(OPENVAS_OMP_ONLY "Build only the omp library and the required base and misc libraries" OFF)
 OPTION(BUILD_STATIC "Build static versions of the openvas libraries" OFF)
 
 if (NOT BUILD_STATIC)
@@ -203,35 +202,33 @@ pkg_check_modules (GLIB REQUIRED glib-2.0>=2.32)
 pkg_check_modules (LIBGVM_BASE REQUIRED libgvm_base>=1.0.0)
 pkg_check_modules (LIBGVM_UTIL REQUIRED libgvm_util>=1.0.0)
 
-if (NOT OPENVAS_OMP_ONLY)
-  pkg_check_modules (OPENVAS_WMICLIENT libopenvas_wmiclient>=1.0.1)
-  pkg_check_modules (OPENVAS_WINCMD libopenvas_wincmd>=1.0.1)
-  pkg_check_modules (LIBSSH REQUIRED libssh>=0.5.0)
+pkg_check_modules (OPENVAS_WMICLIENT libopenvas_wmiclient>=1.0.1)
+pkg_check_modules (OPENVAS_WINCMD libopenvas_wincmd>=1.0.1)
+pkg_check_modules (LIBSSH REQUIRED libssh>=0.5.0)
 
-  message (STATUS "Looking for pcap...")
-  find_library (PCAP pcap)
-  message (STATUS "Looking for pcap... ${PCAP}")
-  if (NOT PCAP)
-    message (SEND_ERROR "The pcap library is required.")
-  endif (NOT PCAP)
+message (STATUS "Looking for pcap...")
+find_library (PCAP pcap)
+message (STATUS "Looking for pcap... ${PCAP}")
+if (NOT PCAP)
+  message (SEND_ERROR "The pcap library is required.")
+endif (NOT PCAP)
 
-  message (STATUS "Looking for pcap-config...")
-  find_program (PCAP_CONFIG pcap-config)
+message (STATUS "Looking for pcap-config...")
+find_program (PCAP_CONFIG pcap-config)
 
-  if (PCAP_CONFIG)
-    message (STATUS "Looking for pcap-config... ${PCAP_CONFIG}")
-    execute_process (COMMAND pcap-config --libs
-      OUTPUT_VARIABLE PCAP_LDFLAGS
-      OUTPUT_STRIP_TRAILING_WHITESPACE)
-    execute_process (COMMAND pcap-config --cflags
-      OUTPUT_VARIABLE PCAP_CFLAGS
-      OUTPUT_STRIP_TRAILING_WHITESPACE)
-  else (PCAP_CONFIG)
-    message (STATUS "pcap-config not found, using defaults...")
-    set (PCAP_LDFLAGS "-L/usr/lib -lpcap")
-    set (PCAP_CFLAGS "-I/usr/include")
-  endif (PCAP_CONFIG)
-endif (NOT OPENVAS_OMP_ONLY)
+if (PCAP_CONFIG)
+  message (STATUS "Looking for pcap-config... ${PCAP_CONFIG}")
+  execute_process (COMMAND pcap-config --libs
+    OUTPUT_VARIABLE PCAP_LDFLAGS
+    OUTPUT_STRIP_TRAILING_WHITESPACE)
+  execute_process (COMMAND pcap-config --cflags
+    OUTPUT_VARIABLE PCAP_CFLAGS
+    OUTPUT_STRIP_TRAILING_WHITESPACE)
+else (PCAP_CONFIG)
+  message (STATUS "pcap-config not found, using defaults...")
+  set (PCAP_LDFLAGS "-L/usr/lib -lpcap")
+  set (PCAP_CFLAGS "-I/usr/include")
+endif (PCAP_CONFIG)
 
 if (NOT MINGW)
   # TODO: We do not have a library lookup for those modules
@@ -296,7 +293,6 @@ configure_file (doc/Doxyfile.in ${CMAKE_BINARY_DIR}/doc/Doxyfile @ONLY)
 configure_file (doc/Doxyfile_full.in ${CMAKE_BINARY_DIR}/doc/Doxyfile_full @ONLY)
 configure_file (VERSION.in ${CMAKE_BINARY_DIR}/VERSION @ONLY)
 configure_file (libopenvas_base.pc.in ${CMAKE_BINARY_DIR}/libopenvas_base.pc @ONLY)
-configure_file (libopenvas_omp.pc.in ${CMAKE_BINARY_DIR}/libopenvas_omp.pc @ONLY)
 configure_file (libopenvas_misc.pc.in ${CMAKE_BINARY_DIR}/libopenvas_misc.pc @ONLY)
 configure_file (libopenvas_nasl.pc.in ${CMAKE_BINARY_DIR}/libopenvas_nasl.pc @ONLY)
 
@@ -304,10 +300,7 @@ configure_file (libopenvas_nasl.pc.in ${CMAKE_BINARY_DIR}/libopenvas_nasl.pc @ON
 
 add_subdirectory (base)
 add_subdirectory (misc)
-if (NOT OPENVAS_OMP_ONLY)
-  add_subdirectory (nasl)
-endif (NOT OPENVAS_OMP_ONLY)
-add_subdirectory (omp)
+add_subdirectory (nasl)
 
 ## Documentation
 
@@ -321,8 +314,6 @@ install (FILES doc/openvas-nasl-lint.1
          DESTINATION ${DATADIR}/man/man1 )
 
 install (FILES ${CMAKE_BINARY_DIR}/libopenvas_base.pc
-         DESTINATION ${LIBDIR}/pkgconfig)
-install (FILES ${CMAKE_BINARY_DIR}/libopenvas_omp.pc
          DESTINATION ${LIBDIR}/pkgconfig)
 install (FILES ${CMAKE_BINARY_DIR}/libopenvas_misc.pc
          DESTINATION ${LIBDIR}/pkgconfig)
