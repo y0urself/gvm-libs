@@ -117,6 +117,3 @@ nasl/tests/test_script_signing.sh: GPLv2+
 nasl/tests/test_socket.nasl: GPLv2+
 nasl/tests/testsuiteinit.nasl: GPLv2+
 nasl/tests/testsuitesummary.nasl: GPLv2+
-
-omp/CMakeLists.txt: GPLv2+
-omp/omp.[c|h]: GPLv2+
