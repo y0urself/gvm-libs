@@ -1,3 +1,17 @@
+2017-02-02  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
+	Module "openvas_ssh" is now in gvm-libs/util.
+
+	* misc/openvas_ssh.c, misc/openvas_ssh.h: Removed.
+
+	* misc/CMakeLists.txt: Removed handling of this module.
+
+	* CMakeLists.txt: Remove checks for LIBSSH.
+
+	* INSTALL: Remove hints about ssh.
+
+	* nasl/nasl_ssh.c: Removed unneeded incude.
+
 2017-02-01  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 
 	* COPYING: Remove omp/.

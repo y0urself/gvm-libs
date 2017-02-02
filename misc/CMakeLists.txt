@@ -74,17 +74,17 @@ if (NOT MINGW)
 endif (NOT MINGW)
 
 if (MINGW)
-  set (FILES openvas_auth.c openvas_ssh.c openvas_proctitle.c)
-  set (HEADERS openvas_proctitle.h openvas_ssh.h openvas_auth.h)
+  set (FILES openvas_auth.c openvas_proctitle.c)
+  set (HEADERS openvas_proctitle.h openvas_auth.h)
 else (MINGW)
   set (FILES arglists.c bpf_share.c ftp_funcs.c ids_send.c ldap_connect_auth.c
-             network.c openvas_ssh.c openvas_auth.c plugutils.c popen.c
+             network.c openvas_auth.c plugutils.c popen.c
              openvas_proctitle.c prefs.c www_funcs.c pcap.c)
 
   set (HEADERS arglists.h bpf_share.h ftp_funcs.h ldap_connect_auth.h
                network.h pcap_openvas.h plugutils.h popen.h openvas_proctitle.h
                openvas_auth.h
-               openvas_ssh.h prefs.h nvt_categories.h internal_com.h www_funcs.h)
+               prefs.h nvt_categories.h internal_com.h www_funcs.h)
 endif (MINGW)
 
 if (BUILD_WITH_LDAP)
@@ -123,7 +123,7 @@ if (BUILD_SHARED)
     target_link_libraries (openvas_misc_shared openvas_base_shared ${W32LIBS})
   else (MINGW)
     target_link_libraries (openvas_misc_shared LINK_PRIVATE ${GNUTLS_LDFLAGS} openvas_base_shared ${UUID_LDFLAGS}
-                           ${GLIB_LDFLAGS} ${PCAP_LDFLAGS} ${LIBSSH_LDFLAGS} ${LDAP_LDFLAGS}
+                           ${GLIB_LDFLAGS} ${PCAP_LDFLAGS} ${LDAP_LDFLAGS}
                            ${GCRYPT_LDFLAGS} ${LINKER_HARDENING_FLAGS})
   endif (MINGW)
 endif (BUILD_SHARED)

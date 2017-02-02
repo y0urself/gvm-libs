@@ -63,7 +63,6 @@
 #include "nasl_debug.h"
 #include "../misc/network.h"            /* for openvas_get_socket_from_connection */
 #include "../misc/prefs.h"  /* for prefs_get() */
-#include "../misc/openvas_ssh.h"
 
 #include "nasl_ssh.h"
 
