@@ -587,7 +587,7 @@ redis2kbitem_single (const char *name, const redisReply *elt, int force_int)
 
   item->next    = NULL;
   item->namelen = namelen;
-  strcpy (item->name, name);
+  strncpy (item->name, name, namelen);
 
   return item;
 }
