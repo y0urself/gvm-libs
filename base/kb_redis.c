@@ -427,7 +427,7 @@ redis_new (kb_t *kb, const char *kb_path)
 
   kbr = g_malloc0 (sizeof (struct kb_redis) + strlen (kb_path) + 1);
   kbr->kb.kb_ops = &KBRedisOperations;
-  strcpy (kbr->path, kb_path);
+  strncpy (kbr->path, kb_path, strlen (kb_path));
 
   rc = redis_test_connection (kbr);
   if (rc)
