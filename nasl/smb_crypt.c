@@ -388,7 +388,7 @@ void SMBsesskeygen_ntv1_ntlmssp(const uchar kr[16],
 {
   /* yes, this session key does not change - yes, this
      is a problem - but it is 128 bits */
-
+  (void) nt_resp;
   mdfour_ntlmssp((unsigned char *)sess_key, kr, 16);
 
 }
@@ -547,6 +547,8 @@ void SMBNTLMv2encrypt_hash_ntlmssp(const char *user, const char *domain, uchar n
                       uint8_t *lm_response, uint8_t *nt_response,
                       uint8_t *user_session_key)
 {
+  (void) user;
+  (void) domain;
   NTLMv2_generate_response_ntlmssp(ntlm_v2_hash, server_chal, address_list, address_list_len, nt_response);
 
   /* The NTLMv2 calculations also provide a session key, for signing etc later */

@@ -77,7 +77,7 @@ size_t smb_iconv_ntlmssp(smb_iconv_t cd,
 		bufsize = sizeof(cvtbuf);
 
 		if (cd->pull(cd->cd_pull,
-			     inbuf, inbytesleft, &bufp, &bufsize) == -1
+			     inbuf, inbytesleft, &bufp, &bufsize) == (size_t) -1
 		    && errno != E2BIG) return -1;
 
 		bufp = cvtbuf;
@@ -85,7 +85,8 @@ size_t smb_iconv_ntlmssp(smb_iconv_t cd,
 
 		if (cd->push(cd->cd_push,
 			     (const char **)&bufp, &bufsize,
-			     outbuf, outbytesleft) == -1) return -1;
+			     outbuf, outbytesleft) == (size_t) -1)
+                  return -1;
 	}
 
 	return 0;
@@ -215,6 +216,7 @@ static size_t iconv_copy_ntlmssp(void *cd, const char **inbuf, size_t *inbytesle
 
 	n = MIN(*inbytesleft, *outbytesleft);
 
+        (void) cd;
 	memmove(*outbuf, *inbuf, n);
 
 	(*inbytesleft) -= n;

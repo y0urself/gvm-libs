@@ -91,6 +91,8 @@ uint8_t * ntlmssp_genauth_keyexchg(uint8_t *session_key, char *challenge_data, u
   /* Make up a new session key */
   uint8 client_session_key[16];
 
+  (void) challenge_data;
+  (void) nt_hash;
   generate_random_buffer_ntlmssp(client_session_key, sizeof(client_session_key));
   /* Encrypt the new session key with the old one */
 

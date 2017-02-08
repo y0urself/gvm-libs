@@ -1,3 +1,27 @@
+2017-02-08  Hani Benhabiles <hani.benhabiles@greenbone.net>
+
+	* nasl/iconv.c (smb_iconv_ntlmssp), nasl/nasl_builtin_find_service.c
+	(mark_swat_server, mark_vqserver, mark_mldonkey, mark_http_proxy)
+	(mark_auth_server, mark_pop_server, mark_mysql, mark_cvspserver)
+	(mark_cvsupserver, mark_cvslockserver, mark_rsync, mark_wild_shell)
+	(mark_telnet_server, mark_gnome14_server, mark_eggdrop_server)
+	(mark_netbus_server, mark_finger_server, mark_lpd_server)
+	(mark_lyskom_server, mark_ph_server, mark_time_server, mark_ens_server)
+	(mark_citrix_server, mark_giop_server, mark_tcpmux_server)
+	(mark_BitTorrent_server, mark_smux_server, mark_LISa_server)
+	(mark_msdtc_server, mark_nagiosd_server, mark_teamspeak2_server)
+	(mark_websm_server, mark_ofa_express_server, mark_smppd_server)
+	(mark_upsmon_server, mark_sub7_server, mark_spamd_server)
+	(mark_quicktime_streaming_server, mark_dameware_server)
+	(mark_stonegate_auth_server, mark_listserv_server, mark_fssniffer)
+	(mark_remote_nc_server, mark_ppp_daemon, mark_ircxpro_admin_server)
+	(mark_gnocatan_server, mark_pnsclient, mark_veritas_backup)
+	(mark_jabber_server, plugin_do_run, sigterm, sigchld, fwd_data)
+	(plugin_run_find_service), nasl/ntlmssp.c (ntlmssp_genauth_keyexchg),
+	nasl/smb_crypt.c (SMBsesskeygen_ntv1_ntlmssp)
+	(SMBNTLMv2encrypt_hash_ntlmssp): Fix unused-parameter and sign-compare
+	extra warnings.
+
 2017-02-07  Hani Benhabiles <hani.benhabiles@greenbone.net>
 
 	* nasl/nasl.c (main): Fork before executing each plugin. This fixes

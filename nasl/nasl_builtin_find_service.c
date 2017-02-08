@@ -146,20 +146,20 @@ mark_nntp_server (struct arglist *desc, int port, char *buffer, int trp)
 
 
 void
-mark_swat_server (struct arglist *desc, int port, unsigned char *buffer)
+mark_swat_server (struct arglist *desc, int port)
 {
   register_service (desc, port, "swat");
 }
 
 void
-mark_vqserver (struct arglist *desc, int port, unsigned char *buffer)
+mark_vqserver (struct arglist *desc, int port)
 {
   register_service (desc, port, "vqServer-admin");
 }
 
 
 void
-mark_mldonkey (struct arglist *desc, int port, unsigned char *buffer)
+mark_mldonkey (struct arglist *desc, int port)
 {
   char ban[512];
   register_service (desc, port, "mldonkey");
@@ -320,7 +320,7 @@ mark_ssh_server (struct arglist *desc, int port, char *buffer)
 }
 
 void
-mark_http_proxy (struct arglist *desc, int port, unsigned char *buffer, int trp)
+mark_http_proxy (struct arglist *desc, int port, int trp)
 {
   char ban[512];
   /* the banner is in www/banner/port */
@@ -336,7 +336,8 @@ mark_pop_server (struct arglist *desc, int port, char *buffer)
   char *c = strchr (buffer, '\n');
   char ban[512];
   char *buffer2;
-  int i;
+  unsigned int i;
+
   if (c)
     c[0] = 0;
   buffer2 = g_strdup (buffer);
@@ -380,7 +381,7 @@ mark_imap_server (struct arglist *desc, int port, char *buffer, int trp)
 }
 
 void
-mark_auth_server (struct arglist *desc, int port, char *buffer)
+mark_auth_server (struct arglist *desc, int port)
 {
   register_service (desc, port, "auth");
   post_log (oid, desc, port, "An identd server is running on this port");
@@ -392,7 +393,7 @@ mark_auth_server (struct arglist *desc, int port, char *buffer)
  * <vincent@strongholdnet.com>
  */
 void
-mark_postgresql (struct arglist *desc, int port, char *buffer)
+mark_postgresql (struct arglist *desc, int port)
 {
   register_service (desc, port, "postgresql");
   /* if (port != 5432) */
@@ -400,7 +401,7 @@ mark_postgresql (struct arglist *desc, int port, char *buffer)
 }
 
 void
-mark_mysql (struct arglist *desc, int port, char *buffer)
+mark_mysql (struct arglist *desc, int port)
 {
   register_service (desc, port, "mysql");
   /* if (port != 3306) */
@@ -408,7 +409,7 @@ mark_mysql (struct arglist *desc, int port, char *buffer)
 }
 
 void
-mark_cvspserver (struct arglist *desc, int port, char *buffer, int trp)
+mark_cvspserver (struct arglist *desc, int port)
 {
   register_service (desc, port, "cvspserver");
   /* if (port != 2401) */
@@ -417,7 +418,7 @@ mark_cvspserver (struct arglist *desc, int port, char *buffer, int trp)
 
 
 void
-mark_cvsupserver (struct arglist *desc, int port, char *buffer, int trp)
+mark_cvsupserver (struct arglist *desc, int port)
 {
   register_service (desc, port, "cvsup");
   post_log (oid, desc, port, "A CVSup server is running on this port");
@@ -425,7 +426,7 @@ mark_cvsupserver (struct arglist *desc, int port, char *buffer, int trp)
 
 
 void
-mark_cvslockserver (struct arglist *desc, int port, char *buffer, int trp)
+mark_cvslockserver (struct arglist *desc, int port)
 {
   register_service (desc, port, "cvslockserver");
   /* if (port != 2401) */
@@ -433,7 +434,7 @@ mark_cvslockserver (struct arglist *desc, int port, char *buffer, int trp)
 }
 
 void
-mark_rsync (struct arglist *desc, int port, char *buffer, int trp)
+mark_rsync (struct arglist *desc, int port)
 {
   register_service (desc, port, "rsync");
   post_log (oid, desc, port, "A rsync server is running on this port");
@@ -441,7 +442,7 @@ mark_rsync (struct arglist *desc, int port, char *buffer, int trp)
 
 
 void
-mark_wild_shell (struct arglist *desc, int port, char *buffer)
+mark_wild_shell (struct arglist *desc, int port)
 {
 
   register_service (desc, port, "wild_shell");
@@ -451,7 +452,7 @@ mark_wild_shell (struct arglist *desc, int port, char *buffer)
 }
 
 void
-mark_telnet_server (struct arglist *desc, int port, char *buffer, int trp)
+mark_telnet_server (struct arglist *desc, int port, int trp)
 {
   char ban[255];
   register_service (desc, port, "telnet");
@@ -464,7 +465,7 @@ mark_telnet_server (struct arglist *desc, int port, char *buffer, int trp)
 }
 
 void
-mark_gnome14_server (struct arglist *desc, int port, char *buffer, int trp)
+mark_gnome14_server (struct arglist *desc, int port, int trp)
 {
   char ban[255];
   register_service (desc, port, "gnome14");
@@ -477,7 +478,7 @@ mark_gnome14_server (struct arglist *desc, int port, char *buffer, int trp)
 }
 
 void
-mark_eggdrop_server (struct arglist *desc, int port, char *buffer, int trp)
+mark_eggdrop_server (struct arglist *desc, int port, int trp)
 {
   char ban[255];
   register_service (desc, port, "eggdrop");
@@ -490,7 +491,7 @@ mark_eggdrop_server (struct arglist *desc, int port, char *buffer, int trp)
 }
 
 void
-mark_netbus_server (struct arglist *desc, int port, char *buffer)
+mark_netbus_server (struct arglist *desc, int port)
 {
   register_service (desc, port, "netbus");
   post_alarm (oid, desc, port, "NetBus is running on this port");
@@ -508,8 +509,7 @@ mark_linuxconf (struct arglist *desc, int port, unsigned char *buffer)
 }
 
 static void
-mark_finger_server (struct arglist *desc, int port, unsigned char *banner,
-                    int trp)
+mark_finger_server (struct arglist *desc, int port, int trp)
 {
   char tmp[256];
 
@@ -566,7 +566,7 @@ mark_uucp_server (struct arglist *desc, int port, unsigned char *banner,
 
 
 static void
-mark_lpd_server (struct arglist *desc, int port, unsigned char *banner, int trp)
+mark_lpd_server (struct arglist *desc, int port, int trp)
 {
   char tmp[255];
 
@@ -580,8 +580,7 @@ mark_lpd_server (struct arglist *desc, int port, unsigned char *banner, int trp)
 
 /* http://www.lysator.liu.se/lyskom/lyskom-server/ */
 static void
-mark_lyskom_server (struct arglist *desc, int port, unsigned char *banner,
-                    int trp)
+mark_lyskom_server (struct arglist *desc, int port, int trp)
 {
   char tmp[255];
 
@@ -594,7 +593,7 @@ mark_lyskom_server (struct arglist *desc, int port, unsigned char *banner,
 
 /* http://www.emailman.com/ph/ */
 static void
-mark_ph_server (struct arglist *desc, int port, unsigned char *banner, int trp)
+mark_ph_server (struct arglist *desc, int port, int trp)
 {
   char tmp[255];
 
@@ -606,7 +605,7 @@ mark_ph_server (struct arglist *desc, int port, unsigned char *banner, int trp)
 }
 
 static void
-mark_time_server (struct arglist *desc, int port, unsigned char *banner, int trp)
+mark_time_server (struct arglist *desc, int port, int trp)
 {
   char tmp[256];
 
@@ -619,7 +618,7 @@ mark_time_server (struct arglist *desc, int port, unsigned char *banner, int trp
 
 
 static void
-mark_ens_server (struct arglist *desc, int port, char *banner, int trp)
+mark_ens_server (struct arglist *desc, int port, int trp)
 {
   char tmp[255];
   register_service (desc, port, "iPlanetENS");
@@ -631,7 +630,7 @@ mark_ens_server (struct arglist *desc, int port, char *banner, int trp)
 }
 
 static void
-mark_citrix_server (struct arglist *desc, int port, const char *banner, int trp)
+mark_citrix_server (struct arglist *desc, int port, int trp)
 {
   char tmp[255];
 
@@ -643,7 +642,7 @@ mark_citrix_server (struct arglist *desc, int port, const char *banner, int trp)
 }
 
 static void
-mark_giop_server (struct arglist *desc, int port, const char *banner, int trp)
+mark_giop_server (struct arglist *desc, int port, int trp)
 {
   char tmp[255];
 
@@ -674,7 +673,7 @@ mark_exchg_routing_server (struct arglist *desc, int port, char *buffer,
 
 
 static void
-mark_tcpmux_server (struct arglist *desc, int port, char *buffer, int trp)
+mark_tcpmux_server (struct arglist *desc, int port, int trp)
 {
   char msg[255];
 
@@ -687,7 +686,7 @@ mark_tcpmux_server (struct arglist *desc, int port, char *buffer, int trp)
 
 
 static void
-mark_BitTorrent_server (struct arglist *desc, int port, unsigned char *buffer, int trp)
+mark_BitTorrent_server (struct arglist *desc, int port, int trp)
 {
   char msg[255];
 
@@ -699,8 +698,7 @@ mark_BitTorrent_server (struct arglist *desc, int port, unsigned char *buffer, i
 }
 
 static void
-mark_smux_server (struct arglist *desc, int port, unsigned char *buffer,
-                  int trp)
+mark_smux_server (struct arglist *desc, int port, int trp)
 {
   char msg[255];
 
@@ -718,8 +716,7 @@ mark_smux_server (struct arglist *desc, int port, unsigned char *buffer,
  * it usually runs on port 7741.
  */
 static void
-mark_LISa_server (struct arglist *desc, int port, unsigned char *banner,
-                  int trp)
+mark_LISa_server (struct arglist *desc, int port, int trp)
 {
   char tmp[255];
 
@@ -738,7 +735,7 @@ mark_LISa_server (struct arglist *desc, int port, unsigned char *banner,
  *
  */
 static void
-mark_msdtc_server (struct arglist *desc, int port, unsigned char *buffer)
+mark_msdtc_server (struct arglist *desc, int port)
 {
   register_service (desc, port, "msdtc");
   post_log (oid, desc, port, "A MSDTC server is running on this port");
@@ -923,7 +920,7 @@ mark_acap_server (struct arglist *desc, int port, char *buffer, int trp)
  * books).
  */
 static void
-mark_nagiosd_server (struct arglist *desc, int port, char *buffer, int trp)
+mark_nagiosd_server (struct arglist *desc, int port, int trp)
 {
   char ban[255];
   register_service (desc, port, "nagiosd");
@@ -941,7 +938,7 @@ mark_nagiosd_server (struct arglist *desc, int port, char *buffer, int trp)
  * That's Teamspeak2 rc2 Server - http://www.teamspeak.org/
  */
 static void
-mark_teamspeak2_server (struct arglist *desc, int port, char *buffer, int trp)
+mark_teamspeak2_server (struct arglist *desc, int port, int trp)
 {
   char ban[255];
   register_service (desc, port, "teamspeak2");
@@ -968,7 +965,7 @@ mark_teamspeak2_server (struct arglist *desc, int port, char *buffer, int trp)
  * configured and used with.  (AIX Version 5.1)
  */
 static void
-mark_websm_server (struct arglist *desc, int port, char *buffer, int trp)
+mark_websm_server (struct arglist *desc, int port, int trp)
 {
   char ban[255];
   register_service (desc, port, "websm");
@@ -983,7 +980,7 @@ mark_websm_server (struct arglist *desc, int port, char *buffer, int trp)
  * 00: 43 4e 46 47 41 50 49                               CNFGAPI
  */
 static void
-mark_ofa_express_server (struct arglist *desc, int port, char *buffer, int trp)
+mark_ofa_express_server (struct arglist *desc, int port, int trp)
 {
   char ban[255];
   register_service (desc, port, "ofa_express");
@@ -1003,7 +1000,7 @@ mark_ofa_express_server (struct arglist *desc, int port, char *buffer, int trp)
  * 0.78..
  */
 static void
-mark_smppd_server (struct arglist *desc, int port, char *buffer, int trp)
+mark_smppd_server (struct arglist *desc, int port, int trp)
 {
   char ban[255];
   register_service (desc, port, "smppd");
@@ -1021,7 +1018,7 @@ mark_smppd_server (struct arglist *desc, int port, char *buffer, int trp)
  * 20: 43 4f 4d 4d 41 4e 44 0a COMMAND.
  */
 static void
-mark_upsmon_server (struct arglist *desc, int port, char *buffer, int trp)
+mark_upsmon_server (struct arglist *desc, int port, int trp)
 {
   char ban[255];
   register_service (desc, port, "upsmon");
@@ -1040,7 +1037,7 @@ mark_upsmon_server (struct arglist *desc, int port, char *buffer, int trp)
  * 30: 67 65 6e 64 73 20 32 2e 31                         gends 2.1
  */
 static void
-mark_sub7_server (struct arglist *desc, int port, char *buffer, int trp)
+mark_sub7_server (struct arglist *desc, int port, int trp)
 {
   char ban[255];
   register_service (desc, port, "sub7");
@@ -1058,7 +1055,7 @@ mark_sub7_server (struct arglist *desc, int port, char *buffer, int trp)
  *  20: 54 20 2f 20 48 54 54 50 2f 31 2e 30 0d 0d 0a       T /
  */
 static void
-mark_spamd_server (struct arglist *desc, int port, char *buffer, int trp)
+mark_spamd_server (struct arglist *desc, int port, int trp)
 {
   char ban[255];
   register_service (desc, port, "spamd");
@@ -1070,8 +1067,7 @@ mark_spamd_server (struct arglist *desc, int port, char *buffer, int trp)
 
 /* Thanks to Mike Blomgren */
 static void
-mark_quicktime_streaming_server (struct arglist *desc, int port, char *buffer,
-                                 int trp)
+mark_quicktime_streaming_server (struct arglist *desc, int port, int trp)
 {
   char ban[255];
   register_service (desc, port, "quicktime-streaming-server");
@@ -1083,7 +1079,7 @@ mark_quicktime_streaming_server (struct arglist *desc, int port, char *buffer,
 
 /* Thanks to Allan <als@bpal.com> */
 static void
-mark_dameware_server (struct arglist *desc, int port, char *buffer, int trp)
+mark_dameware_server (struct arglist *desc, int port, int trp)
 {
   char ban[255];
   register_service (desc, port, "dameware");
@@ -1093,8 +1089,7 @@ mark_dameware_server (struct arglist *desc, int port, char *buffer, int trp)
 }
 
 static void
-mark_stonegate_auth_server (struct arglist *desc, int port, char *buffer,
-                            int trp)
+mark_stonegate_auth_server (struct arglist *desc, int port, int trp)
 {
   char ban[255];
   register_service (desc, port, "SG_ClientAuth");
@@ -1106,7 +1101,7 @@ mark_stonegate_auth_server (struct arglist *desc, int port, char *buffer,
 
 
 void
-mark_listserv_server (struct arglist *desc, int port, char *buffer, int trp)
+mark_listserv_server (struct arglist *desc, int port, int trp)
 {
   char ban[255];
   register_service (desc, port, "listserv");
@@ -1120,7 +1115,7 @@ mark_listserv_server (struct arglist *desc, int port, char *buffer, int trp)
 
 
 void
-mark_fssniffer (struct arglist *desc, int port, char *buffer, int trp)
+mark_fssniffer (struct arglist *desc, int port, int trp)
 {
   char ban[255];
   register_service (desc, port, "FsSniffer");
@@ -1133,7 +1128,7 @@ mark_fssniffer (struct arglist *desc, int port, char *buffer, int trp)
 }
 
 void
-mark_remote_nc_server (struct arglist *desc, int port, char *buffer, int trp)
+mark_remote_nc_server (struct arglist *desc, int port, int trp)
 {
   char ban[255];
   register_service (desc, port, "RemoteNC");
@@ -1305,7 +1300,7 @@ mark_interscan_viruswall (struct arglist *desc, int port, char *buffer, int trp)
 }
 
 static void
-mark_ppp_daemon (struct arglist *desc, int port, char *buffer, int trp)
+mark_ppp_daemon (struct arglist *desc, int port, int trp)
 {
   char ban[512];
 
@@ -1331,8 +1326,7 @@ mark_zebra_server (struct arglist *desc, int port, char *buffer, int trp)
 }
 
 static void
-mark_ircxpro_admin_server (struct arglist *desc, int port, char *buffer,
-                           int trp)
+mark_ircxpro_admin_server (struct arglist *desc, int port, int trp)
 {
   char ban[512];
 
@@ -1346,7 +1340,7 @@ mark_ircxpro_admin_server (struct arglist *desc, int port, char *buffer,
 
 
 static void
-mark_gnocatan_server (struct arglist *desc, int port, char *buffer, int trp)
+mark_gnocatan_server (struct arglist *desc, int port, int trp)
 {
   char ban[512];
 
@@ -1389,7 +1383,7 @@ mark_dictd_server (struct arglist *desc, int port, char *buffer, int trp)
 
 /* Thanks to Tony van Lingen */
 static void
-mark_pnsclient (struct arglist *desc, int port, char *buffer, int trp)
+mark_pnsclient (struct arglist *desc, int port, int trp)
 {
   char ban[512];
 
@@ -1403,7 +1397,7 @@ mark_pnsclient (struct arglist *desc, int port, char *buffer, int trp)
 
 /* Thanks to Jesus D. Munoz */
 static void
-mark_veritas_backup (struct arglist *desc, int port, char *buffer, int trp)
+mark_veritas_backup (struct arglist *desc, int port, int trp)
 {
   char ban[512];
   register_service (desc, port, "VeritasNetBackup");
@@ -1427,7 +1421,7 @@ mark_pblocald_server (struct arglist *desc, int port, char *buffer, int trp)
 }
 
 static void
-mark_jabber_server (struct arglist *desc, int port, char *buffer, int trp)
+mark_jabber_server (struct arglist *desc, int port, int trp)
 {
   char ban[255];
   register_service (desc, port, "jabber");
@@ -1510,7 +1504,7 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
   char *head = "Ports/tcp/", *host_fqdn;
   u_short unknown[65535];
   int num_unknown = 0;
-  int len_head = strlen (head);
+  size_t len_head = strlen (head);
 
   int rw_timeout = 5, cnx_timeout = 5, wrap_timeout = 3;
   int x, timeout;
@@ -1547,10 +1541,10 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
           int cnx;
           char *line;
           char *origline;
-          int trp, i;
+          int trp;
           char buffer[2049];
           unsigned char *banner = NULL, *bannerHex = NULL;
-          int banner_len;
+          size_t banner_len, i;
           int port = atoi (h->name + len_head);
           int flg = 0;
           int unindentified_service = 0;
@@ -1570,7 +1564,8 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
           bannerHex = plug_get_key (desc, kb, &type, NULL);
           if (type == ARG_STRING && bannerHex != NULL && bannerHex[0] != '\0')
             {
-              int i, c1, c2;
+              int c1, c2;
+              unsigned int i;
               banner_len = strlen ((char *) bannerHex) / 2;
               if (banner_len >= sizeof (buffer))
                 banner_len = sizeof (buffer) - 1;
@@ -1661,8 +1656,8 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
 
           if (cnx >= 0 || banner_len > 0)
             {
-              int len, line_len;
-              int realfd = -1;
+              int line_len, realfd = -1;
+              size_t len;
 
               if (cnx >= 0)
                 {
@@ -1877,7 +1872,8 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
 
                   {
                     char buf2[sizeof (buffer) * 2 + 1];
-                    int y, flag = 0;
+                    int flag = 0;
+                    unsigned int y;
 
                     strcat (kb, "Hex");
 
@@ -1935,12 +1931,12 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
                           || ((u_char) buffer[1] == 252)
                           || ((u_char) buffer[1] == 253)
                           || ((u_char) buffer[1] == 254)))
-                    mark_telnet_server (desc, port, origline, trp);
+                    mark_telnet_server (desc, port, trp);
                   else if (((u_char) buffer[0] == 0)
                            && ((u_char) buffer[1] == 1)
                            && ((u_char) buffer[2] == 1)
                            && ((u_char) buffer[3] == 0))
-                    mark_gnome14_server (desc, port, origline, trp);
+                    mark_gnome14_server (desc, port, trp);
                   else
                     if (strncmp
                         (line, "http/1.0 403 forbidden",
@@ -1951,7 +1947,7 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
                     }
                   else if (strstr ((char *) banner, "Eggdrop") != NULL &&
                            strstr ((char *) banner, "Eggheads") != NULL)
-                    mark_eggdrop_server (desc, port, origline, trp);
+                    mark_eggdrop_server (desc, port, trp);
                   else if (strncmp (line, "$lock ", strlen ("$lock ")) == 0)
                     mark_direct_connect_hub (desc, port, trp);
                   else if (len > 34 && strstr (&(buffer[34]), "iss ecnra"))
@@ -1997,22 +1993,22 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
                            && strstr (line, "smtp ") != NULL)
                     mark_smtp_server (desc, port, origline, trp);
                   else if ( line[0] != '\0' && ( ( strncmp (buffer + 1,"host '", 6) == 0) || ( strstr (buffer, "mysql") != NULL || strstr (buffer,"mariadb") != NULL ) ) )
-                     mark_mysql (desc, port, origline);
+                     mark_mysql (desc, port);
                   else if (!strncmp (line, "efatal", 6)
                            || !strncmp (line, "einvalid packet length",
                                         strlen ("einvalid packet length")))
-                    mark_postgresql (desc, port, origline);
+                    mark_postgresql (desc, port);
                   else if (strstr (line, "cvsup server ready") != NULL)
-                    mark_cvsupserver (desc, port, origline, trp);
+                    mark_cvsupserver (desc, port);
                   else if (!strncmp (line, "cvs [pserver aborted]:", 22) ||
                            !strncmp (line, "cvs [server aborted]:", 21))
-                    mark_cvspserver (desc, port, origline, trp);
+                    mark_cvspserver (desc, port);
                   else if (!strncmp (line, "cvslock ", 8))
-                    mark_cvslockserver (desc, port, origline, trp);
+                    mark_cvslockserver (desc, port);
                   else if (!strncmp (line, "@rsyncd", 7))
-                    mark_rsync (desc, port, origline, trp);
+                    mark_rsync (desc, port);
                   else if ((len == 4) && may_be_time ((time_t *) banner))
-                    mark_time_server (desc, port, banner, trp);
+                    mark_time_server (desc, port, trp);
                   else if (strstr (buffer, "rmserver")
                            || strstr (buffer, "realserver"))
                     mark_rmserver (desc, port, origline, trp);
@@ -2047,14 +2043,14 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
                   else if (strstr (line, "* ok courier-imap"))
                     mark_imap_server (desc, port, origline, trp);
                   else if (strncmp (line, "giop", 4) == 0)
-                    mark_giop_server (desc, port, origline, trp);
+                    mark_giop_server (desc, port, trp);
                   else if (strstr (line, "microsoft routing server"))
                     mark_exchg_routing_server (desc, port, origline, trp);
                   /* Apparently an iPlanet ENS server */
                   else if (strstr (line, "gap service ready"))
-                    mark_ens_server (desc, port, origline, trp);
+                    mark_ens_server (desc, port, trp);
                   else if (strstr (line, "-service not available"))
-                    mark_tcpmux_server (desc, port, origline, trp);
+                    mark_tcpmux_server (desc, port, trp);
                   /*
                    * Citrix sends 7f 7f 49 43 41, that
                    * we converted to lowercase
@@ -2062,7 +2058,7 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
                   else if (strlen (line) > 2 && line[0] == 0x7F
                            && line[1] == 0x7F
                            && strncmp (&line[2], "ica", 3) == 0)
-                    mark_citrix_server (desc, port, origline, trp);
+                    mark_citrix_server (desc, port, trp);
 
                   else if (strstr (origline, " INN ")
                            || strstr (origline, " Leafnode ")
@@ -2090,39 +2086,39 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
                   else
                     if (strstr
                         (buffer, "www-authenticate: basic realm=\"swat\""))
-                    mark_swat_server (desc, port, banner);
+                    mark_swat_server (desc, port);
                   else if (strstr (buffer, "vqserver") &&
                            strstr (buffer, "www-authenticate: basic realm=/"))
-                    mark_vqserver (desc, port, banner);
+                    mark_vqserver (desc, port);
                   else if (strstr (buffer, "1invalid request") != NULL)
-                    mark_mldonkey (desc, port, banner);
+                    mark_mldonkey (desc, port);
                   else if (strstr (buffer, "get: command not found"))
-                    mark_wild_shell (desc, port, origline);
+                    mark_wild_shell (desc, port);
                   else if (strstr (buffer, "microsoft windows") != NULL &&
                            strstr (buffer, "c:\\") != NULL &&
                            strstr (buffer, "(c) copyright 1985-") != NULL &&
                            strstr (buffer, "microsoft corp.") != NULL)
-                    mark_wild_shell (desc, port, origline);
+                    mark_wild_shell (desc, port);
                   else if (strstr (buffer, "netbus"))
-                    mark_netbus_server (desc, port, origline);
+                    mark_netbus_server (desc, port);
                   else if (strstr (line, "0 , 0 : error : unknown-error") ||
                            strstr (line, "0, 0: error: unknown-error") ||
                            strstr (line, "get : error : unknown-error") ||
                            strstr (line, "0 , 0 : error : invalid-port"))
-                    mark_auth_server (desc, port, origline);
+                    mark_auth_server (desc, port);
                   else if (!strncmp (line, "http/1.", 7) && strstr (line, "proxy"))     /* my proxy "HTTP/1.1
                                                                                          * 502 Proxy Error" */
-                    mark_http_proxy (desc, port, banner, trp);
+                    mark_http_proxy (desc, port, trp);
                   else if (!strncmp (line, "http/1.", 7)
                            && strstr (buffer, "via: "))
-                    mark_http_proxy (desc, port, banner, trp);
+                    mark_http_proxy (desc, port, trp);
                   else if (!strncmp (line, "http/1.", 7)
                            && strstr (buffer, "proxy-connection: "))
-                    mark_http_proxy (desc, port, banner, trp);
+                    mark_http_proxy (desc, port, trp);
                   else if (!strncmp (line, "http/1.", 7)
                            && strstr (buffer, "cache")
                            && strstr (line, "bad request"))
-                    mark_http_proxy (desc, port, banner, trp);
+                    mark_http_proxy (desc, port, trp);
 #if 0
                   else if (strncmp (line, "http/1.", 7) == 0 &&
                            strstr (buffer, "gnutella") != NULL)
@@ -2150,22 +2146,22 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
                   else if (strcmp (line, "bad request") == 0 || /* See bug # 387 */
                            strstr (line, "invalid protocol request (71): gget / http/1.0") || (strncmp (line, "lpd:", 4) == 0) || (strstr (line, "lpsched") != NULL) || (strstr (line, "malformed from address") != NULL) || (strstr (line, "no connect permissions") != NULL) ||       /* <- RH 8 lpd */
                            strcmp (line, "bad request") == 0)
-                    mark_lpd_server (desc, port, banner, trp);
+                    mark_lpd_server (desc, port, trp);
                   else if (strstr (line, "%%lyskom unsupported protocol"))
-                    mark_lyskom_server (desc, port, banner, trp);
+                    mark_lyskom_server (desc, port, trp);
                   else if (strstr (line, "598:get:command not recognized"))
-                    mark_ph_server (desc, port, banner, trp);
+                    mark_ph_server (desc, port, trp);
                   else if (strstr (line, "BitTorrent prot"))
-                    mark_BitTorrent_server (desc, port, banner, trp);
+                    mark_BitTorrent_server (desc, port, trp);
                   else if (banner[0] == 'A' && banner[1] == 0x01
                            && banner[2] == 0x02 && banner[3] == '\0')
-                    mark_smux_server (desc, port, banner, trp);
+                    mark_smux_server (desc, port, trp);
                   else
                     if (!strncmp
                         (line, "0 succeeded\n", strlen ("0 succeeded\n")))
-                    mark_LISa_server (desc, port, banner, trp);
+                    mark_LISa_server (desc, port, trp);
                   else if (strlen ((char *) banner) == 3 && banner[2] == '\n')
-                    mark_msdtc_server (desc, port, banner);
+                    mark_msdtc_server (desc, port);
                   else
                     if ((!strncmp (line, "220", 3)
                          && strstr (line, "poppassd")))
@@ -2178,28 +2174,28 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
                            strstr (origline,
                                    "are not among the allowed hosts...\n") !=
                            NULL)
-                    mark_nagiosd_server (desc, port, origline, trp);
+                    mark_nagiosd_server (desc, port, trp);
                   else if (strstr (line, "[ts].error") != NULL ||
                            strstr (line, "[ts].\n") != NULL)
-                    mark_teamspeak2_server (desc, port, origline, trp);
+                    mark_teamspeak2_server (desc, port, trp);
                   else if (strstr (origline, "Language received from client:")
                            && strstr (origline, "Setlocale:"))
-                    mark_websm_server (desc, port, origline, trp);
+                    mark_websm_server (desc, port, trp);
                   else if (strncmp (origline, "CNFGAPI", 7) == 0)
-                    mark_ofa_express_server (desc, port, origline, trp);
+                    mark_ofa_express_server (desc, port, trp);
                   else if (strstr (line, "suse meta pppd") != NULL)
-                    mark_smppd_server (desc, port, origline, trp);
+                    mark_smppd_server (desc, port, trp);
                   else
                     if (strncmp
                         (origline, "ERR UNKNOWN-COMMAND",
                          strlen ("ERR UNKNOWN-COMMAND")) == 0)
-                    mark_upsmon_server (desc, port, origline, trp);
+                    mark_upsmon_server (desc, port, trp);
                   else
                     if (strncmp (line, "connected. ", strlen ("connected. "))
                         == 0 && strstr (line, "legends") != NULL)
-                    mark_sub7_server (desc, port, origline, trp);
+                    mark_sub7_server (desc, port, trp);
                   else if (strncmp (line, "spamd/", strlen ("spamd/")) == 0)
-                    mark_spamd_server (desc, port, origline, trp);
+                    mark_spamd_server (desc, port, trp);
                   else if (strstr (line, " dictd ")
                            && strncmp (line, "220", 3) == 0)
                     mark_dictd_server (desc, port, origline, trp);
@@ -2214,26 +2210,25 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
                            && (banner[0] == '~')
                            && (banner[strlen ((char *) banner) - 1] == '~')
                            && (strchr ((char *) banner, '}') != NULL))
-                    mark_ppp_daemon (desc, port, origline, trp);
+                    mark_ppp_daemon (desc, port, trp);
                   else if (strstr ((char *) banner, "Hello, this is zebra ")
                            != NULL)
                     mark_zebra_server (desc, port, origline, trp);
                   else if (strstr (line, "ircxpro ") != NULL)
-                    mark_ircxpro_admin_server (desc, port, origline, trp);
+                    mark_ircxpro_admin_server (desc, port, trp);
                   else
                     if (strncmp
                         (origline, "version report",
                          strlen ("version report")) == 0)
-                    mark_gnocatan_server (desc, port, origline, trp);
+                    mark_gnocatan_server (desc, port, trp);
                   else if (strncmp (origline, "RTSP/1.0", strlen ("RTSP/1.0"))
                            && strstr (origline, "QTSS/") != NULL)
-                    mark_quicktime_streaming_server (desc, port, origline,
-                                                     trp);
+                    mark_quicktime_streaming_server (desc, port, trp);
                   else if (strlen (origline) >= 2 && origline[0] == 0x30
                            && origline[1] == 0x11 && origline[2] == 0)
-                    mark_dameware_server (desc, port, origline, trp);
+                    mark_dameware_server (desc, port, trp);
                   else if (strstr (line, "stonegate firewall") != NULL)
-                    mark_stonegate_auth_server (desc, port, origline, trp);
+                    mark_stonegate_auth_server (desc, port, trp);
                   else if (strncmp (line, "pbmasterd", strlen ("pbmasterd"))
                            == 0)
                     mark_pbmaster_server (desc, port, origline, trp);
@@ -2245,7 +2240,7 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
                         (line, "<stream:error>invalid xml</stream:error>",
                          strlen ("<stream:error>invalid xml</stream:error>"))
                         == 0)
-                    mark_jabber_server (desc, port, origline, trp);
+                    mark_jabber_server (desc, port, trp);
                   else
                     if (strncmp
                         (line, "/c -2 get ctgetoptions",
@@ -2255,26 +2250,26 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
                     if (strncmp
                         (line, "error:wrong password",
                          strlen ("error:wrong password")) == 0)
-                    mark_pnsclient (desc, port, origline, trp);
+                    mark_pnsclient (desc, port, trp);
                   else
                     if (strncmp (line, "1000      2", strlen ("1000      2"))
                         == 0)
-                    mark_veritas_backup (desc, port, origline, trp);
+                    mark_veritas_backup (desc, port, trp);
                   else
                     if (strstr
                         (line, "the file name you specified is invalid")
                         && strstr (line, "listserv"))
-                    mark_listserv_server (desc, port, origline, trp);
+                    mark_listserv_server (desc, port, trp);
                   else
                     if (strncmp
                         (line, "control password:",
                          strlen ("control password:")) == 0)
-                    mark_fssniffer (desc, port, origline, trp);
+                    mark_fssniffer (desc, port, trp);
                   else
                     if (strncmp
                         (line, "remotenc control password:",
                          strlen ("remotenc control password:")) == 0)
-                    mark_remote_nc_server (desc, port, origline, trp);
+                    mark_remote_nc_server (desc, port, trp);
                   else
                     if (((p =
                           (unsigned char *) strstr ((char *) banner,
@@ -2296,8 +2291,7 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
                             p--;
                           c = *p;
                           *p = '\0';
-                          mark_finger_server (desc, port, p ? banner : NULL,
-                                              trp);
+                          mark_finger_server (desc, port, trp);
                         }
 
                       if (p != NULL)
@@ -2470,6 +2464,8 @@ static void
 sigterm (int s)
 {
   int i;
+
+  (void) s;
   for (i = 0; i < MAX_SONS; i++)
     {
       if (sons[i] != 0)
@@ -2482,6 +2478,8 @@ static void
 sigchld (int s)
 {
   int i;
+
+  (void) s;
   for (i = 0; i < MAX_SONS; i++)
     {
       waitpid (sons[i], NULL, WNOHANG);
@@ -2489,7 +2487,7 @@ sigchld (int s)
 }
 
 static int
-fwd_data (int in, int out, pid_t sender)
+fwd_data (int in, int out)
 {
   int e;
   char *buf = NULL;
@@ -2719,7 +2717,7 @@ plugin_run_find_service (lex_ctxt * lexic)
               if (sons[i] != 0 && sons_pipe[i][1] >= 0
                   && FD_ISSET (sons_pipe[i][1], &rd) != 0)
                 {
-                  if (fwd_data (sons_pipe[i][1], unix_sock, sons[i]) < 0)
+                  if (fwd_data (sons_pipe[i][1], unix_sock) < 0)
                     {
                       close (sons_pipe[i][1]);
                       sons_pipe[i][1] = -1;
@@ -2738,7 +2736,7 @@ plugin_run_find_service (lex_ctxt * lexic)
 
               if (kill (sons[i], 0) < 0)
                 {
-                  fwd_data (sons_pipe[i][1], unix_sock, sons[i]);
+                  fwd_data (sons_pipe[i][1], unix_sock);
                   close (sons_pipe[i][1]);
                   sons_pipe[i][1] = -1;
                   sons[i] = 0;
