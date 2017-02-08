@@ -267,6 +267,7 @@ cgibin (lex_ctxt * lexic)
   const char *path = prefs_get ("cgi_path");
   tree_cell *retc;
 
+  (void) lexic;
   if (path == NULL)
     path = "/cgi-bin:/scripts";
   retc = alloc_tree_cell (0, NULL);

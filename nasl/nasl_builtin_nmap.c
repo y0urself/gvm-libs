@@ -1261,6 +1261,7 @@ nse_script_destroy (gpointer data, gpointer udata)
 {
   struct nse_script *script;
 
+  (void) udata;
   script = (struct nse_script *) data;
   if (script)
     {
@@ -1282,6 +1283,7 @@ nse_script_destroy (gpointer data, gpointer udata)
 void
 simple_item_destroy (gpointer data, gpointer udata)
 {
+  (void) udata;
   g_free (data);
 }
 
@@ -1355,6 +1357,8 @@ xml_start_element (GMarkupParseContext * context, const gchar * element_name,
 {
   nmap_t *nmap = (nmap_t *) user_data;
   void (*callback) (nmap_t *, const gchar **, const gchar **);
+  (void) context;
+  (void) error;
 
   callback = g_hash_table_lookup (nmap->parser.opentag, element_name);
   if (callback)
@@ -1377,6 +1381,8 @@ xml_end_element (GMarkupParseContext * context, const gchar * element_name,
   nmap_t *nmap = (nmap_t *) user_data;
   void (*callback) (nmap_t *);
 
+  (void) context;
+  (void) error;
   callback = g_hash_table_lookup (nmap->parser.closetag, element_name);
   if (callback)
     callback (nmap);
@@ -1398,6 +1404,9 @@ xml_read_text (GMarkupParseContext * context, const gchar * text,
 {
   nmap_t *nmap = (nmap_t *) user_data;
 
+  (void) context;
+  (void) error;
+  (void) text_len;
   if (!nmap->parser.enable_read)
     return;
 
@@ -1426,6 +1435,8 @@ void
 xmltag_open_host (nmap_t * nmap, const gchar ** attrnames,
                   const gchar ** attrval)
 {
+  (void) attrnames;
+  (void) attrval;
   nmap->parser.in_host = TRUE;
 }
 
@@ -1474,6 +1485,8 @@ void
 xmltag_open_ports (nmap_t * nmap, const gchar ** attrnames,
                    const gchar ** attrval)
 {
+  (void) attrnames;
+  (void) attrval;
   nmap->parser.in_ports = TRUE;
 }
 
@@ -1560,6 +1573,8 @@ void
 xmltag_open_cpe (nmap_t * nmap, const gchar ** attrnames,
                              const gchar ** attrval)
 {
+  (void) attrnames;
+  (void) attrval;
   /* Safety check */
   if (nmap->parser.rbuff)
     {
@@ -1580,6 +1595,8 @@ void
 xmltag_open_hostscript (nmap_t * nmap, const gchar ** attrnames,
                         const gchar ** attrval)
 {
+  (void) attrnames;
+  (void) attrval;
   nmap->parser.in_hostscript = TRUE;
 }
 

@@ -394,7 +394,7 @@ next_session_id (void)
 {
   static int initialized;
   static int last = 9000;
-  int i;
+  unsigned int i;
 
   if (!initialized)
     {
@@ -488,7 +488,7 @@ nasl_ssh_connect (lex_ctxt *lexic)
   tree_cell *retc;
   const char *hostname, *key_type, *csciphers, *scciphers;
   int port, sock;
-  int tbl_slot;
+  unsigned int tbl_slot;
   const char *s;
   int verbose = 0;
   int forced_sock = -1;
@@ -678,7 +678,7 @@ nasl_ssh_connect (lex_ctxt *lexic)
 static int
 verify_session_id (int session_id, const char *funcname, int *r_slot)
 {
-  int tbl_slot;
+  unsigned int tbl_slot;
   if (session_id <= 0)
     {
       if (funcname)
@@ -768,7 +768,8 @@ nasl_ssh_disconnect (lex_ctxt *lexic)
 static int
 nasl_ssh_close_hook (int sock)
 {
-  int tbl_slot, session_id;
+  int session_id;
+  unsigned int tbl_slot;
 
   if (sock == -1)
     return -1;
@@ -805,7 +806,8 @@ nasl_ssh_close_hook (int sock)
 tree_cell *
 nasl_ssh_session_id_from_sock (lex_ctxt *lexic)
 {
-  int tbl_slot, sock, session_id;
+  int sock, session_id;
+  unsigned int tbl_slot;
   tree_cell *retc;
 
   session_id = 0;
@@ -1252,6 +1254,7 @@ nasl_ssh_userauth (lex_ctxt *lexic)
 static void
 exec_ssh_cmd_alarm (int signal)
 {
+  (void) signal;
   log_legacy_write ("exec_ssh_cmd: Timeout");
 }
 
@@ -1700,6 +1703,7 @@ nasl_ssh_get_auth_methods (lex_ctxt *lexic)
 static void
 request_ssh_shell_alarm (int signal)
 {
+  (void) signal;
   log_legacy_write ("request_ssh_shell: Timeout");
 }
 

@@ -126,6 +126,7 @@ my_socket_close(int s)
 
 static int std_port(int port)
 {
+  (void) port;
   return 0; /** @todo: We are not able anymore to judge wether a port is a standard
              * port. Previously a port was believed to be a standard port
              * when it occurred in the currently configured list of ports.
@@ -212,7 +213,7 @@ banner_grab(const struct in6_addr *pia, const char* portrange,
     }
   tcpproto = proto->p_proto;
 
-  for (i = 0; i < sizeof(ports_states) / sizeof(*ports_states); i ++)
+  for (i = 0; i < (int) (sizeof(ports_states) / sizeof(*ports_states)); i ++)
     ports_states[i] = GRAB_PORT_NOT_TESTED;
   scanned_ports = 0;
   for (i = 0; i < 3; i ++)
@@ -1274,7 +1275,7 @@ plugin_run_openvas_tcp_scanner (lex_ctxt * lexic)
   const char * port_range = prefs_get ("port_range");
   const char * p;
   struct in6_addr *p_addr;
-  int	timeout = 0, max_cnx, min_cnx, x;
+  unsigned int timeout = 0, max_cnx, min_cnx, x;
   int	safe_checks = prefs_get_bool ("safe_checks");
 
   p = prefs_get ("checks_read_timeout");

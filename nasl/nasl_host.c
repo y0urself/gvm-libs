@@ -230,6 +230,7 @@ nasl_this_host_name (lex_ctxt * lexic)
   char *hostname;
   tree_cell *retc;
 
+  (void) lexic;
   retc = alloc_tree_cell (0, NULL);
   retc->type = CONST_DATA;
 

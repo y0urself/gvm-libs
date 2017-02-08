@@ -641,10 +641,11 @@ NULL, 0},};
 int
 init_nasl_library (lex_ctxt * lexic)
 {
-  int i, j, c;
+  int j, c;
   nasl_func *pf;
   tree_cell tc;
   const char **p, *q;
+  unsigned i;
 
   memset (&tc, 0, sizeof (tc));
   for (i = 0, c = 0; i < sizeof (libfuncs) / sizeof (libfuncs[0]) - 1; i++)

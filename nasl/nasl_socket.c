@@ -1352,7 +1352,7 @@ nasl_get_sock_info (lex_ctxt * lexic)
             retc = NULL;  /* No certificate or other error.  */
           else
             {
-              int i;
+              unsigned int i;
               retc = alloc_tree_cell (0, NULL);
               retc->type = DYN_ARRAY;
               retc->x.ref_val = a = g_malloc0 (sizeof *a);

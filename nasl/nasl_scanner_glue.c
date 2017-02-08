@@ -281,6 +281,7 @@ tree_cell *
 script_summary (lex_ctxt * lexic)
 {
   /* XXX: For backward compatibility. */
+  (void) lexic;
   return FAKE_CELL;
 }
 
@@ -585,6 +586,7 @@ script_get_preference_file_location (lex_ctxt * lexic)
 tree_cell *
 safe_checks (lex_ctxt * lexic)
 {
+  (void) lexic;
   tree_cell *retc = alloc_tree_cell (0, NULL);
 
   retc->type = CONST_INT;
@@ -1038,5 +1040,6 @@ tree_cell *
 nasl_scanner_status (lex_ctxt * lexic)
 {
   /* Kept for backward compatibility. */
+  (void) lexic;
   return FAKE_CELL;
 }

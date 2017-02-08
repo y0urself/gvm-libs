@@ -246,8 +246,8 @@ nasl_get_sign (lex_ctxt * lexic)
   char *mac_key = (char *) get_str_var_by_name (lexic, "key");
   uint8_t *buf = (uint8_t *) get_str_var_by_name (lexic, "buf");
   int buflen = get_int_var_by_name (lexic, "buflen", -1);
-  uint32 seq_num = get_int_var_by_name (lexic, "seq_number", -1);
-  if (mac_key == NULL || buf == NULL || buflen == -1 || seq_num == -1)
+  int seq_num = get_int_var_by_name (lexic, "seq_number", -1);
+  if (mac_key == NULL || buf == NULL || buflen == -1 || seq_num <= -1)
     {
       nasl_perror (lexic,
                    "Syntax : get_sign(key:<k>, buf:<b>, buflen:<bl>, seq_number:<s>)\n");
@@ -683,15 +683,14 @@ tree_cell *
 nasl_nt_owf_gen (lex_ctxt * lexic)
 {
   char *pass = get_str_var_by_num (lexic, 0);
-  int pass_len = get_var_size_by_num (lexic, 0);
+  unsigned int i, pass_len = get_var_size_by_num (lexic, 0);
   char pwd[130];
   short upwd[130], *dst;
   short val;
   char *src;
 
-  int i;
 
-  if (pass_len < 0 || pass == NULL)
+  if (pass_len == 0 || pass == NULL)
     {
       nasl_perror (lexic, "Syntax : nt_owf_gen(cryptkey:<c>, password:<p>)\n");
       return NULL;
@@ -728,7 +727,7 @@ nasl_lm_owf_gen (lex_ctxt * lexic)
   tree_cell *retc;
   uchar pwd[15];
   uchar p16[16];
-  int i;
+  unsigned int i;
 
   if (pass_len < 0 || pass == NULL)
     {

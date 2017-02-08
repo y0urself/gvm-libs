@@ -314,7 +314,7 @@ dump_cell_val (const tree_cell * c)
         break;
       case CONST_STR:
       case CONST_DATA:         /* Beurk (English: Yuck) */
-        if (c->size >= sizeof (txt) + 2)
+        if ((unsigned int) c->size >= sizeof (txt) + 2)
           {
             snprintf (txt, sizeof (txt), "\"%s", c->x.str_val);
             strcpy (txt + (sizeof (txt) - 5), "...\"");
@@ -355,7 +355,8 @@ dump_tree (const tree_cell * c, int n, int idx)
       return;
     }
 #endif
-  if (c->type < 0 || c->type >= sizeof (node_names) / sizeof (node_names[0]))
+  if (c->type < 0
+      || (unsigned int) c->type >= sizeof (node_names) / sizeof (node_names[0]))
     printf ("* UNKNOWN %d (0x%x)*\n", c->type, c->type);
   else
     printf ("%s (%d)\n", node_names[c->type], c->type);
@@ -427,7 +428,7 @@ nasl_type_name (int t)
     i = 0;
   txt = txt4[i];
 
-  if (t >= 0 && t < sizeof (node_names) / sizeof (node_names[0]))
+  if (t >= 0 && (unsigned int) t < sizeof (node_names) / sizeof (node_names[0]))
     snprintf (txt, 32, "%s (%d)", node_names[t], t);
   else
     snprintf (txt, 32, "*UNKNOWN* (%d)", t);

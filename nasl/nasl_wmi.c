@@ -116,6 +116,7 @@ nasl_wmi_versioninfo (lex_ctxt * lexic)
   char *version = wmi_versioninfo ();
   tree_cell *retc = alloc_tree_cell (0, NULL);
 
+  (void) lexic;
   if (!version)
     {
       return NULL;

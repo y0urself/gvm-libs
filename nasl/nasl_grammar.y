@@ -481,6 +481,7 @@ glob: GLOBAL arg_decl
 static void
 naslerror(naslctxt *parm, const char *s)
 {
+  (void) parm;
   fputs(s, stderr);
 }
 

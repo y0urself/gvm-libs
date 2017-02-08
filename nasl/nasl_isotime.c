@@ -586,6 +586,7 @@ nasl_isotime_now (lex_ctxt *lexic)
   tree_cell *retc;
   my_isotime_t timebuf;
 
+  (void) lexic;
   get_current_isotime (timebuf);
 
   retc = alloc_typed_cell (CONST_STR);

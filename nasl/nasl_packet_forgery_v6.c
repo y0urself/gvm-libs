@@ -745,8 +745,8 @@ dump_tcp_v6_packet (lex_ctxt * lexic)
       int a = 0;
       struct ip6_hdr *ip6 = (struct ip6_hdr *) pkt;
       struct tcphdr *tcp = (struct tcphdr *) (pkt + 40);
-      int j;
-      int limit;
+      unsigned int j;
+      unsigned int limit;
       char *c;
 
       limit = get_var_size_by_num (lexic, i - 1);
@@ -937,7 +937,7 @@ get_udp_v6_element (lex_ctxt * lexic)
   tree_cell *retc;
   char *udp;
   char *element;
-  int ipsz;
+  unsigned int ipsz;
   struct udphdr *udphdr;
   int ret;
 
@@ -1004,7 +1004,7 @@ set_udp_v6_elements (lex_ctxt * lexic)
 {
   struct ip6_hdr *ip6 =
     (struct ip6_hdr *) get_str_local_var_by_name (lexic, "udp");
-  int sz = get_local_var_size_by_name (lexic, "udp");
+  unsigned int sz = get_local_var_size_by_name (lexic, "udp");
   char *data = get_str_local_var_by_name (lexic, "data");
   int data_len = get_local_var_size_by_name (lexic, "data");
 
@@ -1122,9 +1122,9 @@ dump_udp_v6_packet (lex_ctxt * lexic)
   while ((pkt = (u_char *) get_str_var_by_num (lexic, i++)) != NULL)
     {
       struct udphdr *udp = (struct udphdr *) (pkt + sizeof (struct ip6_hdr));
-      int j;
+      unsigned int j;
       char *c;
-      int limit = get_var_size_by_num (lexic, i - 1);
+      unsigned int limit = get_var_size_by_num (lexic, i - 1);
       printf ("------\n");
       printf ("\tuh_sport : %d\n", ntohs (udp->uh_sport));
       printf ("\tuh_dport : %d\n", ntohs (udp->uh_dport));
@@ -1554,7 +1554,7 @@ nasl_tcp_v6_ping (lex_ctxt * lexic)
   struct in6_addr src;
   struct sockaddr_in6 soca;
   int flag = 0;
-  int i = 0;
+  unsigned int i = 0;
   int bpf;
   char filter[255];
   tree_cell *retc;
@@ -1716,7 +1716,7 @@ nasl_send_v6packet (lex_ctxt * lexic)
       int sz = get_var_size_by_num (lexic, vi);
       vi++;
 
-      if (sz < sizeof (struct ip6_hdr))
+      if ((unsigned int) sz < sizeof (struct ip6_hdr))
         {
           nasl_perror (lexic, "send_packet(): packet is too short!\n");
           continue;

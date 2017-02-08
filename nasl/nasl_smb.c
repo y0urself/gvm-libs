@@ -71,6 +71,7 @@ nasl_smb_versioninfo (lex_ctxt * lexic)
   char *version = smb_versioninfo ();
   tree_cell *retc = alloc_tree_cell (0, NULL);
 
+  (void) lexic;
   if (!version)
     {
       return NULL;

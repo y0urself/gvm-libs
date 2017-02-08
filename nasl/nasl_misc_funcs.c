@@ -56,6 +56,7 @@
 tree_cell *
 nasl_rand (lex_ctxt * lexic)
 {
+  (void) lexic;
   tree_cell *retc;
   retc = alloc_tree_cell (0, NULL);
   retc->type = CONST_INT;
@@ -789,6 +790,7 @@ nasl_unixtime (lex_ctxt * lexic)
 {
   tree_cell *retc;
 
+  (void) lexic;
   retc = alloc_typed_cell (CONST_INT);
   retc->x.i_val = time (NULL);
   return retc;
@@ -1003,7 +1005,8 @@ tree_cell *
 nasl_dec2str (lex_ctxt * lexic)
 {
   /*converts integer to 4 byte buffer */
-  uint32 num = get_int_local_var_by_name (lexic, "num", -1);
+  (void) lexic;
+  int num = get_int_local_var_by_name (lexic, "num", -1);
   if (num == -1)
     {
       nasl_perror (lexic, "Syntax : dec2str(num:<n>)\n");
@@ -1025,6 +1028,7 @@ nasl_dec2str (lex_ctxt * lexic)
 tree_cell *
 nasl_get_byte_order (lex_ctxt * lexic)
 {
+  (void) lexic;
   tree_cell *retc;
   short w = 0x0001;
   char *p = (char *) &w;
