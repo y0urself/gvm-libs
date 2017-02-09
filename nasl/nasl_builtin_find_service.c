@@ -52,6 +52,12 @@
 
 #define NUM_CHILDREN		"Number of connections done in parallel : "
 
+#undef G_LOG_DOMAIN
+/**
+ * @brief GLib logging domain.
+ */
+#define G_LOG_DOMAIN "lib  nasl"
+
 const char *oid;
 
 static void
@@ -64,9 +70,9 @@ register_service (struct arglist *desc, int port, const char *proto)
   if (port < 0 || proto == NULL ||
       (l = strlen (proto)) == 0 || l > sizeof (k) - 10)
     {
-      log_legacy_write
-       ("find_service->register_service: invalid value - port=%d, proto=%s",
-        port, proto == NULL ? "(null)" : proto);
+      g_message
+        ("find_service->register_service: invalid value - port=%d, proto=%s",
+         port, proto == NULL ? "(null)" : proto);
       return;
     }
 #endif
@@ -1595,9 +1601,9 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
               if (banner_len > 0)
                 banner = (unsigned char *) buffer;
 #ifdef DEBUG
-              log_legacy_write
-               ("find_service(%s): found hex banner in KB for port %d len=%d",
-                inet_ntoa (*p_ip), port, banner_len);
+              g_message
+                ("find_service(%s): found hex banner in KB for port %d len=%d",
+                 inet_ntoa (*p_ip), port, banner_len);
 #endif
             }
           g_free (bannerHex);
@@ -1609,18 +1615,18 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
                 {
                   banner_len = strlen ((char *) banner);
 #ifdef DEBUG
-                  log_legacy_write
-                   ("find_service(%s): found banner in KB for port %d len=%d",
-                    inet_ntoa (*p_ip), port, banner_len);
+                  g_message
+                    ("find_service(%s): found banner in KB for port %d len=%d",
+                     inet_ntoa (*p_ip), port, banner_len);
 #endif
                 }
             }
           if (banner_len > 0)
             {
 #ifdef DEBUG
-              log_legacy_write
-               ("find_service(%s): banner is known on port %d -"
-                " will not open a new connection", inet_ntoa (*p_ip), port);
+              g_message
+                ("find_service(%s): banner is known on port %d -"
+                 " will not open a new connection", inet_ntoa (*p_ip), port);
 #endif
               cnx = -1;
               trp = OPENVAS_ENCAPS_IP;
@@ -1628,9 +1634,9 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
           else
             {
 #ifdef DEBUG
-              log_legacy_write
-               ("find_service(%s): banner is unknown on port %d"
-                " - connecting...", inet_ntoa (*p_ip), port);
+              g_message
+                ("find_service(%s): banner is unknown on port %d"
+                 " - connecting...", inet_ntoa (*p_ip), port);
 #endif
               if (banner != NULL)
                 {
@@ -1675,9 +1681,9 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
                                       GSIZE_TO_POINTER (1));
                 }
 #ifdef DEBUG
-              log_legacy_write
-               ("find_service(%s): Port %d is open. \"Transport\" is %d",
-                inet_ntoa (*p_ip), port, trp);
+              g_message
+                ("find_service(%s): Port %d is open. \"Transport\" is %d",
+                 inet_ntoa (*p_ip), port, trp);
 #endif
               plug_set_port_transport (desc, port, trp);
               (void) stream_set_timeout (port, rw_timeout);
@@ -1719,9 +1725,9 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
                     }
                   g_free (p);
 #ifdef DEBUG
-                  log_legacy_write
-                   ("find_service(%s): no banner on port %d according to KB",
-                    inet_ntoa (*p_ip), port);
+                  g_message
+                    ("find_service(%s): no banner on port %d according to KB",
+                     inet_ntoa (*p_ip), port);
 #endif
 
                   if (!no_banner_grabbed)
@@ -1765,10 +1771,10 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
                     {           /* No banner was found
                                  * by openvas_tcp_scanner */
 #ifdef DEBUG
-                      log_legacy_write
-                       ("find_service(%s): no banner was found by"
-                        " openvas_tcp_scanner on port %d - sending GET"
-                        " without waiting", inet_ntoa (*p_ip), port);
+                      g_message
+                        ("find_service(%s): no banner was found by"
+                         " openvas_tcp_scanner on port %d - sending GET"
+                         " without waiting", inet_ntoa (*p_ip), port);
 #endif
                       len = 0;
                       timeout = 0;
@@ -1779,8 +1785,8 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
                     {
 #ifdef DEBUG
                       if (!no_banner_grabbed)
-                        log_legacy_write
-                         ("No banner on port %d - sending GET", port);
+                        g_message
+                          ("No banner on port %d - sending GET", port);
 #endif
                       write_stream_connection (cnx, http_get,
                                                strlen (http_get));
@@ -2312,9 +2318,9 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
               else
                 {
 #ifdef DEBUG
-                  log_legacy_write
-                   ("find_service(%s): could not read anything from port %d",
-                    inet_ntoa (*p_ip), port);
+                  g_message
+                    ("find_service(%s): could not read anything from port %d",
+                     inet_ntoa (*p_ip), port);
 #endif
                   unindentified_service = 1;
 #define TESTSTRING	"OpenVAS Wrap Test"
@@ -2343,9 +2349,9 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
                   char b;
 
 #ifdef DEBUG
-                  log_legacy_write
-                   ("find_service(%s): potentially wrapped service on port %d",
-                    inet_ntoa (*p_ip), port);
+                  g_message
+                    ("find_service(%s): potentially wrapped service on port %d",
+                     inet_ntoa (*p_ip), port);
 #endif
                   nfd =
                     open_stream_connection (desc, port, OPENVAS_ENCAPS_IP,
@@ -2366,10 +2372,10 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
                       (void) gettimeofday (&tv2, NULL);
                       diff_tv2 = DIFFTV1000 (tv2, tv1);
 #ifdef DEBUG
-                      log_legacy_write
-                       ("find_service(%s): select(port=%d)=%d after"
-                        " %d.%03d s on %d", inet_ntoa (*p_ip), port, x,
-                        diff_tv2, diff_tv2 / 1000, wrap_timeout);
+                      g_message
+                        ("find_service(%s): select(port=%d)=%d after"
+                         " %d.%03d s on %d", inet_ntoa (*p_ip), port, x,
+                         diff_tv2, diff_tv2 / 1000, wrap_timeout);
 #endif
                       if (x < 0)
                         {
@@ -2415,8 +2421,8 @@ plugin_do_run (struct arglist *desc, struct arglist *h, int test_ssl)
                             }
 #ifdef DEBUG
                           else
-                            log_legacy_write ("\
-The service on port %s:%d closes the connection in %d.%03d s when we send garbage,\n\
+                            g_message ("\
+The service on port %s:%d closes the connection in %d.%03d s when we send garbage,\n \
 and in %d.%03d when we just wait. It is  probably not wrapped", inet_ntoa (*p_ip), port, diff_tv / 1000, diff_tv % 1000, diff_tv2 / 1000, diff_tv2 % 1000);
 #endif
                         }
@@ -2442,9 +2448,9 @@ and in %d.%03d when we just wait. It is  probably not wrapped", inet_ntoa (*p_ip
             }
 #ifdef DEBUG
           else
-            log_legacy_write
-             ("find_service(%s): could not connect to port %d",
-              inet_ntoa (*p_ip), port);
+            g_message
+              ("find_service(%s): could not connect to port %d",
+               inet_ntoa (*p_ip), port);
 #endif
 
         }

@@ -57,6 +57,12 @@
 
 #define IMPORT(var) char *var = get_str_local_var_by_name(lexic, #var)
 
+#undef G_LOG_DOMAIN
+/**
+ * @brief GLib logging domain.
+ */
+#define G_LOG_DOMAIN "lib  nasl"
+
 /**
  * @brief Get a version string of the SMB implementation.
  *
@@ -113,7 +119,7 @@ nasl_smb_connect (lex_ctxt * lexic)
   if ((host == NULL) || (username == NULL) || (password == NULL)
       || (share == NULL))
     {
-      log_legacy_write ("nasl_smb_connect: Invalid input arguments\n");
+      g_message ("nasl_smb_connect: Invalid input arguments");
       return NULL;
     }
 
@@ -121,7 +127,7 @@ nasl_smb_connect (lex_ctxt * lexic)
   if ((strlen (password) == 0) || (strlen (username) == 0)
       || (strlen (ip) == 0) || (strlen (share) == 0))
     {
-      log_legacy_write ("nasl_smb_connect: Invalid input arguments\n");
+      g_message ("nasl_smb_connect: Invalid input arguments");
       g_free (ip);
       return NULL;
     }
@@ -133,7 +139,7 @@ nasl_smb_connect (lex_ctxt * lexic)
 
   if (value == -1)
     {
-      log_legacy_write ("nasl_smb_connect: SMB Connect failed\n");
+      g_message ("nasl_smb_connect: SMB Connect failed");
       return NULL;
     }
 
@@ -193,13 +199,13 @@ nasl_smb_file_SDDL (lex_ctxt * lexic)
 
   if (!filename)
     {
-      log_legacy_write ("smb_file_SDDL failed: Invalid filename\n");
+      g_message ("smb_file_SDDL failed: Invalid filename");
       return NULL;
     }
 
   if (!handle)
     {
-      log_legacy_write ("smb_file_SDDL failed: Invalid smb_handle\n");
+      g_message ("smb_file_SDDL failed: Invalid smb_handle");
       return NULL;
     }
 
@@ -238,13 +244,13 @@ nasl_smb_file_owner_sid (lex_ctxt * lexic)
 
   if (!filename)
     {
-      log_legacy_write ("smb_file_owner_sid failed: Invalid filename\n");
+      g_message ("smb_file_owner_sid failed: Invalid filename");
       return NULL;
     }
 
   if (!handle)
     {
-      log_legacy_write ("smb_file_owner_sid failed: Invalid smb_handle\n");
+      g_message ("smb_file_owner_sid failed: Invalid smb_handle");
       return NULL;
     }
 
@@ -283,13 +289,13 @@ nasl_smb_file_group_sid (lex_ctxt * lexic)
 
   if (!filename)
     {
-      log_legacy_write ("smb_file_group_sid failed: Invalid filename\n");
+      g_message ("smb_file_group_sid failed: Invalid filename");
       return NULL;
     }
 
   if (!handle)
     {
-      log_legacy_write ("smb_file_group_sid failed: Invalid smb_handle\n");
+      g_message ("smb_file_group_sid failed: Invalid smb_handle");
       return NULL;
     }
 
@@ -329,13 +335,13 @@ nasl_smb_file_trustee_rights (lex_ctxt * lexic)
 
   if (!filename)
     {
-      log_legacy_write ("smb_file_trustee_rights failed: Invalid filename\n");
+      g_message ("smb_file_trustee_rights failed: Invalid filename");
       return NULL;
     }
 
   if (!handle)
     {
-      log_legacy_write ("smb_file_trustee_rights failed: Invalid smb_handle\n");
+      g_message ("smb_file_trustee_rights failed: Invalid smb_handle");
       return NULL;
     }
 
@@ -387,7 +393,7 @@ nasl_win_cmd_exec (lex_ctxt * lexic)
 
   if ((host == NULL) || (username == NULL) || (password == NULL) || (cmd == NULL))
     {
-      log_legacy_write ("win_cmd_exec: Invalid input arguments\n");
+      g_message ("win_cmd_exec: Invalid input arguments");
       return NULL;
     }
 
@@ -395,7 +401,7 @@ nasl_win_cmd_exec (lex_ctxt * lexic)
   if ((strlen (password) == 0) || (strlen (username) == 0)
       || strlen (ip) == 0)
     {
-      log_legacy_write ("win_cmd_exec: Invalid input arguments\n");
+      g_message ("win_cmd_exec: Invalid input arguments");
       g_free(ip);
       return NULL;
     }
@@ -424,7 +430,7 @@ nasl_win_cmd_exec (lex_ctxt * lexic)
   value = wincmd (argc, argv, &res);
   if (value == -1)
     {
-      log_legacy_write ("win_cmd_exec: WinCMD Connect failed\n");
+      g_message ("win_cmd_exec: WinCMD Connect failed");
       g_free(ip);
       return NULL;
     }

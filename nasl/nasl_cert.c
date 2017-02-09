@@ -56,6 +56,12 @@
 
 #include "nasl_cert.h"
 
+#undef G_LOG_DOMAIN
+/**
+ * @brief GLib logging domain.
+ */
+#define G_LOG_DOMAIN "lib  nasl"
+
 
 #ifndef DIM
 # define DIM(v)		     (sizeof(v)/sizeof((v)[0]))
@@ -187,21 +193,21 @@ nasl_cert_open (lex_ctxt *lexic)
   data = get_str_var_by_num (lexic, 0);
   if (!data || !(datalen = get_var_size_by_num (lexic, 0)))
     {
-      log_legacy_write ("No certificate passed to cert_open");
+      g_message ("No certificate passed to cert_open");
       return NULL;
     }
 
   err = ksba_reader_new (&reader);
   if (err)
     {
-      log_legacy_write ("Opening reader object failed: %s",
-                        gpg_strerror (err));
+      g_message ("Opening reader object failed: %s",
+                 gpg_strerror (err));
       return NULL;
     }
   err = ksba_reader_set_mem (reader, data, datalen);
   if (err)
     {
-      log_legacy_write ("ksba_reader_set_mem failed: %s", gpg_strerror (err));
+      g_message ("ksba_reader_set_mem failed: %s", gpg_strerror (err));
       ksba_reader_release (reader);
       return NULL;
     }
@@ -209,7 +215,7 @@ nasl_cert_open (lex_ctxt *lexic)
   err = ksba_cert_new (&cert);
   if (err)
     {
-      log_legacy_write ("ksba_cert_new failed: %s", gpg_strerror (err));
+      g_message ("ksba_cert_new failed: %s", gpg_strerror (err));
       ksba_reader_release (reader);
       return NULL;
     }
@@ -217,7 +223,7 @@ nasl_cert_open (lex_ctxt *lexic)
   err = ksba_cert_read_der (cert, reader);
   if (err)
     {
-      log_legacy_write ("Certificate parsing failed: %s", gpg_strerror (err));
+      g_message ("Certificate parsing failed: %s", gpg_strerror (err));
       /* FIXME: Try again this time assuming a PEM certificate.  */
       ksba_reader_release (reader);
       ksba_cert_release (cert);
@@ -228,7 +234,7 @@ nasl_cert_open (lex_ctxt *lexic)
   obj = g_try_malloc (sizeof *obj);
   if (!obj)
     {
-      log_legacy_write ("malloc failed in %s", __FUNCTION__);
+      g_message ("malloc failed in %s", __FUNCTION__);
       ksba_cert_release (cert);
       return NULL;
     }
@@ -272,7 +278,7 @@ nasl_cert_close (lex_ctxt *lexic)
     return FAKE_CELL;
   if (object_id < 0)
     {
-      log_legacy_write ("Bad object id %d passed to cert_close", object_id);
+      g_message ("Bad object id %d passed to cert_close", object_id);
       return FAKE_CELL;
     }
 
@@ -281,8 +287,8 @@ nasl_cert_close (lex_ctxt *lexic)
       break;
   if (!obj)
     {
-      log_legacy_write ("Unused object id %d passed to cert_close",
-                        object_id);
+      g_message ("Unused object id %d passed to cert_close",
+                 object_id);
       return FAKE_CELL;
     }
 
@@ -777,7 +783,7 @@ nasl_cert_query (lex_ctxt *lexic)
   object_id = get_int_var_by_num (lexic, 0, -1);
   if (object_id <= 0)
     {
-      log_legacy_write ("Bad object id %d passed to cert_query", object_id);
+      g_message ("Bad object id %d passed to cert_query", object_id);
       return NULL;
     }
 
@@ -786,7 +792,7 @@ nasl_cert_query (lex_ctxt *lexic)
       break;
   if (!obj)
     {
-      log_legacy_write ("Unused object id %d passed to cert_query", object_id);
+      g_message ("Unused object id %d passed to cert_query", object_id);
       return NULL;
     }
 
@@ -794,7 +800,7 @@ nasl_cert_query (lex_ctxt *lexic)
   command = get_str_var_by_num (lexic, 1);
   if (!command || get_var_type_by_num (lexic, 1) != VAR2_STRING)
     {
-      log_legacy_write ("No proper command passed to cert_query");
+      g_message ("No proper command passed to cert_query");
       return NULL;
     }
 
@@ -970,11 +976,10 @@ nasl_cert_query (lex_ctxt *lexic)
     }
   else
     {
-      log_legacy_write ("Unknown command '%s' passed to cert_query", command);
+      g_message ("Unknown command '%s' passed to cert_query", command);
     }
 
   return retc;
 }
-
 
 #endif /* HAVE_LIBKSBA */

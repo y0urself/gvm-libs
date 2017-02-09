@@ -28,6 +28,12 @@
 #include "plugutils.h"
 #include "support.h"
 
+#undef G_LOG_DOMAIN
+/**
+ * @brief GLib logging domain.
+ */
+#define G_LOG_DOMAIN "lib  misc"
+
 /*
  * This function implements "whisker like" IDS evasion tactics plus a couple
  * of other methods.
@@ -119,7 +125,7 @@ build_encode_URL (struct arglist *data, char *method, char *path, char *name,
     sprintf (ret, "%s/%s", path, name);
 
 #ifdef URL_DEBUG
-  log_legacy_write ("Request => %s\n", ret);
+  g_message ("Request => %s", ret);
 #endif
 
   for (s = ret; *s != '\0'; s++)
@@ -150,7 +156,7 @@ build_encode_URL (struct arglist *data, char *method, char *path, char *name,
             }
 #ifdef URL_DEBUG
       if (i > 0)
-        log_legacy_write ("Request =  %s\n", ret);
+        g_message ("Request =  %s", ret);
 #endif
     }
 
@@ -175,7 +181,7 @@ build_encode_URL (struct arglist *data, char *method, char *path, char *name,
       ret = ret2;
       n_slash *= 2;
 #ifdef URL_DEBUG
-      log_legacy_write ("Request =  %s\n", ret);
+      g_message ("Request =  %s", ret);
 #endif
     }
 
@@ -205,7 +211,7 @@ build_encode_URL (struct arglist *data, char *method, char *path, char *name,
       ret = ret2;
       n_slash *= 3;
 #ifdef URL_DEBUG
-      log_legacy_write ("Request =  %s\n", ret);
+      g_message ("Request =  %s", ret);
 #endif
     }
 
@@ -226,7 +232,7 @@ build_encode_URL (struct arglist *data, char *method, char *path, char *name,
       g_free (ret);
       ret = ret2;
 #ifdef URL_DEBUG
-      log_legacy_write ("Request =  %s\n", ret);
+      g_message ("Request =  %s", ret);
 #endif
     }
 
@@ -246,7 +252,7 @@ build_encode_URL (struct arglist *data, char *method, char *path, char *name,
       g_free (ret);
       ret = ret2;
 #ifdef URL_DEBUG
-      log_legacy_write ("Request =  %s\n", ret);
+      g_message ("Request =  %s", ret);
 #endif
     }
 
@@ -272,7 +278,7 @@ build_encode_URL (struct arglist *data, char *method, char *path, char *name,
       ret = ret2;
       n_slash *= 2;
 #ifdef URL_DEBUG
-      log_legacy_write ("Request =  %s\n", ret);
+      g_message ("Request =  %s", ret);
 #endif
     }
 
@@ -287,7 +293,7 @@ build_encode_URL (struct arglist *data, char *method, char *path, char *name,
             n_backslash++;
           }
 #ifdef URL_DEBUG
-      log_legacy_write ("Request =  %s\n", ret);
+      g_message ("Request =  %s", ret);
 #endif
     }
 
@@ -380,7 +386,7 @@ build_encode_URL (struct arglist *data, char *method, char *path, char *name,
       g_free (ret);
       ret = ret2;
 #ifdef URL_DEBUG
-      log_legacy_write ("Request =  %s\n", ret);
+      g_message ("Request =  %s", ret);
 #endif
     }
 
@@ -433,7 +439,7 @@ build_encode_URL (struct arglist *data, char *method, char *path, char *name,
       g_free (ret);
       ret = ret2;
 #ifdef URL_DEBUG
-      log_legacy_write ("Request =  %s\n", ret);
+      g_message ("Request =  %s", ret);
 #endif
     }
 
@@ -476,7 +482,7 @@ build_encode_URL (struct arglist *data, char *method, char *path, char *name,
   ret = ret2;
 
 #ifdef URL_DEBUG
-  log_legacy_write ("Request <= %s\n", ret);
+  g_message ("Request <= %s", ret);
 #endif
   return ret;
 }

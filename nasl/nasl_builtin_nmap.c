@@ -72,7 +72,7 @@
 
 
 #ifndef NDEBUG
-  #define dbg(...) do { log_legacy_write (__VA_ARGS__); } while (0)
+  #define dbg(...) do { g_message (__VA_ARGS__); } while (0)
   #define err(x) do { perror (x); } while (0)
 #else
   #define dbg(...)

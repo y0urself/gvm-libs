@@ -57,6 +57,11 @@
 #define DEBUG 1
 #endif
 
+#undef G_LOG_DOMAIN
+/**
+ * @brief GLib logging domain.
+ */
+#define G_LOG_DOMAIN "lib  nasl"
 /*----------------------------------------------------------------------------*/
 struct pseudohdr {
 	struct in_addr  saddr;
@@ -333,7 +338,7 @@ rm_packet (struct list * l, unsigned short dport)
 	if (p == NULL)
 	{
 #if DEBUG > 1
-          log_legacy_write ("Odd - no entry for %d - RTT too low ?!", dport);
+          g_message ("Odd - no entry for %d - RTT too low ?!", dport);
 #endif
           return l;
 	}
@@ -637,7 +642,7 @@ v6_sendpacket (int soc, int bpf, int skip, struct in6_addr *dst,
     packets = add_packet(packets, dport, ack);
     e = sendto(soc, pkt,sizeof(struct tcphdr), 0, (struct sockaddr *) & soca, sizeof(soca));
     if (e < 0) {
-      log_legacy_write ("sendto error in v6_sendpacket");
+      g_message ("sendto error in v6_sendpacket");
       perror("sendto ");
       close(soc);
       bpf_close(bpf);

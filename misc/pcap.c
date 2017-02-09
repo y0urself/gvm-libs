@@ -40,6 +40,11 @@
 
 #define MAXROUTES 1024
 
+#undef G_LOG_DOMAIN
+/**
+ * @brief GLib logging domain.
+ */
+#define G_LOG_DOMAIN "lib  misc"
 
 struct interface_info
 {
@@ -646,17 +651,17 @@ getinterfaces (int *howmany)
   sd = socket (AF_INET, SOCK_DGRAM, 0);
   bzero (buf, sizeof (buf));
   if (sd < 0)
-    log_legacy_write ("socket in getinterfaces");
+    g_message ("socket in getinterfaces");
 
   ifc.ifc_len = sizeof (buf);
   ifc.ifc_buf = buf;
   if (ioctl (sd, SIOCGIFCONF, &ifc) < 0)
-    log_legacy_write ("Failed to determine your configured interfaces!");
+    g_message ("Failed to determine your configured interfaces!");
 
   close (sd);
   if (ifc.ifc_len == 0)
-    log_legacy_write
-     ("getinterfaces: SIOCGIFCONF claims you have no network interfaces!");
+    g_message
+      ("getinterfaces: SIOCGIFCONF claims you have no network interfaces!");
 
 #ifndef __FreeBSD__
   len = sizeof (struct ifmap);
@@ -679,9 +684,9 @@ getinterfaces (int *howmany)
       numinterfaces++;
       if (numinterfaces == 1023)
         {
-          log_legacy_write
-           ("You seem to have more than 1023 network interfaces."
-            " Things may not work right.");
+          g_message
+            ("You seem to have more than 1023 network interfaces."
+             " Things may not work right.");
           break;
         }
       mydevs[numinterfaces].name[0] = '\0';
@@ -856,7 +861,7 @@ getipv4routes (struct myroute *myroutes, int *numroutes)
       if (fgets (buf, sizeof (buf), routez) == NULL)  /* Kill the first line */
         {
           // /proc/net/route was empty or an error occurred.
-          log_legacy_write ("Could not read from /proc/net/route");
+          g_message ("Could not read from /proc/net/route");
           fclose (routez);
           return -1;
         }
@@ -865,8 +870,8 @@ getipv4routes (struct myroute *myroutes, int *numroutes)
           p = strtok (buf, " \t\n");
           if (!p)
             {
-              log_legacy_write ("Could not find interface in"
-                                " /proc/net/route line");
+              g_message ("Could not find interface in"
+                         " /proc/net/route line");
               continue;
             }
           strncpy (iface, p, sizeof (iface));
@@ -882,8 +887,8 @@ getipv4routes (struct myroute *myroutes, int *numroutes)
 #endif
           if (!endptr || *endptr)
             {
-              log_legacy_write ("Failed to determine Destination from"
-                                " /proc/net/route");
+              g_message ("Failed to determine Destination from"
+                         " /proc/net/route");
               continue;
             }
           inaddr.s_addr = dest;
@@ -899,8 +904,8 @@ getipv4routes (struct myroute *myroutes, int *numroutes)
             }
           if (!p)
             {
-              log_legacy_write ("Failed to find field %d in"
-                                " /proc/net/route", i + 2);
+              g_message ("Failed to find field %d in"
+                         " /proc/net/route", i + 2);
               continue;
             }
           endptr = NULL;
@@ -915,8 +920,8 @@ getipv4routes (struct myroute *myroutes, int *numroutes)
 #endif
           if (!endptr || *endptr)
             {
-              log_legacy_write ("Failed to determine mask from"
-                                " /proc/net/route");
+              g_message ("Failed to determine mask from"
+                         " /proc/net/route");
               continue;
             }
 
@@ -933,13 +938,13 @@ getipv4routes (struct myroute *myroutes, int *numroutes)
                 break;
               }
           if (i == numinterfaces)
-            log_legacy_write
-             ("Failed to find interface %s mentioned in /proc/net/route",
+            g_message
+              ("Failed to find interface %s mentioned in /proc/net/route",
                iface);
           (*numroutes)++;
           if (*numroutes >= MAXROUTES)
             {
-              log_legacy_write ("You seem to have WAY to many routes!");
+              g_message ("You seem to have WAY to many routes!");
               break;
             }
         }
@@ -998,7 +1003,7 @@ getipv6routes (struct myroute *myroutes, int *numroutes)
 #endif
               if (inet_pton (AF_INET6, v6addr, &in6addr) <= 0)
                 {
-                  log_legacy_write ("invalid ipv6 addressd");
+                  g_message ("invalid ipv6 addressd");
                   continue;
                 }
               memcpy (&myroutes[*numroutes].dest6, &in6addr,
@@ -1015,7 +1020,7 @@ getipv6routes (struct myroute *myroutes, int *numroutes)
             {
               token = strtok (NULL, " \t\n");
               if (!token)
-                log_legacy_write ("getipv6routes error");
+                g_message ("getipv6routes error");
             }
 
           token = strtok (NULL, " \t\n");
@@ -1034,13 +1039,13 @@ getipv6routes (struct myroute *myroutes, int *numroutes)
                 break;
               }
           if (i == numinterfaces)
-            log_legacy_write
-             ("Failed to find interface %s mentioned in /proc/net/route\n",
-              iface);
+            g_message
+              ("Failed to find interface %s mentioned in /proc/net/route\n",
+               iface);
           (*numroutes)++;
           if (*numroutes >= MAXROUTES)
             {
-              log_legacy_write ("You seem to have WAY to many routes!");
+              g_message ("You seem to have WAY to many routes!");
               break;
             }
         }
@@ -1049,7 +1054,7 @@ getipv6routes (struct myroute *myroutes, int *numroutes)
     }
   else
     {
-      log_legacy_write ("Didn't find IPv6 routes");
+      g_message ("Didn't find IPv6 routes");
       return -1;
     }
 }
@@ -1084,7 +1089,7 @@ v6_routethrough (struct in6_addr *dest, struct in6_addr *source)
   struct in6_addr src;
 
   if (!dest)
-    log_legacy_write ("ipaddr2devname passed a NULL dest address");
+    g_message ("ipaddr2devname passed a NULL dest address");
 
   if (IN6_IS_ADDR_V4MAPPED (dest))
     gvm_source_addr_as_addr6 (&src);
@@ -1199,7 +1204,7 @@ v6_routethrough (struct in6_addr *dest, struct in6_addr *source)
 
           myhostent = gethostbyname (myname);
           if (gethostname (myname, MAXHOSTNAMELEN) || !myhostent)
-            log_legacy_write ("Cannot get hostname!");
+            g_message ("Cannot get hostname!");
           if (myhostent->h_addrtype == AF_INET)
             {
               addy.s6_addr32[0] = 0;
@@ -1232,8 +1237,8 @@ v6_routethrough (struct in6_addr *dest, struct in6_addr *source)
       return NULL;
     }
   else
-    log_legacy_write ("%s: Provided technique is neither proc route nor"
-                      " connect socket", __FUNCTION__);
+    g_message ("%s: Provided technique is neither proc route nor"
+               " connect socket", __FUNCTION__);
   return NULL;
 }
 
@@ -1271,7 +1276,7 @@ routethrough (struct in_addr *dest, struct in_addr *source)
 
   gvm_source_addr (&src);
   if (!dest)
-    log_legacy_write ("ipaddr2devname passed a NULL dest address");
+    g_message ("ipaddr2devname passed a NULL dest address");
 
   if (!initialized)
     {
@@ -1285,14 +1290,14 @@ routethrough (struct in_addr *dest, struct in_addr *source)
           /* OK, linux style /proc/net/route ... we can handle this ... */
           /* Now that we've got the interfaces, we g0 after the r0ut3Z */
           if (fgets (buf, sizeof (buf), routez) == NULL)  /* Kill the first line */
-            log_legacy_write ("Could not read from /proc/net/route");
+            g_message ("Could not read from /proc/net/route");
           while (fgets (buf, sizeof (buf), routez))
             {
               p = strtok (buf, " \t\n");
               if (!p)
                 {
-                  log_legacy_write ("Could not find interface in"
-                                    " /proc/net/route line");
+                  g_message ("Could not find interface in"
+                             " /proc/net/route line");
                   continue;
                 }
               strncpy (iface, p, sizeof (iface));
@@ -1305,8 +1310,8 @@ routethrough (struct in_addr *dest, struct in_addr *source)
               myroutes[numroutes].dest = strtoul (p, &endptr, 16);
               if (!endptr || *endptr)
                 {
-                  log_legacy_write
-                   ("Failed to determine Destination from /proc/net/route");
+                  g_message
+                    ("Failed to determine Destination from /proc/net/route");
                   continue;
                 }
               for (i = 0; i < 6; i++)
@@ -1317,16 +1322,16 @@ routethrough (struct in_addr *dest, struct in_addr *source)
                 }
               if (!p)
                 {
-                  log_legacy_write ("Failed to find field %d in"
-                                    " /proc/net/route", i + 2);
+                  g_message ("Failed to find field %d in"
+                             " /proc/net/route", i + 2);
                   continue;
                 }
               endptr = NULL;
               myroutes[numroutes].mask = strtoul (p, &endptr, 16);
               if (!endptr || *endptr)
                 {
-                  log_legacy_write ("Failed to determine mask"
-                                    " from /proc/net/route");
+                  g_message ("Failed to determine mask"
+                             " from /proc/net/route");
                   continue;
                 }
 
@@ -1343,13 +1348,13 @@ routethrough (struct in_addr *dest, struct in_addr *source)
                     break;
                   }
               if (i == numinterfaces)
-                log_legacy_write
-                 ("Failed to find interface %s mentioned in /proc/net/route",
+                g_message
+                  ("Failed to find interface %s mentioned in /proc/net/route",
                   iface);
               numroutes++;
               if (numroutes >= MAXROUTES)
                 {
-                  log_legacy_write ("You seem to have WAY to many routes!");
+                  g_message ("You seem to have WAY to many routes!");
                   break;
                 }
             }
@@ -1357,7 +1362,7 @@ routethrough (struct in_addr *dest, struct in_addr *source)
         }
       else
         {
-          log_legacy_write ("Could not read from /proc/net/route");
+          g_message ("Could not read from /proc/net/route");
           return NULL;
         }
     }

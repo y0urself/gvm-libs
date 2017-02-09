@@ -52,6 +52,12 @@
 #include "../base/nvticache.h" /* for nvticache_get_by_oid() */
 #include "../base/kb.h"
 
+#undef G_LOG_DOMAIN
+/**
+ * @brief GLib logging domain.
+ */
+#define G_LOG_DOMAIN "lib  misc"
+
 /* Used to allow debugging for openvas-nasl */
 int global_nasl_debug = 0;
 
@@ -561,8 +567,8 @@ get_plugin_preference_fname (struct arglist *desc, const char *filename)
     g_file_open_tmp ("openvassd-file-upload.XXXXXX", &tmpfilename, &error);
   if (tmpfile == -1)
     {
-      log_legacy_write ("get_plugin_preference_fname: Could not open temporary"
-                        " file for %s: %s", filename, error->message);
+      g_message ("get_plugin_preference_fname: Could not open temporary"
+                 " file for %s: %s", filename, error->message);
       g_error_free (error);
       return NULL;
     }
@@ -570,8 +576,8 @@ get_plugin_preference_fname (struct arglist *desc, const char *filename)
 
   if (!g_file_set_contents (tmpfilename, content, contentsize, &error))
     {
-      log_legacy_write ("get_plugin_preference_fname: could set contents of"
-                        " temporary file for %s: %s", filename, error->message);
+      g_message ("get_plugin_preference_fname: could set contents of"
+                 " temporary file for %s: %s", filename, error->message);
       g_error_free (error);
       return NULL;
     }
@@ -662,10 +668,10 @@ plug_set_key_len (struct arglist *args, char *name, int type, const void *value,
   if (global_nasl_debug == 1)
     {
       if (type == ARG_STRING)
-        log_legacy_write ("set key %s -> %s\n", name, (char *) value);
+        g_message ("set key %s -> %s", name, (char *) value);
       else if (type == ARG_INT)
-        log_legacy_write ("set key %s -> %d\n", name,
-                          (int) GPOINTER_TO_SIZE (value));
+        g_message ("set key %s -> %d", name,
+                   (int) GPOINTER_TO_SIZE (value));
     }
 }
 
@@ -691,10 +697,10 @@ plug_replace_key_len (struct arglist *args, char *name, int type, void *value,
   if (global_nasl_debug == 1)
     {
       if (type == ARG_STRING)
-        log_legacy_write ("replace key %s -> %s\n", name, (char *) value);
+        g_message ("replace key %s -> %s", name, (char *) value);
       else if (type == ARG_INT)
-        log_legacy_write ("replace key %s -> %d\n", name,
-                          (int) GPOINTER_TO_SIZE (value));
+        g_message ("replace key %s -> %d", name,
+                   (int) GPOINTER_TO_SIZE (value));
     }
 }
 
@@ -853,8 +859,8 @@ plug_get_key (struct arglist *args, char *name, int *type, size_t *len)
         }
       else if (pid < 0)
         {
-          log_legacy_write ("libopenvas:%s:%s(): fork() failed (%s)", __FILE__,
-                            __func__, strerror (errno));
+          g_message ("libopenvas:%s:%s(): fork() failed (%s)", __FILE__,
+                     __func__, strerror (errno));
           kb_item_free (res_list);
           return NULL;
         }

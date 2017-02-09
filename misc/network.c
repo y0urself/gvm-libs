@@ -70,6 +70,12 @@
 #define INADDR_NONE 0xffffffff
 #endif
 
+#undef G_LOG_DOMAIN
+/**
+ * @brief GLib logging domain.
+ */
+#define G_LOG_DOMAIN "lib  misc"
+
 /*----------------------------------------------------------------*
  * Low-level connection management                                *
  *----------------------------------------------------------------*/
@@ -151,7 +157,7 @@ renice_myself (void)
       renice_result = nice (1);
       if (renice_result == -1 && errno != 0)
         {
-          log_legacy_write ("Unable to renice process: %d", errno);
+          g_message ("Unable to renice process: %d", errno);
         }
     }
 }
@@ -162,7 +168,7 @@ renice_myself (void)
 static int
 pid_perror (const char *error)
 {
-  log_legacy_write ("[%d] %s : %s\n", getpid (), error, strerror (errno));
+  g_message ("[%d] %s : %s", getpid (), error, strerror (errno));
   return 0;
 }
 
@@ -198,8 +204,8 @@ get_connection_fd (void)
           return i + OPENVAS_FD_OFF;
         }
     }
-  log_legacy_write ("[%d] %s:%d : Out of OpenVAS file descriptors\n",
-                    getpid (), __FILE__, __LINE__);
+  g_message ("[%d] %s:%d : Out of OpenVAS file descriptors",
+             getpid (), __FILE__, __LINE__);
   errno = EMFILE;
   return -1;
 }
@@ -231,8 +237,7 @@ release_connection_fd (int fd, int already_closed)
   if (p->fd >= 0)
     {
 #if DEBUG_SSL > 1
-      log_legacy_write (
-               "[%d] release_connection_fd: fd > 0 fd=%d\n", getpid (), p->fd);
+      g_message ("[%d] release_connection_fd: fd > 0 fd=%d", getpid (), p->fd);
 #endif
       if (shutdown (p->fd, 2) < 0)
         {
@@ -367,14 +372,14 @@ block_socket (int soc)
 void
 tlserror (char *txt, int err)
 {
-  log_legacy_write ("[%d] %s: %s\n", getpid (), txt, gnutls_strerror (err));
+  g_message ("[%d] %s: %s", getpid (), txt, gnutls_strerror (err));
 }
 
 #ifdef DEBUG_SSL
 static void
 log_message_gnutls (int level, const char *msg)
 {
-  log_legacy_write ("LEVEL %d: %s\n", level, msg);
+  g_message ("LEVEL %d: %s", level, msg);
 }
 #endif
 
@@ -407,17 +412,14 @@ openvas_get_socket_from_connection (int fd)
 
   if (!OPENVAS_STREAM (fd))
     {
-      log_legacy_write (
-               "[%d] openvas_get_socket_from_connection: bad fd <%d>\n",
-               getpid (), fd);
-      log_legacy_fflush ();
+      g_message ("[%d] openvas_get_socket_from_connection: bad fd <%d>",
+                 getpid (), fd);
       return fd;
     }
   fp = connections + (fd - OPENVAS_FD_OFF);
   if (fp->transport <= 0)
     {
-      log_legacy_write (
-               "openvas_get_socket_from_connection: fd <%d> is closed\n", fd);
+      g_message ("openvas_get_socket_from_connection: fd <%d> is closed", fd);
       return -1;
     }
   return fp->fd;
@@ -476,8 +478,8 @@ set_gnutls_protocol (gnutls_session_t session, openvas_encaps_t encaps,
         break;
       default:
 #if DEBUG_SSL > 0
-        log_legacy_write ("*Bug* at %s:%d. Unknown transport %d\n", __FILE__,
-                          __LINE__, encaps);
+        g_message ("*Bug* at %s:%d. Unknown transport %d", __FILE__,
+                   __LINE__, encaps);
 #endif
       case OPENVAS_ENCAPS_TLScustom:
         priorities = priority;
@@ -486,8 +488,8 @@ set_gnutls_protocol (gnutls_session_t session, openvas_encaps_t encaps,
 
   if ((err = gnutls_priority_set_direct (session, priorities, &errloc)))
     {
-      log_legacy_write ("[%d] setting session priorities '%.20s': %s\n",
-                        getpid (), errloc, gnutls_strerror (err));
+      g_message ("[%d] setting session priorities '%.20s': %s",
+                 getpid (), errloc, gnutls_strerror (err));
       return -1;
     }
 
@@ -514,8 +516,8 @@ load_cert_and_key (gnutls_certificate_credentials_t xcred, const char *cert,
 
   if (load_gnutls_file (cert, &data))
     {
-      log_legacy_write ("[%d] load_cert_and_key: Error loading cert file %s\n",
-                        getpid (), cert);
+      g_message ("[%d] load_cert_and_key: Error loading cert file %s",
+                 getpid (), cert);
       result = -1;
       goto cleanup;
     }
@@ -539,8 +541,8 @@ load_cert_and_key (gnutls_certificate_credentials_t xcred, const char *cert,
 
   if (load_gnutls_file (key, &data))
     {
-      log_legacy_write ("[%d] load_cert_and_key: Error loading key file %s\n",
-                        getpid (), key);
+      g_message ("[%d] load_cert_and_key: Error loading key file %s",
+                 getpid (), key);
       result = -1;
       goto cleanup;
     }
@@ -792,7 +794,7 @@ socket_negotiate_ssl (int fd, openvas_encaps_t transport, struct arglist *args)
 
   if (!fd_is_stream (fd))
     {
-      log_legacy_write ("Socket %d is not stream\n", fd);
+      g_message ("Socket %d is not stream", fd);
       return -1;
     }
   fp = OVAS_CONNECTION_FROM_FD(fd);
@@ -809,7 +811,7 @@ socket_negotiate_ssl (int fd, openvas_encaps_t transport, struct arglist *args)
   fp->priority = NULL;
   if (open_SSL_connection (fp, cert, key, passwd, cafile, hostname) <= 0)
     {
-      log_legacy_write ("socket_negotiate_ssl: SSL connection failed.\n");
+      g_message ("socket_negotiate_ssl: SSL connection failed.");
       release_connection_fd (fd, 0);
       return -1;
     }
@@ -834,13 +836,13 @@ socket_get_cert (int fd, void **cert, int *certlen)
     return;
   if (!fd_is_stream (fd))
     {
-      log_legacy_write ("Socket %d is not stream\n", fd);
+      g_message ("Socket %d is not stream", fd);
       return;
     }
   session = ovas_get_tlssession_from_connection (fd);
   if (!session)
     {
-      log_legacy_write ("Socket %d is not SSL/TLS encapsulated\n", fd);
+      g_message ("Socket %d is not SSL/TLS encapsulated", fd);
       return;
     }
   if (gnutls_certificate_type_get (session) != GNUTLS_CRT_X509)
@@ -867,13 +869,13 @@ socket_get_ssl_version (int fd)
 
   if (!fd_is_stream (fd))
     {
-      log_legacy_write ("Socket %d is not stream\n", fd);
+      g_message ("Socket %d is not stream", fd);
       return -1;
     }
   session = ovas_get_tlssession_from_connection (fd);
   if (!session)
     {
-      log_legacy_write ("Socket %d is not SSL/TLS encapsulated\n", fd);
+      g_message ("Socket %d is not SSL/TLS encapsulated", fd);
       return -1;
     }
 
@@ -912,13 +914,13 @@ socket_get_ssl_session_id (int fd, void **sid, size_t *ssize)
     return;
   if (!fd_is_stream (fd))
     {
-      log_legacy_write ("Socket %d is not stream\n", fd);
+      g_message ("Socket %d is not stream", fd);
       return;
     }
   session = ovas_get_tlssession_from_connection (fd);
   if (!session)
     {
-      log_legacy_write ("Socket %d is not SSL/TLS encapsulated\n", fd);
+      g_message ("Socket %d is not SSL/TLS encapsulated", fd);
       return;
     }
   tmp = g_malloc0 (*ssize);
@@ -947,13 +949,13 @@ socket_get_ssl_compression (int fd)
 
   if (!fd_is_stream (fd))
     {
-      log_legacy_write ("Socket %d is not stream\n", fd);
+      g_message ("Socket %d is not stream", fd);
       return -1;
     }
   session = ovas_get_tlssession_from_connection (fd);
   if (!session)
     {
-      log_legacy_write ("Socket %d is not SSL/TLS encapsulated\n", fd);
+      g_message ("Socket %d is not SSL/TLS encapsulated", fd);
       return -1;
     }
 
@@ -987,13 +989,13 @@ socket_get_ssl_ciphersuite (int fd)
 
   if (!fd_is_stream (fd))
     {
-      log_legacy_write ("Socket %d is not stream\n", fd);
+      g_message ("Socket %d is not stream", fd);
       return -1;
     }
   session = ovas_get_tlssession_from_connection (fd);
   if (!session)
     {
-      log_legacy_write ("Socket %d is not SSL/TLS encapsulated\n", fd);
+      g_message ("Socket %d is not SSL/TLS encapsulated", fd);
       return -1;
     }
 
@@ -1030,10 +1032,9 @@ open_stream_connection_ext (struct arglist *args, unsigned int port,
     priority = ""; /* To us an empty string is equivalent to NULL.  */
 
 #if DEBUG_SSL > 2
-  log_legacy_write (
-           "[%d] open_stream_connection: TCP:%d transport:%d timeout:%d "
-           " priority: '%s'\n",
-           getpid (), port, transport, timeout, priority);
+  g_message ("[%d] open_stream_connection: TCP:%d transport:%d timeout:%d "
+             " priority: '%s'",
+             getpid (), port, transport, timeout, priority);
 #endif
 
   if (timeout == -2)
@@ -1053,8 +1054,8 @@ open_stream_connection_ext (struct arglist *args, unsigned int port,
       break;
 
     default:
-      log_legacy_write ("open_stream_connection_ext(): unsupported transport"
-                        " layer %d\n", transport);
+      g_message ("open_stream_connection_ext(): unsupported transport"
+                 " layer %d", transport);
       errno = EINVAL;
       return -1;
     }
@@ -1357,12 +1358,12 @@ read_stream_connection_unbuffered (int fd, void *buf0, int min_len, int max_len)
 
     default:
       if (fp->transport || fp->fd != 0)
-        log_legacy_write ("Severe bug! Unhandled transport layer %d (fd=%d)\n",
-                          fp->transport, fd);
+        g_message ("Severe bug! Unhandled transport layer %d (fd=%d)",
+                   fp->transport, fd);
       else
-        log_legacy_write ("read_stream_connection_unbuffered: "
-                          "fd=%d is closed\n",
-                          fd);
+        g_message ("read_stream_connection_unbuffered: "
+                   "fd=%d is closed",
+                   fd);
       errno = EINVAL;
       return -1;
     }
@@ -1565,11 +1566,11 @@ write_stream_connection4 (int fd, void *buf0, int n, int i_opt)
 
     default:
       if (fp->transport || fp->fd != 0)
-        log_legacy_write ("Severe bug! Unhandled transport layer %d (fd=%d)\n",
-                          fp->transport, fd);
+        g_message ("Severe bug! Unhandled transport layer %d (fd=%d)",
+                   fp->transport, fd);
       else
-        log_legacy_write ("read_stream_connection_unbuffered: fd=%d is "
-                          "closed\n", fd);
+        g_message ("read_stream_connection_unbuffered: fd=%d is "
+                   "closed", fd);
       errno = EINVAL;
       return -1;
     }
@@ -1594,7 +1595,7 @@ nsend (int fd, void *data, int length, int i_opt)
   if (OPENVAS_STREAM (fd))
     {
       if (connections[fd - OPENVAS_FD_OFF].fd < 0)
-        log_legacy_write ("OpenVAS file descriptor %d closed ?!\n", fd);
+        g_message ("OpenVAS file descriptor %d closed ?!", fd);
       else
         return write_stream_connection4 (fd, data, length, i_opt);
     }
@@ -1622,7 +1623,7 @@ nsend (int fd, void *data, int length, int i_opt)
     }
   while (n <= 0 && errno == EINTR);
   if (n < 0)
-    log_legacy_write ("[%d] nsend():send %s\n", getpid (), strerror (errno));
+    g_message ("[%d] nsend():send %s", getpid (), strerror (errno));
 
   return n;
 }
@@ -1632,12 +1633,12 @@ nrecv (int fd, void *data, int length, int i_opt)
 {
   int e;
 #if DEBUG_SSL > 8
-  log_legacy_write ("nrecv: fd=%d len=%d\n", fd, length);
+  g_message ("nrecv: fd=%d len=%d", fd, length);
 #endif
   if (OPENVAS_STREAM (fd))
     {
       if (connections[fd - OPENVAS_FD_OFF].fd < 0)
-        log_legacy_write ("OpenVAS file descriptor %d closed ?!\n", fd);
+        g_message ("OpenVAS file descriptor %d closed ?!", fd);
       else
         return read_stream_connection (fd, data, length);
     }
@@ -1719,7 +1720,7 @@ close_stream_connection (int fd)
       return -1;
     }
   fp = OVAS_CONNECTION_FROM_FD (fd);
-  log_legacy_write ("close_stream_connection TCP:%d (fd=%d)\n", fp->port, fd);
+  g_message ("close_stream_connection TCP:%d (fd=%d)", fp->port, fd);
 #endif
 
   if (!OPENVAS_STREAM (fd))     /* Will never happen if debug is on! */
@@ -1959,7 +1960,7 @@ open_sock_tcp (struct arglist *args, unsigned int port, int timeout)
       if (log_count == -1)
         log_count = 0;
       if (log_count < 3)
-        log_legacy_write ("open_sock_tcp: %s:%d time-out.", ip_str, port);
+        g_message ("open_sock_tcp: %s:%d time-out.", ip_str, port);
       log_count++;
       kb_item_set_int (kb, buffer, log_count);
       g_free (ip_str);
@@ -1990,7 +1991,7 @@ open_sock_option (struct arglist *args, unsigned int port, int type,
   t = plug_get_host_ip (args);
   if (!t)
     {
-      log_legacy_write ("ERROR ! NO ADDRESS ASSOCIATED WITH NAME\n");
+      g_message ("ERROR ! NO ADDRESS ASSOCIATED WITH NAME");
       arg_dump (args, 0);
       return (-1);
     }
@@ -2306,8 +2307,8 @@ internal_send (int soc, char *data, int msg_type)
   e = os_recv (soc, &ack, sizeof (ack), 0);
   if (e < 0)
     {
-      log_legacy_write ("internal_send->os_recv(%d): %s\n", soc,
-                        strerror (errno));
+      g_message ("internal_send->os_recv(%d): %s", soc,
+                 strerror (errno));
       return -1;
     }
 
@@ -2344,7 +2345,7 @@ internal_recv (int soc, char **data, int *data_sz, int *msg_type)
 
   if (*data != NULL)
     {
-      log_legacy_write("%s doesn't support buffer pre-alloc anymore.", __func__);
+      g_message("%s doesn't support buffer pre-alloc anymore.", __func__);
       return -1;
     }
 

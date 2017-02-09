@@ -44,6 +44,12 @@
 #define INTBLOB_LEN	20
 #define SIGBLOB_LEN	(2*INTBLOB_LEN)
 
+#undef G_LOG_DOMAIN
+/**
+ * @brief GLib logging domain.
+ */
+#define G_LOG_DOMAIN "lib  nasl"
+
 /**
  * @brief Prints a GnuTLS error.
  *
@@ -569,8 +575,8 @@ extract_mpi_from_sexp (gcry_sexp_t sexp, const char *token)
   child = gcry_sexp_find_token (sexp, token, strlen (token));
   if (!child)
     {
-      log_legacy_write ("set_retc_from_sexp: no subexpression with token <%s>",
-                        token);
+      g_message ("set_retc_from_sexp: no subexpression with token <%s>",
+                 token);
     }
   else
     {
@@ -1404,7 +1410,7 @@ encrypt_data (lex_ctxt *lexic, int cipher, int mode)
   result = g_malloc0 (resultlen);
   if ((error = gcry_cipher_encrypt (hd, result, resultlen, tmp, tmplen)))
     {
-      log_legacy_write ("gcry_cipher_encrypt: %s", gcry_strerror (error));
+      g_message ("gcry_cipher_encrypt: %s", gcry_strerror (error));
       gcry_cipher_close (hd);
       g_free (result);
       g_free (tmp);

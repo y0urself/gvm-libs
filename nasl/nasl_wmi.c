@@ -62,6 +62,12 @@
 #define IMPORT(var) char *var = get_str_local_var_by_name(lexic, #var)
 #define max 5
 
+#undef G_LOG_DOMAIN
+/**
+ * @brief GLib logging domain.
+ */
+#define G_LOG_DOMAIN "lib  nasl"
+
 /**
  * Returns 0 if any alphabets are present
  */
@@ -169,7 +175,7 @@ nasl_wmi_connect (lex_ctxt * lexic)
 
   if ((host == NULL) || (username == NULL) || (password == NULL))
     {
-      log_legacy_write ("nasl_wmi_connect: Invalid input arguments\n");
+      g_message ("nasl_wmi_connect: Invalid input arguments");
       return NULL;
     }
 
@@ -177,7 +183,7 @@ nasl_wmi_connect (lex_ctxt * lexic)
   if ((strlen (password) == 0) || (strlen (username) == 0)
         || strlen (ip) == 0)
     {
-      log_legacy_write ("nasl_wmi_connect: Invalid input arguments\n");
+      g_message ("nasl_wmi_connect: Invalid input arguments");
       g_free (ip);
       return NULL;
     }
@@ -205,7 +211,7 @@ nasl_wmi_connect (lex_ctxt * lexic)
   value = wmi_connect (argc, argv, &handle);
   if (value == -1)
     {
-      log_legacy_write ("nasl_wmi_connect: WMI Connect failed\n");
+      g_message ("nasl_wmi_connect: WMI Connect failed");
       return NULL;
     }
 
@@ -278,7 +284,7 @@ nasl_wmi_query (lex_ctxt * lexic)
 
   if ((value == -1) || (res == NULL))
     {
-      log_legacy_write ("wmi_query: WMI query failed '%s'\n", query);
+      g_message ("wmi_query: WMI query failed '%s'", query);
       return NULL;
     }
 
@@ -323,7 +329,7 @@ nasl_wmi_connect_rsop (lex_ctxt * lexic)
 
   if ((host == NULL) || (username == NULL) || (password == NULL))
     {
-      log_legacy_write ("nasl_wmi_connect_rsop: Invalid input arguments\n");
+      g_message ("nasl_wmi_connect_rsop: Invalid input arguments");
       return NULL;
     }
 
@@ -331,7 +337,7 @@ nasl_wmi_connect_rsop (lex_ctxt * lexic)
   if ((strlen (password) == 0) || (strlen (username) == 0)
       || strlen (ip) == 0)
     {
-      log_legacy_write ("nasl_wmi_connect_rsop: Invalid input arguments\n");
+      g_message ("nasl_wmi_connect_rsop: Invalid input arguments");
       g_free (ip);
       return NULL;
     }
@@ -357,7 +363,7 @@ nasl_wmi_connect_rsop (lex_ctxt * lexic)
   value = wmi_connect_rsop (argc, argv, &handle);
   if (value == -1)
     {
-      log_legacy_write ("nasl_wmi_connect_rsop: WMI Connect failed\n");
+      g_message ("nasl_wmi_connect_rsop: WMI Connect failed");
       return NULL;
     }
 
@@ -396,7 +402,7 @@ nasl_wmi_query_rsop (lex_ctxt * lexic)
   value = wmi_query_rsop (handle, query, &res);
   if ((value == -1) || (res == NULL))
     {
-      log_legacy_write ("wmi_query_rsop: WMI query failed\n");
+      g_message ("wmi_query_rsop: WMI query failed");
       return NULL;
     }
   retc->x.str_val = strdup (res);
@@ -440,7 +446,7 @@ nasl_wmi_connect_reg (lex_ctxt * lexic)
 
   if ((host == NULL) || (username == NULL) || (password == NULL))
     {
-      log_legacy_write ("nasl_wmi_connect_reg: Invalid input arguments\n");
+      g_message ("nasl_wmi_connect_reg: Invalid input arguments");
       return NULL;
     }
 
@@ -448,7 +454,7 @@ nasl_wmi_connect_reg (lex_ctxt * lexic)
   if ((strlen (password) == 0) || (strlen (username) == 0)
       || strlen (ip) == 0)
     {
-      log_legacy_write ("nasl_wmi_connect_reg: Invalid input arguments\n");
+      g_message ("nasl_wmi_connect_reg: Invalid input arguments");
       g_free (ip);
       return NULL;
     }
@@ -474,7 +480,7 @@ nasl_wmi_connect_reg (lex_ctxt * lexic)
   value = wmi_connect_reg (argc, argv, &handle);
   if (value == -1)
     {
-      log_legacy_write ("nasl_wmi_connect_reg: WMI Connect failed\n");
+      g_message ("nasl_wmi_connect_reg: WMI Connect failed");
       return NULL;
     }
 
@@ -519,7 +525,7 @@ nasl_wmi_reg_get_sz (lex_ctxt * lexic)
 
   if ((value == -1) || (res == NULL))
     {
-      log_legacy_write ("nasl_wmi_reg_get_sz: WMI Registry get failed\n");
+      g_message ("nasl_wmi_reg_get_sz: WMI Registry get failed");
       return NULL;
     }
 
@@ -565,7 +571,7 @@ nasl_wmi_reg_enum_value (lex_ctxt * lexic)
 
   if ((value == -1) || (res == NULL))
     {
-      log_legacy_write ("nasl_wmi_reg_enum_value: WMI query failed\n");
+      g_message ("nasl_wmi_reg_enum_value: WMI query failed");
       return NULL;
     }
 
@@ -611,7 +617,7 @@ nasl_wmi_reg_enum_key (lex_ctxt * lexic)
 
   if ((value == -1) || (res == NULL))
     {
-      log_legacy_write ("nasl_wmi_reg_enum_key: WMI query failed\n");
+      g_message ("nasl_wmi_reg_enum_key: WMI query failed");
       return NULL;
     }
 
@@ -659,7 +665,7 @@ nasl_wmi_reg_get_bin_val (lex_ctxt * lexic)
 
   if ((value == -1) || (res == NULL))
     {
-      log_legacy_write ("nasl_wmi_reg_get_bin_val: WMI query failed\n");
+      g_message ("nasl_wmi_reg_get_bin_val: WMI query failed");
       return NULL;
     }
 
@@ -709,7 +715,7 @@ nasl_wmi_reg_get_dword_val (lex_ctxt * lexic)
 
   if ((value == -1) || (res == NULL))
     {
-      log_legacy_write ("nasl_wmi_reg_get_dword_val: WMI query failed\n");
+      g_message ("nasl_wmi_reg_get_dword_val: WMI query failed");
       return NULL;
     }
 
@@ -756,7 +762,7 @@ nasl_wmi_reg_get_ex_string_val (lex_ctxt * lexic)
 
   if ((value == -1) || (res == NULL))
     {
-      log_legacy_write ("nasl_wmi_reg_get_ex_string_val: WMI query failed\n");
+      g_message ("nasl_wmi_reg_get_ex_string_val: WMI query failed");
       return NULL;
     }
 
@@ -803,7 +809,7 @@ nasl_wmi_reg_get_mul_string_val (lex_ctxt * lexic)
 
   if ((value == -1) || (res == NULL))
     {
-      log_legacy_write ("nasl_wmi_reg_get_mul_string_val: WMI query failed\n");
+      g_message ("nasl_wmi_reg_get_mul_string_val: WMI query failed");
       return NULL;
     }
 
@@ -850,7 +856,7 @@ nasl_wmi_reg_get_qword_val (lex_ctxt * lexic)
 
   if ((value == -1) || (res == NULL))
     {
-      log_legacy_write ("nasl_wmi_reg_get_qword_val: WMI query failed\n");
+      g_message ("nasl_wmi_reg_get_qword_val: WMI query failed");
       return NULL;
     }
 
@@ -904,8 +910,8 @@ nasl_wmi_reg_set_dword_val (lex_ctxt * lexic)
 
   if (value == -1)
     {
-      log_legacy_write ("nasl_wmi_reg_set_dword_val: WMI registry set"
-                        " operation failed\n");
+      g_message ("nasl_wmi_reg_set_dword_val: WMI registry set"
+                 " operation failed");
       return NULL;
     }
   return retc;
@@ -956,8 +962,8 @@ nasl_wmi_reg_set_qword_val (lex_ctxt * lexic)
 
   if (value == -1)
     {
-      log_legacy_write ("nasl_wmi_reg_set_qword_val: WMI register"
-                        " set operation failed\n");
+      g_message ("nasl_wmi_reg_set_qword_val: WMI register"
+                 " set operation failed");
       return NULL;
     }
   return retc;
@@ -1000,7 +1006,7 @@ nasl_wmi_reg_set_ex_string_val (lex_ctxt * lexic)
 
   if (value == -1)
     {
-      log_legacy_write ("nasl_wmi_reg_set_ex_string_val: WMI registery set operation failed\n");
+      g_message ("nasl_wmi_reg_set_ex_string_val: WMI registery set operation failed");
       return NULL;
     }
   return retc;
@@ -1043,8 +1049,8 @@ nasl_wmi_reg_set_string_val (lex_ctxt * lexic)
 
   if (value == -1)
     {
-      log_legacy_write ("nasl_wmi_reg_set_string_val: WMI registery"
-                        " set operation failed\n");
+      g_message ("nasl_wmi_reg_set_string_val: WMI registery"
+                 " set operation failed");
       return NULL;
     }
     return retc;
@@ -1083,8 +1089,8 @@ nasl_wmi_reg_create_key (lex_ctxt * lexic)
 
   if (value == -1)
     {
-      log_legacy_write ("nasl_wmi_reg_create_key: WMI registery key create"
-                        " operation failed\n");
+      g_message ("nasl_wmi_reg_create_key: WMI registery key create"
+                 " operation failed");
       return NULL;
     }
     return retc;
@@ -1125,8 +1131,8 @@ nasl_wmi_reg_delete_key (lex_ctxt * lexic)
 
   if (value == -1)
     {
-      log_legacy_write ("nasl_wmi_reg_delete_key: WMI registery key"
-                        " delete operation failed\n");
+      g_message ("nasl_wmi_reg_delete_key: WMI registery key"
+                 " delete operation failed");
       return NULL;
     }
     return retc;

@@ -49,6 +49,11 @@
 #define MAP_FAILED ((void*)-1)
 #endif
 
+#undef G_LOG_DOMAIN
+/**
+ * @brief GLib logging domain.
+ */
+#define G_LOG_DOMAIN "lib  nasl"
 
 extern char *nasl_version (void);
 extern int execute_instruction (struct arglist *, char *);

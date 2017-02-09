@@ -29,6 +29,12 @@
 #undef DEBUG_HIGH
 #define NUM_CLIENTS 128
 
+#undef G_LOG_DOMAIN
+/**
+ * @brief GLib logging domain.
+ */
+#define G_LOG_DOMAIN "lib  misc"
+
 /** Shared pcap_t's. */
 static pcap_t *pcaps[NUM_CLIENTS];
 
@@ -50,7 +56,7 @@ bpf_open_live (char *iface, char *filter)
 
   if (pcaps[i])
     {
-      log_legacy_write ("no free pcap");
+      g_message ("no free pcap");
       return -1;
     }
 
@@ -61,13 +67,13 @@ bpf_open_live (char *iface, char *filter)
   ret = pcap_open_live (iface, 1500, 0, 1, errbuf);
   if (ret == NULL)
     {
-      log_legacy_write ("%s", errbuf);
+      g_message ("%s", errbuf);
       return -1;
     }
 
   if (pcap_lookupnet (iface, &network, &netmask, 0) < 0)
     {
-      log_legacy_write ("pcap_lookupnet failed");
+      g_message ("pcap_lookupnet failed");
       pcap_close (ret);
       return -1;
     }
@@ -82,9 +88,9 @@ bpf_open_live (char *iface, char *filter)
   if (pcap_setnonblock (ret, 1, NULL) == -1)
     {
       pcap_perror (ret, "pcap_setnonblock");
-      log_legacy_write
-       ("call to pcap_setnonblock failed, some plugins/scripts will"
-        " hang/freeze. Upgrade your version of libcap!");
+      g_message
+        ("call to pcap_setnonblock failed, some plugins/scripts will"
+         " hang/freeze. Upgrade your version of libcap!");
     }
 
   if (pcap_setfilter (ret, &filter_prog) < 0)

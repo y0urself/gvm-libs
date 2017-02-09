@@ -57,6 +57,12 @@
 #define NASL_DEBUG 0
 #endif
 
+#undef G_LOG_DOMAIN
+/**
+ * @brief GLib logging domain.
+ */
+#define G_LOG_DOMAIN "lib  nasl"
+
 /*------------------- Private utilities ---------------------------------*/
 
 static int

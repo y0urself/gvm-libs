@@ -57,6 +57,12 @@
 # define UNFIX(n) ntohs(n)
 #endif
 
+#undef G_LOG_DOMAIN
+/**
+ * @brief GLib logging domain.
+ */
+#define G_LOG_DOMAIN "lib  misc"
+
 /*
  * We define our own packet structs (they'll be defined in libnasl later
  * on, and I feel lazy today)
@@ -706,7 +712,7 @@ ids_open_sock_tcp (args, port, method, timeout)
   dst6 = plug_get_host_ip (args);
   if (!dst6)
     {
-      log_legacy_write ("Error - no address associated with name\n");
+      g_message ("Error - no address associated with name");
       return -1;
     }
   if (IN6_IS_ADDR_V4MAPPED (dst6))

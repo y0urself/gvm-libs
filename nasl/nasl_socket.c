@@ -66,6 +66,13 @@
 #ifndef EADDRNOTAVAIL
 #define EADDRNOTAVAIL EADDRINUSE
 #endif
+
+#undef G_LOG_DOMAIN
+/**
+ * @brief GLib logging domain.
+ */
+#define G_LOG_DOMAIN "lib  nasl"
+
 /*----------------------- Private functions ---------------------------*/
 
 static int
@@ -321,8 +328,8 @@ tryagain:
 
   if (getsockopt (sock, SOL_SOCKET, SO_ERROR, &opt, &opt_sz) < 0)
     {
-      log_legacy_write ("[%d] open_priv_sock()->getsockopt() failed : %s\n",
-                        getpid (), strerror (errno));
+      g_message ("[%d] open_priv_sock()->getsockopt() failed : %s",
+                 getpid (), strerror (errno));
       close (sock);
       return NULL;
     }
@@ -1144,7 +1151,7 @@ nasl_socket_get_error (lex_ctxt * lexic)
       break;
 
     default:
-      log_legacy_write ("Unknown error %d %s\n", err, strerror (err));
+      g_message ("Unknown error %d %s", err, strerror (err));
     }
 
   return retc;

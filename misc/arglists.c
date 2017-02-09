@@ -34,6 +34,12 @@
 
 #define HASH_MAX 2713
 
+#undef G_LOG_DOMAIN
+/**
+ * @brief GLib logging domain.
+ */
+#define G_LOG_DOMAIN "lib  misc"
+
 /**
  * @brief Make a hash value from string.
  *
@@ -285,7 +291,7 @@ arg_dump (args, level)
   const char *spaces = "--------------------";
   if (!args)
     {
-      log_legacy_write ("Error ! args == NULL");
+      g_message ("Error ! args == NULL");
       return;
     }
 
@@ -296,28 +302,27 @@ arg_dump (args, level)
           {
           case ARG_STRING:
 
-            log_legacy_write ("%sargs->%s : %s\n", spaces + (20 - level),
-                              args->name, (char *) args->value);
+            g_message ("%sargs->%s : %s", spaces + (20 - level),
+                       args->name, (char *) args->value);
             break;
           case ARG_ARGLIST:
 
-            log_legacy_write ("%sargs->%s :\n", spaces + (20 - level),
-                              args->name);
+            g_message ("%sargs->%s :", spaces + (20 - level),
+                       args->name);
             arg_dump (args->value, level + 1);
             break;
           case ARG_INT:
-            log_legacy_write ("%sargs->%s : %d\n", spaces + (20 - level),
-                              args->name, (int) GPOINTER_TO_SIZE (args->value));
+            g_message ("%sargs->%s : %d", spaces + (20 - level),
+                       args->name, (int) GPOINTER_TO_SIZE (args->value));
             break;
           default:
-            log_legacy_write ("%sargs->%s : %d\n", spaces + (20 - level),
-                              args->name, (int) GPOINTER_TO_SIZE (args->value));
+            g_message ("%sargs->%s : %d", spaces + (20 - level),
+                       args->name, (int) GPOINTER_TO_SIZE (args->value));
             break;
           }
         args = args->next;
       }
 }
-
 
 void
 arg_free (arg)

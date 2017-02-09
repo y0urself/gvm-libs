@@ -32,6 +32,12 @@
 #define RLIM_INFINITY (1024*1024*1024)
 #endif
 
+#undef G_LOG_DOMAIN
+/**
+ * @brief GLib logging domain.
+ */
+#define G_LOG_DOMAIN "lib  misc"
+
 FILE *
 openvas_popen4 (const char *cmd, char *const args[], pid_t * ppid, int inice)
 {
@@ -41,9 +47,9 @@ openvas_popen4 (const char *cmd, char *const args[], pid_t * ppid, int inice)
 
 #if DEBUG
   int i;
-  log_legacy_write ("openvas_popen4: running %s -", cmd);
+  g_message ("openvas_popen4: running %s -", cmd);
   for (i = 0; args[i] != NULL; i++)
-    log_legacy_write (" %s", args[i]);
+    g_message (" %s", args[i]);
   fputc ('\n', stderr);
 #endif
 

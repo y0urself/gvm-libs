@@ -58,6 +58,12 @@
 #define uint32 uint32_t
 #endif
 
+#undef G_LOG_DOMAIN
+/**
+ * @brief GLib logging domain.
+ */
+#define G_LOG_DOMAIN "lib  nasl"
+
 /*-------------------[  Std. HASH ]-------------------------------------*/
 static tree_cell *
 nasl_gcrypt_hash (lex_ctxt * lexic, int algorithm, void *data, size_t datalen,
@@ -158,18 +164,18 @@ nasl_cipher (int algorithm, void *data, size_t dlen, void *key, size_t klen)
 
   if ((error = gcry_cipher_open (&hd, algorithm, GCRY_CIPHER_MODE_ECB, 0)))
     {
-      log_legacy_write ("gcry_cipher_open: %s", gcry_strerror (error));
+      g_message ("gcry_cipher_open: %s", gcry_strerror (error));
       return NULL;
     }
   if ((error = gcry_cipher_setkey (hd, key, klen)))
     {
-      log_legacy_write ("gcry_cipher_setkey: %s", gcry_strerror (error));
+      g_message ("gcry_cipher_setkey: %s", gcry_strerror (error));
       return NULL;
     }
   result = g_malloc0 (dlen);
   if ((error = gcry_cipher_encrypt (hd, result, dlen, data, dlen)))
     {
-      log_legacy_write ("gcry_cipher_encrypt: %s", gcry_strerror (error));
+      g_message ("gcry_cipher_encrypt: %s", gcry_strerror (error));
       return NULL;
     }
   gcry_cipher_close (hd);
@@ -293,8 +299,8 @@ hmac_sha384 (const void *key, int keylen, const void *buf, int buflen)
   err = gcry_md_open (&hd, GCRY_MD_SHA384, key ? GCRY_MD_FLAG_HMAC : 0);
   if (err)
     {
-      log_legacy_write ("nasl_gcrypt_hash(): gcry_md_open failed: %s/%s\n",
-                        gcry_strsource (err), gcry_strerror (err));
+      g_message ("nasl_gcrypt_hash(): gcry_md_open failed: %s/%s",
+                 gcry_strsource (err), gcry_strerror (err));
       return NULL;
     }
 
@@ -303,8 +309,8 @@ hmac_sha384 (const void *key, int keylen, const void *buf, int buflen)
       err = gcry_md_setkey (hd, key, keylen);
       if (err)
         {
-          log_legacy_write ("nasl_gcrypt_hash(): gcry_md_setkey failed: %s/%s\n",
-                            gcry_strsource (err), gcry_strerror (err));
+          g_message ("nasl_gcrypt_hash(): gcry_md_setkey failed: %s/%s",
+                     gcry_strsource (err), gcry_strerror (err));
           return NULL;
         }
     }

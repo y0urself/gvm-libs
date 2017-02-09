@@ -32,9 +32,13 @@
 #include "exec.h"
 #include "../misc/plugutils.h"
 
+#undef G_LOG_DOMAIN
+/**
+ * @brief GLib logging domain.
+ */
+#define G_LOG_DOMAIN "lib  nasl"
 
 extern FILE *nasl_trace_fp;
-
 
 
 void
@@ -54,8 +58,8 @@ nasl_perror (lex_ctxt * lexic, char *msg, ...)
     }
 
   vsnprintf (debug_message, sizeof (debug_message), msg, param);
-  log_legacy_write ("[%d](%s:%d) %s", getpid (), script_name,
-                    lexic ? lexic->line_nb : 0, debug_message);
+  g_message ("[%d](%s:%d) %s", getpid (), script_name,
+             lexic ? lexic->line_nb : 0, debug_message);
 
   /** @todo Enable this when the NVTs are ready.  Sends ERRMSG to client. */
 #if 0

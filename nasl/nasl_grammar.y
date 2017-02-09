@@ -41,6 +41,12 @@
 #include "nasl_debug.h"
 #include "nasl_signature.h"
 
+#undef G_LOG_DOMAIN
+/**
+ * @brief GLib logging domain.
+ */
+#define G_LOG_DOMAIN "lib  nasl"
+  
 static void naslerror(naslctxt *, const char *);
 #define YYERROR_VERBOSE
 %}
@@ -483,6 +489,7 @@ naslerror(naslctxt *parm, const char *s)
 {
   (void) parm;
   fputs(s, stderr);
+  fputc('\n', stderr);
 }
 
 static GSList * inc_dirs = NULL;
@@ -595,8 +602,8 @@ init_nasl_ctx(naslctxt* pc, const char* name)
   }
 
   if (! pc->fp) {
-    log_legacy_write ("%s: Not able to open nor to locate it in include paths",
-                      name);
+    g_message ("%s: Not able to open nor to locate it in include paths",
+               name);
     g_free(full_name);
     return -1;
   }
@@ -638,8 +645,8 @@ init_nasl_ctx(naslctxt* pc, const char* name)
 
   if (nasl_verify_signature(full_name) != 0)
     {
-      log_legacy_write ("%s: Will not execute. Bad or missing signature",
-                        full_name);
+      g_message ("%s: Will not execute. Bad or missing signature",
+                 full_name);
       if (pc->kb)
         kb_item_add_str (pc->kb, key_path, "0", 0);
       fclose(pc->fp);
@@ -1005,8 +1012,8 @@ mylex(lvalp, parm)
 	      if (c ==  '\n')
 		ctx->line_nb --;
 	      if (! isprint(c)) c = '.';
-	      log_legacy_write ("lexer error: invalid token >!%c "
-                                "parsed as >!< %c", c, c);
+	      g_message ("lexer error: invalid token >!%c "
+                         "parsed as >!< %c", c, c);
 	      return NOMATCH;
 	    }
 	  break;
