@@ -1,3 +1,15 @@
+2017-02-09  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
+	Module "openvas_auth" is now in gvm-libs/util.
+
+	* misc/openvas_auth.c, misc/openvas_auth.h: Removed.
+
+	* misc/CMakeLists.txt: Removed handling of this module.
+
+	* COPYING: Remove module from this list.
+
+	* misc/ldap_connect_auth.c: Removed unneeded incude.
+
 2017-02-08  Hani Benhabiles <hani.benhabiles@greenbone.net>
 
 	* nasl/CMakeLists.txt: Add -Wextra flag.

@@ -35,7 +35,6 @@ misc/internal_com.h: GPLv2+
 misc/ldap_connect_auth.[c|h]: GPLv2+
 misc/network.[c|h]: LGPLv2+
 misc/nvt_categories.h: LGPLv2+
-misc/openvas_auth.[c|h]: GPLv2+
 misc/openvas_proctitle.[c|h]: GPLv2+
 misc/pcap.c: LGPLv2+
 misc/pcap_openvas.h: LGPLv2+
