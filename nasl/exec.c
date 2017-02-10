@@ -1739,7 +1739,7 @@ exec_nasl_script (struct arglist *script_infos, const char *name,
   if (init_nasl_ctx (&ctx, name) == 0)
     {
       if (naslparse (&ctx))
-        {          
+        {
           g_message ("%s: Parse error at or near line %d",
                      name, ctx.line_nb);
           nasl_clean_ctx (&ctx);

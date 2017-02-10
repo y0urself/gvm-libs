@@ -46,7 +46,7 @@
  * @brief GLib logging domain.
  */
 #define G_LOG_DOMAIN "lib  nasl"
-  
+
 static void naslerror(naslctxt *, const char *);
 #define YYERROR_VERBOSE
 %}
