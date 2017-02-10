@@ -74,15 +74,12 @@ if (NOT MINGW)
 endif (NOT MINGW)
 
 if (MINGW)
-  set (FILES openvas_proctitle.c)
-  set (HEADERS openvas_proctitle.h )
 else (MINGW)
   set (FILES arglists.c bpf_share.c ftp_funcs.c ids_send.c ldap_connect_auth.c
-             network.c plugutils.c popen.c
-             openvas_proctitle.c prefs.c www_funcs.c pcap.c)
+             network.c plugutils.c popen.c prefs.c www_funcs.c pcap.c)
 
   set (HEADERS arglists.h bpf_share.h ftp_funcs.h ldap_connect_auth.h
-               network.h pcap_openvas.h plugutils.h popen.h openvas_proctitle.h
+               network.h pcap_openvas.h plugutils.h popen.h
                prefs.h nvt_categories.h internal_com.h www_funcs.h)
 endif (MINGW)
 
