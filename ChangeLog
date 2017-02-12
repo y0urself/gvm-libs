@@ -1,3 +1,16 @@
+2017-02-12  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
+	Module "ldap_connect_auth" is now in gvm-libs/base.
+
+	* misc/ldap_connect_auth.c, misc/ldap_connect_auth.h: Removed.
+
+	* misc/CMakeLists.txt: Removed handling of this module. And
+	also the checks for LDAP library.
+
+	* COPYING: Remove module from this list.
+
+	* INSTALL: Remove note on ldap library requirement.
+
 2017-02-10  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 
 	Module "openvas_proctitle" is now in gvm-libs/base.

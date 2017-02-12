@@ -39,30 +39,6 @@ if (MINGW)
   endif (CROSS_ENV)
 endif (MINGW)
 
-## Config
-
-if (NOT MINGW)
-  if (NOT BUILD_WITHOUT_LDAP)
-    message (STATUS "Looking for libldap...")
-
-    find_library (LIBLDAP ldap2)
-    if (NOT LIBLDAP)
-      find_library (LIBLDAP ldap)
-    endif (NOT LIBLDAP)
-    if (NOT LIBLDAP)
-      message (STATUS "  No ldap library found - ldap support disabled")
-    else (NOT LIBLDAP)
-      message (STATUS "  Found ${LIBLDAP} - ldap support enabled")
-      add_definitions (-DENABLE_LDAP_AUTH=1)
-      set (BUILD_WITH_LDAP TRUE)
-      set (LDAP_LDFLAGS "-lldap")
-    endif (NOT LIBLDAP)
-  else (NOT BUILD_WITHOUT_LDAP)
-    message (STATUS "Disabled ldap via configuration option")
-  endif (NOT BUILD_WITHOUT_LDAP)
-
-endif (NOT MINGW)
-
 # Library
 
 
@@ -75,17 +51,13 @@ endif (NOT MINGW)
 
 if (MINGW)
 else (MINGW)
-  set (FILES arglists.c bpf_share.c ftp_funcs.c ids_send.c ldap_connect_auth.c
+  set (FILES arglists.c bpf_share.c ftp_funcs.c ids_send.c
              network.c plugutils.c popen.c prefs.c www_funcs.c pcap.c)
 
-  set (HEADERS arglists.h bpf_share.h ftp_funcs.h ldap_connect_auth.h
+  set (HEADERS arglists.h bpf_share.h ftp_funcs.h
                network.h pcap_openvas.h plugutils.h popen.h
                prefs.h nvt_categories.h internal_com.h www_funcs.h)
 endif (MINGW)
-
-if (BUILD_WITH_LDAP)
-  list (APPEND FILES ldap_connect_auth.c)
-endif (BUILD_WITH_LDAP)
 
 link_directories (${CMAKE_CURRENT_BINARY_DIR}/../base)
 
@@ -119,7 +91,7 @@ if (BUILD_SHARED)
     target_link_libraries (openvas_misc_shared openvas_base_shared ${W32LIBS})
   else (MINGW)
     target_link_libraries (openvas_misc_shared LINK_PRIVATE ${GNUTLS_LDFLAGS} openvas_base_shared ${UUID_LDFLAGS}
-                           ${GLIB_LDFLAGS} ${PCAP_LDFLAGS} ${LDAP_LDFLAGS}
+                           ${GLIB_LDFLAGS} ${PCAP_LDFLAGS}
                            ${GCRYPT_LDFLAGS} ${LINKER_HARDENING_FLAGS})
   endif (MINGW)
 endif (BUILD_SHARED)
