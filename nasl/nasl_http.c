@@ -21,7 +21,7 @@
 #include <ctype.h>              /* for isspace */
 #include <string.h>             /* for strlen */
 
-#include "../misc/prefs.h"      /* for prefs_get */
+#include <gvm/base/prefs.h>     /* for prefs_get */
 
 #include "../base/kb.h"                 /* for kb_item_get_str */
 #include "../misc/plugutils.h"          /* plug_get_host_fqdn */

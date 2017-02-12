@@ -29,8 +29,8 @@
 
 #include <regex.h>
 #include <gvm/base/logging.h>
+#include <gvm/base/prefs.h>     /* for prefs_get */
 
-#include "../misc/prefs.h"           /* for prefs_get */
 #include "../misc/plugutils.h"
 
 #include "nasl.h"

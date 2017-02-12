@@ -51,6 +51,7 @@
 #include <glib/gstdio.h>
 
 #include <gvm/base/logging.h>
+#include <gvm/base/prefs.h>    /* for prefs_get() */
 
 #include "nasl_tree.h"
 #include "nasl_global_ctxt.h"
@@ -62,7 +63,6 @@
 #include "../base/kb.h"
 #include "nasl_debug.h"
 #include "../misc/network.h"            /* for openvas_get_socket_from_connection */
-#include "../misc/prefs.h"  /* for prefs_get() */
 
 #include "nasl_ssh.h"
 

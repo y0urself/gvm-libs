@@ -31,10 +31,10 @@
 #include <glib.h>
 
 #include <gvm/base/logging.h>
+#include <gvm/base/prefs.h>    /* for prefs_get */
 
 #include "../misc/arglists.h" /* for struct arglist */
 #include "../misc/plugutils.h" /* for find_in_path */
-#include "../misc/prefs.h"          /* for prefs_get */
 #include "../misc/network.h"
 
 #include "nasl_lex_ctxt.h"

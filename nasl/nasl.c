@@ -33,6 +33,7 @@
 
 #include <gvm/base/hosts.h>     /* for gvm_hosts_* and gvm_host_* */
 #include <gvm/base/nvti.h>
+#include <gvm/base/prefs.h>     /* for prefs_get */
 
 #include "../misc/network.h"
 
@@ -40,7 +41,6 @@
 #include "nasl_lex_ctxt.h"
 #include "exec.h"
 #include "../base/kb.h"                 /* for kb_new */
-#include "../misc/prefs.h" /* for prefs_get */
 #include "../misc/nvt_categories.h"
 
 #include <glib.h>

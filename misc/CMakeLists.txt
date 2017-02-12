@@ -52,11 +52,11 @@ endif (NOT MINGW)
 if (MINGW)
 else (MINGW)
   set (FILES arglists.c bpf_share.c ftp_funcs.c ids_send.c
-             network.c plugutils.c popen.c prefs.c www_funcs.c pcap.c)
+             network.c plugutils.c popen.c  www_funcs.c pcap.c)
 
   set (HEADERS arglists.h bpf_share.h ftp_funcs.h
                network.h pcap_openvas.h plugutils.h popen.h
-               prefs.h nvt_categories.h internal_com.h www_funcs.h)
+               nvt_categories.h internal_com.h www_funcs.h)
 endif (MINGW)
 
 link_directories (${CMAKE_CURRENT_BINARY_DIR}/../base)

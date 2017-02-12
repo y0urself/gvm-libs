@@ -35,6 +35,7 @@
 #include <glib.h>
 
 #include <gvm/base/logging.h>
+#include <gvm/base/prefs.h>     /* for prefs_get */
 
 #include "../base/kb.h"                 /* for KB_TYPE_INT */
 #include "../misc/plugutils.h"          /* for plug_set_id */
@@ -51,7 +52,6 @@
 
 #include "../base/nvticache.h"
 
-#include "../misc/prefs.h" /* for prefs_get */
 
 #ifndef NASL_DEBUG
 #define NASL_DEBUG 0

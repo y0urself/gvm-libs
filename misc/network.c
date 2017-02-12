@@ -48,6 +48,7 @@
 
 #include <gvm/base/networking.h>
 #include <gvm/base/logging.h>
+#include <gvm/base/prefs.h>
 #include <gvm/util/serverutils.h> /* for load_gnutls_file */
 
 #ifdef __FreeBSD__
@@ -59,7 +60,6 @@
 #include "../base/kb.h"         /* for kb_item_get_str() */
 
 #include "ids_send.h"
-#include "prefs.h"
 #include "plugutils.h"
 #include "internal_com.h" /* for INTERNAL_COMM_MSG_TYPE_CTRL */
 #include "support.h"
