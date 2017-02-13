@@ -123,9 +123,6 @@ set (CPACK_SOURCE_IGNORE_FILES
 "${CMAKE_BINARY_DIR}"
 "/.svn/"
 "swp$"
-"nasl/nasl_grammar.tab.c"
-"nasl/nasl_grammar.tab.h"
-"nasl/nasl_grammar.output"
 )
 
 include (CPack)
@@ -293,13 +290,11 @@ configure_file (doc/Doxyfile_full.in ${CMAKE_BINARY_DIR}/doc/Doxyfile_full @ONLY
 configure_file (VERSION.in ${CMAKE_BINARY_DIR}/VERSION @ONLY)
 configure_file (libopenvas_base.pc.in ${CMAKE_BINARY_DIR}/libopenvas_base.pc @ONLY)
 configure_file (libopenvas_misc.pc.in ${CMAKE_BINARY_DIR}/libopenvas_misc.pc @ONLY)
-configure_file (libopenvas_nasl.pc.in ${CMAKE_BINARY_DIR}/libopenvas_nasl.pc @ONLY)
 
 ## Program
 
 add_subdirectory (base)
 add_subdirectory (misc)
-add_subdirectory (nasl)
 
 ## Documentation
 
@@ -307,16 +302,9 @@ add_subdirectory (doc)
 
 ## Install
 
-install (FILES doc/openvas-nasl.1
-         DESTINATION ${DATADIR}/man/man1 )
-install (FILES doc/openvas-nasl-lint.1
-         DESTINATION ${DATADIR}/man/man1 )
-
 install (FILES ${CMAKE_BINARY_DIR}/libopenvas_base.pc
          DESTINATION ${LIBDIR}/pkgconfig)
 install (FILES ${CMAKE_BINARY_DIR}/libopenvas_misc.pc
-         DESTINATION ${LIBDIR}/pkgconfig)
-install (FILES ${CMAKE_BINARY_DIR}/libopenvas_nasl.pc
          DESTINATION ${LIBDIR}/pkgconfig)
 
 install (DIRECTORY DESTINATION ${OPENVAS_LOG_DIR})
