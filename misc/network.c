@@ -1026,6 +1026,7 @@ open_stream_connection_ext (struct arglist *args, unsigned int port,
   char *key = NULL;
   char *passwd = NULL;
   char *cafile = NULL;
+  char *hostname = NULL;
 
   if (!priority)
     priority = ""; /* To us an empty string is equivalent to NULL.  */
@@ -1087,7 +1088,6 @@ open_stream_connection_ext (struct arglist *args, unsigned int port,
     {
     int ret;
     char buf[1024];
-    char *hostname = NULL;
 
     case OPENVAS_ENCAPS_IP:
       break;

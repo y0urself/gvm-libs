@@ -1,6 +1,11 @@
+2017-02-13  Hani Benhabiles <hani.benhabiles@greenbone.net>
+
+	* misc/network.c (open_stream_connection_ext): Define hostname variable
+	outside the switch block as it may not be initialized within it.
+
 2017-02-13  Juan Jose Nicola  <juan.nicola@greenbone.net>
 
-        Moving nasl library to opevas-scanner as nasl submodule.
+	Moving nasl library to opevas-scanner as nasl submodule.
 
 	* doc/openvas-nasl.1, doc/openvas-nasl-lint.1,
 	nasl/, nasl/arc4.c, nasl/build, nasl/byteorder.h, nasl/capture_packet.c,
