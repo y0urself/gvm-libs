@@ -1026,7 +1026,6 @@ open_stream_connection_ext (struct arglist *args, unsigned int port,
   char *key = NULL;
   char *passwd = NULL;
   char *cafile = NULL;
-  char *hostname = NULL;
 
   if (!priority)
     priority = ""; /* To us an empty string is equivalent to NULL.  */
@@ -1088,6 +1087,8 @@ open_stream_connection_ext (struct arglist *args, unsigned int port,
     {
     int ret;
     char buf[1024];
+    char *hostname = NULL;
+
     case OPENVAS_ENCAPS_IP:
       break;
     case OPENVAS_ENCAPS_SSLv23:
@@ -1111,6 +1112,7 @@ open_stream_connection_ext (struct arglist *args, unsigned int port,
       if (kb_item_get_int (kb, buf) <= 0)
         hostname = plug_get_host_fqdn (args);
       ret = open_SSL_connection (fp, cert, key, passwd, cafile, hostname);
+      g_free (hostname);
       g_free (cert);
       g_free (key);
       g_free (passwd);
