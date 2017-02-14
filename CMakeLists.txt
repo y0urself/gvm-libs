@@ -288,7 +288,6 @@ set (OPENVASLIB_VERSION "${LIBOPENVASCONFIG_VERSION}")
 configure_file (doc/Doxyfile.in ${CMAKE_BINARY_DIR}/doc/Doxyfile @ONLY)
 configure_file (doc/Doxyfile_full.in ${CMAKE_BINARY_DIR}/doc/Doxyfile_full @ONLY)
 configure_file (VERSION.in ${CMAKE_BINARY_DIR}/VERSION @ONLY)
-configure_file (libopenvas_base.pc.in ${CMAKE_BINARY_DIR}/libopenvas_base.pc @ONLY)
 configure_file (libopenvas_misc.pc.in ${CMAKE_BINARY_DIR}/libopenvas_misc.pc @ONLY)
 
 ## Program
@@ -302,8 +301,6 @@ add_subdirectory (doc)
 
 ## Install
 
-install (FILES ${CMAKE_BINARY_DIR}/libopenvas_base.pc
-         DESTINATION ${LIBDIR}/pkgconfig)
 install (FILES ${CMAKE_BINARY_DIR}/libopenvas_misc.pc
          DESTINATION ${LIBDIR}/pkgconfig)
 

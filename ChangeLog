@@ -1,5 +1,26 @@
 2017-02-14  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 
+	Module "nvticache" is now in gvm-libs/util.
+
+	* base/nvticache.c, base/nvticache.h: Removed.
+
+	* base/CMakeLists.txt: Removed handling of this module.
+
+	* COPYING: Remove module from this list.
+
+	* misc/CMakeLists.txt: Drop openvase_base library
+	which is not needed anymore.
+
+	* misc/plugutils.c: Include gvm/util/nvticache.h instead
+	of ../base/nvticache.h.
+
+	* CMakeLists.txt: Do not configure and install the pc file for base
+	library.
+
+	* libopenvas_base.pc.in: Removed. This is not required anymore.
+
+2017-02-14  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
 	Module "kb" is now in gvm-libs/util.
 
 	* base/kb_redis.c, base/kb.h: Removed.

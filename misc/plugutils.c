@@ -44,13 +44,13 @@
 #include <gvm/base/logging.h>
 #include <gvm/base/prefs.h>          /* for prefs_get_bool */
 #include <gvm/util/kb.h>
+#include <gvm/util/nvticache.h>      /* for nvticache_get_by_oid() */
 
 #include "arglists.h"
 #include "network.h"
 #include "plugutils.h"
 #include "internal_com.h"
 
-#include "../base/nvticache.h" /* for nvticache_get_by_oid() */
 
 #undef G_LOG_DOMAIN
 /**

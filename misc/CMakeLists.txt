@@ -59,8 +59,6 @@ else (MINGW)
                nvt_categories.h internal_com.h www_funcs.h)
 endif (MINGW)
 
-link_directories (${CMAKE_CURRENT_BINARY_DIR}/../base)
-
 # Indentation targets
 # TODO: Commented out as it provokes error. Unclear
 # what this directive is good for.
@@ -72,7 +70,7 @@ if (BUILD_STATIC)
   set_target_properties (openvas_misc_static PROPERTIES OUTPUT_NAME "openvas_misc")
   set_target_properties (openvas_misc_static PROPERTIES CLEAN_DIRECT_OUTPUT 1)
   set_target_properties (openvas_misc_static PROPERTIES PUBLIC_HEADER "${HEADERS}")
-  target_link_libraries (openvas_misc_static openvas_base_static)
+  target_link_libraries (openvas_misc_static)
 endif (BUILD_STATIC)
 
 if (BUILD_SHARED)
@@ -88,9 +86,9 @@ if (BUILD_SHARED)
     set (GLIB_LDFLAGS -Wl,--start-group ${GLIB_LDFLAGS} gmodule-2.0 -Wl,--end-group)
     set (W32LIBS ${GLIB_LDFLAGS} gnutls intl iconv tasn1
        gcrypt gpgme assuan libgpg-error ole32 ws2_32 ffi z shlwapi dnsapi winmm)
-    target_link_libraries (openvas_misc_shared openvas_base_shared ${W32LIBS})
+    target_link_libraries (openvas_misc_shared ${W32LIBS})
   else (MINGW)
-    target_link_libraries (openvas_misc_shared LINK_PRIVATE ${GNUTLS_LDFLAGS} openvas_base_shared ${UUID_LDFLAGS}
+    target_link_libraries (openvas_misc_shared LINK_PRIVATE ${GNUTLS_LDFLAGS} ${UUID_LDFLAGS}
                            ${GLIB_LDFLAGS} ${PCAP_LDFLAGS}
                            ${GCRYPT_LDFLAGS} ${LINKER_HARDENING_FLAGS})
   endif (MINGW)
