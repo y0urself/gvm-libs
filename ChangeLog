@@ -1,3 +1,8 @@
+2017-02-14  Juan Jose Nicola  <jnicola@armant.core.os.greenbone.net>
+
+	* doc/Doxyfile_full.in, doc/Doxyfile.in: Remove ALIASES and INPUT referred
+	to the nasl docs generation.
+
 2017-02-14  Juan Jose Nicola  <juan.nicola@greenbone.net>
 
 	* doc/signatures-howto.txt: Moved to openvas-scanner
