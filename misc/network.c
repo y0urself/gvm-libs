@@ -50,6 +50,7 @@
 #include <gvm/base/logging.h>
 #include <gvm/base/prefs.h>
 #include <gvm/util/serverutils.h> /* for load_gnutls_file */
+#include <gvm/util/kb.h>          /* for kb_item_get_str() */
 
 #ifdef __FreeBSD__
 #include <netinet/in.h>
@@ -57,7 +58,6 @@
 #endif
 
 #include "network.h"            /* for socket_close() */
-#include "../base/kb.h"         /* for kb_item_get_str() */
 
 #include "ids_send.h"
 #include "plugutils.h"

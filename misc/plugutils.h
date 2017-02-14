@@ -29,8 +29,7 @@
 #include "arglists.h"
 
 #include <gvm/base/nvti.h>  /* for nvti_t */
-
-#include "../base/kb.h"
+#include <gvm/util/kb.h>
 
 #define LEGACY_OID "1.3.6.1.4.1.25623.1.0."
 

@@ -39,7 +39,7 @@
 
 /* for nvticache_t */
 #include "nvticache.h"
-#include "kb.h"
+#include <gvm/util/kb.h>
 
 #include <string.h> // for strlen
 #include <assert.h>

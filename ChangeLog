@@ -1,5 +1,22 @@
 2017-02-14  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 
+	Module "kb" is now in gvm-libs/util.
+
+	* base/kb_redis.c, base/kb.h: Removed.
+
+	* base/CMakeLists.txt: Removed handling of this module.
+
+	* INSTALL: Remove requirement of hiredis.
+
+	* COPYING: Remove module from this list.
+
+	* base/nvticache.c: Include gvm/util/kb.h instead of kb.h.
+
+	* misc/network.c, misc/plugutils.c, misc/plugutils.h,
+	misc/www_funcs.c: Include gvm/util/kb.h instead of ../base/kb.h.
+
+2017-02-14  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
 	* misc/nvt_categories.h (ACT_STRING_*): Removed all these definitions
 	as they are not used anywhere anymore. Nasl uses its own table
 	of strings.

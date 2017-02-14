@@ -35,20 +35,6 @@ if (NOT MINGW)
 
   pkg_check_modules (GIO REQUIRED gio-2.0)
 
-  pkg_check_modules (REDIS hiredis>=0.10.1)
-
-  if (NOT REDIS_FOUND)
-    # Make a second attempt to find hiredis without pkg-config
-    message (STATUS "Looking for hiredis...")
-    find_library (HIREDIS hiredis)
-    message (STATUS "Looking for hiredis... ${HIREDIS}")
-    if (NOT HIREDIS)
-      message (SEND_ERROR "The hiredis library is required.")
-    endif (NOT HIREDIS)
-
-    set (REDIS_LDFLAGS "-lhiredis")
-  endif (NOT REDIS_FOUND)
-
 endif (NOT MINGW)
 
 include_directories (${GLIB_INCLUDE_DIRS}
@@ -59,8 +45,8 @@ include_directories (${GLIB_INCLUDE_DIRS}
 if (MINGW)
   set  (FILES nvticache.c)
 else (MINGW)
-  set (FILES nvticache.c kb_redis.c)
-  set (HEADERS kb.h nvticache.h)
+  set (FILES nvticache.c)
+  set (HEADERS nvticache.h)
 endif (MINGW)
 
 if (BUILD_STATIC)

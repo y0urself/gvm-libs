@@ -23,8 +23,8 @@
 #include <arpa/inet.h>
 
 #include <gvm/base/networking.h>
+#include <gvm/util/kb.h>
 
-#include "../base/kb.h"
 #include "plugutils.h"
 #include "support.h"
 
