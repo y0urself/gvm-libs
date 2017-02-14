@@ -1,3 +1,8 @@
+2017-02-14  Michael Wiegand <michael.wiegand@greenbone.net>
+
+	* misc/arglists.h: Move Doxygen mainpage configuration here now that
+	nasl/nasl.h has moved to openvas-scanner.
+
 2017-02-14  Juan Jose Nicola  <juan.nicola@greenbone.net>
 
 	* doc/Doxyfile_full.in: Remove ALIASES referred	to the nasl
