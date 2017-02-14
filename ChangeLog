@@ -1,3 +1,9 @@
+2017-02-14  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
+	* misc/nvt_categories.h (ACT_STRING_*): Removed all these definitions
+	as they are not used anywhere anymore. Nasl uses its own table
+	of strings.
+
 2017-02-14  Michael Wiegand <michael.wiegand@greenbone.net>
 
 	* misc/arglists.h: Move Doxygen mainpage configuration here now that
