@@ -292,7 +292,6 @@ configure_file (libopenvas_misc.pc.in ${CMAKE_BINARY_DIR}/libopenvas_misc.pc @ON
 
 ## Program
 
-add_subdirectory (base)
 add_subdirectory (misc)
 
 ## Documentation

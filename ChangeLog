@@ -1,3 +1,14 @@
+2017-02-15  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
+	Finally remove last remains of base library.
+
+	* base/, base/CMakeLists.txt. base/README.txt, base/test-hosts.c:
+	Removed. The test tool is now in gvm-libs.
+
+	* CMakeLists.txt: Removed base module.
+
+	* COPYING: Removed base module.
+
 2017-02-14  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
 
 	Module "nvticache" is now in gvm-libs/util.
