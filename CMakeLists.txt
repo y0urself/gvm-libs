@@ -244,15 +244,6 @@ if (NOT MINGW)
     OUTPUT_VARIABLE GPGME_CFLAGS
     OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-  message (STATUS "Looking for netsnmp...")
-  find_library (SNMP snmp)
-  message (STATUS "Looking for netsnmp... ${SNMP}")
-  if (SNMP)
-    execute_process (COMMAND net-snmp-config --libs
-      OUTPUT_VARIABLE SNMP_LDFLAGS
-      OUTPUT_STRIP_TRAILING_WHITESPACE)
-  endif (SNMP)
-
   message (STATUS "Looking for libgcrypt...")
   find_library (GCRYPT gcrypt)
   message (STATUS "Looking for libgcrypt... ${GCRYPT}")

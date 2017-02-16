@@ -1,3 +1,14 @@
+2017-02-16  Juan Jose Nicola  <juan.nicola@greenbone.net>
+
+	* INSTALL: Remove bison, flex, libpcap, libssh, libksba to the list
+	of prerequisites since nasl is now  . Remove recommendations
+	to have WMI and improved SNMP support. Remove prerequisites from the
+	apt-install command. Leave only 'misc' and delete 'base' from the
+	instruction to link the library statically.
+
+	* CMakeLists.txt: Remove all related to libsnmp since it was used only for
+	nasl module and it was moved to openvas-scanner.
+
 2017-02-16  Michael Wiegand <michael.wiegand@greenbone.net>
 
 	* doc/Doxyfile.in, doc/Doxyfile_full.in: Remove 'base' from Doxygen

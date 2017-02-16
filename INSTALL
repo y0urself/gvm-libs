@@ -14,8 +14,6 @@ some supported platforms.
 
 General build environment:
 * a C compiler (e.g. gcc)
-* bison >= 2.5
-* flex
 * cmake >= 3.0
 * pkg-config
 
@@ -24,27 +22,18 @@ Specific development libraries:
 * libglib >= 2.32
 * libgnutls >= 3.2.15
 * libgcrypt
-* zlib
 * libpcap
 * libgpgme >= 1.1.2
-* libssh >= 0.5.0
-* libksba >= 1.0.7
+
 
 Prerequisites for building documentation:
 * doxygen
 * xmltoman (optional, for building man page)
 * sqlfairy (optional, for producing database diagram)
 
-Recommended to have WMI support:
-* openvas-smb >= 1.0.1
-
-Recommended to have improved SNMP support:
-* netsnmp
-
 Install prerequisites on Debian GNU/Linux 'Jessie' 8:
-# apt-get install gcc pkg-config libssh-dev libgnutls28-dev libglib2.0-dev \
-  libpcap-dev libgpgme11-dev bison libksba-dev \
-  libsnmp-dev libgcrypt20-dev
+# apt-get install gcc pkg-config libgnutls28-dev libglib2.0-dev \
+  libpcap-dev libgpgme11-dev libgcrypt20-dev
 
 
 Compiling openvas-libraries
@@ -137,7 +126,7 @@ and install it into the path you configured.
 
 Once you have build and installed the GnuTLS library, configure OpenVAS
 Libraries with the following parameters to request statically linked versions of
-the "base" and "misc" modules:
+the "misc" module:
 
    $ cmake -DBUILD_STATIC=1 -DBUILD_SHARED=0 ..
 
