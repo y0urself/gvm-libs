@@ -50,6 +50,7 @@
 #include "network.h"
 #include "plugutils.h"
 #include "internal_com.h"
+#include "scanneraux.h"
 
 
 #undef G_LOG_DOMAIN
