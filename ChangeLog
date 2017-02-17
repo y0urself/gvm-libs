@@ -1,5 +1,10 @@
 2017-02-17  Michael Wiegand <michael.wiegand@greenbone.net>
 
+	* doc/test_ipv6_packet_forgery.nasl: Deleted. Moved to 'examples'
+	directory in the 'openvas-nvts' SVN repository.
+
+2017-02-17  Michael Wiegand <michael.wiegand@greenbone.net>
+
 	* INSTALL: Remove references to irrelevant documentation
 	prerequisites.
 
