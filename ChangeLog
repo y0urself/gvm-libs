@@ -1,3 +1,9 @@
+2017-02-17  Jan-Oliver Wagner <jan-oliver.wagner@greenbone.net>
+
+	* misc/scanneraux.h: New. This is for auxiliary stucts.
+
+	* COPYING: Add new file.
+
 2017-02-17  Michael Wiegand <michael.wiegand@greenbone.net>
 
 	* doc/test_ipv6_packet_forgery.nasl: Deleted. Moved to 'examples'
