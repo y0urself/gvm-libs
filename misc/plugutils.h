@@ -33,8 +33,8 @@
 
 #define LEGACY_OID "1.3.6.1.4.1.25623.1.0."
 
-void scanner_add_port (struct arglist *, int, char *);
 
+void scanner_add_port (struct arglist *, int, char *);
 
 /*
  * Arglist management at plugin-level

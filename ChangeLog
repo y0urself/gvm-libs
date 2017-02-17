@@ -1,3 +1,9 @@
+2017-02-17  Hani Benhabiles <hani.benhabiles@greenbone.net>
+
+	* misc/plugutils.c (proto_post_wrapped, plug_get_key)
+	(get_plugin_preference_file_content, get_plugin_preference_file_size):
+	Adjust to change of globals from arglist to struct scan_globals.
+
 2017-02-16  Juan Jose Nicola  <juan.nicola@greenbone.net>
 
 	* INSTALL: Remove bison, flex, libpcap, libssh, libksba to the list

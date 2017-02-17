@@ -283,6 +283,7 @@ proto_post_wrapped (const char *oid, struct arglist *desc, int port, const char 
   int soc, len;
   const char *prepend_tags, *append_tags;
   char *buffer, *data, **nvti_tags = NULL;
+  struct scan_globals *globals;
   GString *action_str;
   gsize length;
   nvti_t *nvti;
@@ -413,7 +414,8 @@ proto_post_wrapped (const char *oid, struct arglist *desc, int port, const char 
               idbuffer);
 
   mark_post (oid, desc, what, action);
-  soc = arg_get_value_int (arg_get_value (desc, "globals"), "global_socket");
+  globals = arg_get_value (desc, "globals");
+  soc = globals->global_socket;
   /* Convert to UTF-8 before sending to Manager. */
   data = g_convert (buffer, -1, "UTF-8", "ISO_8859-1", NULL, &length, NULL);
   internal_send (soc, data, INTERNAL_COMM_MSG_TYPE_DATA);
@@ -603,13 +605,13 @@ char *
 get_plugin_preference_file_content (struct arglist *desc,
                                     const char *identifier)
 {
-  struct arglist *globals = arg_get_value (desc, "globals");
+  struct scan_globals *globals = arg_get_value (desc, "globals");
   GHashTable *trans;
 
   if (!globals)
     return NULL;
 
-  trans = arg_get_value (globals, "files_translation");
+  trans = globals->files_translation;
   if (!trans)
     return NULL;
 
@@ -634,14 +636,14 @@ get_plugin_preference_file_content (struct arglist *desc,
 long
 get_plugin_preference_file_size (struct arglist *desc, const char *identifier)
 {
-  struct arglist *globals = arg_get_value (desc, "globals");
+  struct scan_globals *globals = arg_get_value (desc, "globals");
   GHashTable *trans;
   gchar *filesize_str;
 
   if (!globals)
     return -1;
 
-  trans = arg_get_value (globals, "files_size_translation");
+  trans = globals->files_size_translation;
   if (!trans)
     return -1;
 
@@ -826,17 +828,17 @@ plug_get_key (struct arglist *args, char *name, int *type, size_t *len)
       if ((pid = fork ()) == 0)
         {
           int old;
-          struct arglist *globals;
+          struct scan_globals *globals;
           void *ret;
 
           kb_lnk_reset (kb);
           nvticache_reset ();
           close (sockpair[0]);
           globals = arg_get_value (args, "globals");
-          old = arg_get_value_int (globals, "global_socket");
+          old = globals->global_socket;
           if (old > 0)
             close (old);
-          arg_set_value (globals, "global_socket", GSIZE_TO_POINTER (sockpair[1]));
+          globals->global_socket = sockpair[1];
 
           srand48 (getpid () + getppid () + time (NULL));
 
@@ -868,10 +870,10 @@ plug_get_key (struct arglist *args, char *name, int *type, size_t *len)
         {
           int e;
           int status;
-          struct arglist *globals;
+          struct scan_globals *globals;
 
           globals = arg_get_value (args, "globals");
-          upstream = arg_get_value_int (globals, "global_socket");
+          upstream = globals->global_socket;
           close (sockpair[1]);
           _plug_get_key_son = pid;
           sig_term (plug_get_key_sighand_term);
