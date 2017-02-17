@@ -1,5 +1,11 @@
 2017-02-17  Michael Wiegand <michael.wiegand@greenbone.net>
 
+	* CMakeLists.txt: Remove now superfluous checks for
+	libopenvas_wmiclient and libopenvas_wincmd. The checks are now longer
+	needed since the code using them has moved to openvas-libraries.
+
+2017-02-17  Michael Wiegand <michael.wiegand@greenbone.net>
+
 	* COPYING: List correct license for misc/CMakeLists.txt.
 
 2017-02-17  Hani Benhabiles <hani.benhabiles@greenbone.net>
