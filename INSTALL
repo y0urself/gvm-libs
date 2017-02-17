@@ -28,8 +28,6 @@ Specific development libraries:
 
 Prerequisites for building documentation:
 * doxygen
-* xmltoman (optional, for building man page)
-* sqlfairy (optional, for producing database diagram)
 
 Install prerequisites on Debian GNU/Linux 'Jessie' 8:
 # apt-get install gcc pkg-config libgnutls28-dev libglib2.0-dev \

@@ -1,5 +1,10 @@
 2017-02-17  Michael Wiegand <michael.wiegand@greenbone.net>
 
+	* INSTALL: Remove references to irrelevant documentation
+	prerequisites.
+
+2017-02-17  Michael Wiegand <michael.wiegand@greenbone.net>
+
 	* CMakeLists.txt: Remove now superfluous checks for
 	libopenvas_wmiclient and libopenvas_wincmd. The checks are now longer
 	needed since the code using them has moved to openvas-libraries.
