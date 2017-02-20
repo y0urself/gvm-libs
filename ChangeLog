@@ -1,3 +1,7 @@
+2017-02-20  Juan Jose Nicola  <juan.nicola@greenbone.net>
+
+	* CMakeLists.txt: Remove any handling for misc library.
+
 2017-02-17  Hani Benhabiles <hani.benhabiles@greenbone.net>
 
 	* misc/CMakeLists.txt: Install scanneraux.h

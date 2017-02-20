@@ -276,31 +276,12 @@ set (OPENVASLIB_VERSION "${LIBOPENVASCONFIG_VERSION}")
 configure_file (doc/Doxyfile.in ${CMAKE_BINARY_DIR}/doc/Doxyfile @ONLY)
 configure_file (doc/Doxyfile_full.in ${CMAKE_BINARY_DIR}/doc/Doxyfile_full @ONLY)
 configure_file (VERSION.in ${CMAKE_BINARY_DIR}/VERSION @ONLY)
-configure_file (libopenvas_misc.pc.in ${CMAKE_BINARY_DIR}/libopenvas_misc.pc @ONLY)
 
 ## Program
-
-add_subdirectory (misc)
 
 ## Documentation
 
 add_subdirectory (doc)
-
-## Install
-
-install (FILES ${CMAKE_BINARY_DIR}/libopenvas_misc.pc
-         DESTINATION ${LIBDIR}/pkgconfig)
-
-install (DIRECTORY DESTINATION ${OPENVAS_LOG_DIR})
-install (DIRECTORY DESTINATION ${OPENVAS_DATA_DIR})
-install (DIRECTORY DESTINATION ${OPENVAS_CACHE_DIR})
-install (DIRECTORY DESTINATION ${OPENVAS_SYSCONF_DIR})
-install (DIRECTORY
-  DESTINATION ${OPENVAS_SYSCONF_DIR}/gnupg
-  DIRECTORY_PERMISSIONS OWNER_EXECUTE OWNER_READ OWNER_WRITE)
-install (DIRECTORY
-  DESTINATION ${OPENVAS_STATE_DIR}/gnupg
-  DIRECTORY_PERMISSIONS OWNER_EXECUTE OWNER_READ OWNER_WRITE)
 
 ## Tests
 
